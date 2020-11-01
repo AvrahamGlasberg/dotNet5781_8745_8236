@@ -8,18 +8,24 @@ namespace dotNet5781_01_8745_8236
 {
     class Bus
     {
-        private int _kmTotal;
-        public int KmTotal { get { return _kmTotal; } set { _kmTotal = value; } }
+        private int _kmTotal;//total km the bus drove
+        public int KmTotal { get { return _kmTotal; } set { _kmTotal = value; } }//property
 
-        private int _kmFromFuel;
-        public int KmFromFuel { get { return _kmFromFuel; } set { _kmFromFuel = value; } }
-        private int _kmFromtreat;
-        public int KmFromtreat { get { return _kmFromtreat; } set { _kmFromtreat = value; } }
-        private int _licNum;
-        public int LicNum { get { return _licNum; } }
+        private int _kmFromFuel;//km the bus drove since last refuel
+        public int KmFromFuel { get { return _kmFromFuel; } set { _kmFromFuel = value; } }//property
+        private int _kmFromtreat;//km the bus drove since last treatment
+        public int KmFromtreat { get { return _kmFromtreat; } set { _kmFromtreat = value; } }//property
+        private int _licNum;//licesne number
+        public int LicNum { get { return _licNum; } }//property
 
-        private DateTime _start;
-        public DateTime Start { get { return _start; } set { _start = value; } }
+        private DateTime _start;//date after last treatment/started working
+        public DateTime Start { get { return _start; } set { _start = value; } }//property
+
+        /// <summary>
+        /// constructor for Bus cless
+        /// </summary>
+        /// <param name="licNum">the Bus's licesnse number</param>
+        /// <param name="date">the date that the bus started working </param>
         public Bus(int licNum, DateTime date) 
         { 
         _kmTotal = 0;
@@ -28,9 +34,20 @@ namespace dotNet5781_01_8745_8236
         _licNum = licNum;
         _start = date;
         }
+
+        /// <summary>
+        /// This function refuels the bus and lowers it's KmFromfuel to 0.
+        /// </summary>
         public void reFual() { _kmFromFuel = 0; }
+
+        /// <summary>
+        /// This function treatments the bus and lowers it's KmFromtreat to 0.
+        /// </summary>
         public void treatment() { _kmFromtreat = 0; _start = DateTime.Now; }
 
+        /// <summary>
+        /// This function prints the bus's license numbber and the Km since last treatment.
+        /// </summary>
         public void print()
         {
             string strLic = LicNum.ToString();
