@@ -126,3 +126,35 @@ namespace dotNet5781_01_8745_8236
         }
     }
 }
+//Running example:
+//For adding new bus, enter 'a'.
+//For select bus for a ride enter 'r'.
+//For treatment or refueling enter 't'.
+//For printing details for all buses since last treatment enter 'p'.
+//For exit enter 'e'.
+//a
+//Enter license: 12345678
+//Enter starting date: 01 / 01 / 2020
+
+//For adding new bus, enter 'a'.
+//For select bus for a ride enter 'r'.
+//For treatment or refueling enter 't'.
+//For printing details for all buses since last treatment enter 'p'.
+//For exit enter 'e'.
+//r
+//Enter license: 12345678
+
+//For adding new bus, enter 'a'.
+//For select bus for a ride enter 'r'.
+//For treatment or refueling enter 't'.
+//For printing details for all buses since last treatment enter 'p'.
+//For exit enter 'e'.
+//p
+//123-45-678 drove 167 Km since last treatment.
+
+//For adding new bus, enter 'a'.
+//For select bus for a ride enter 'r'.
+//For treatment or refueling enter 't'.
+//For printing details for all buses since last treatment enter 'p'.
+//For exit enter 'e'.
+//e
