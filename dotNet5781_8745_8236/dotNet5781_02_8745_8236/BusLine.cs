@@ -11,25 +11,29 @@ namespace dotNet5781_02_8745_8236
     {
         General, North, South, Center, Jerusalem
     }
-    class BusLine
+    class BusLine : IComparable
     {
-        private int busLine;
+        private int busNum;
+        public int BusNum { get { return busNum; } }
         private BusLineStations firstStation;
+        public BusLineStations FirstStation { get { if (stations.Count != 0) return stations[0]; else throw new ArgumentException("There are no stations"); } }
         private BusLineStations lastStation;
+        public BusLineStations LastStation { get { if (stations.Count != 0) return stations[stations.Count - 1]; else throw new ArgumentException("There are no stations"); } }
         private Area area;
         private List<BusLineStations> stations;
-        public BusLine(int _busLine, int _area) // ctor
+        public BusLine(int _busNum, int _area) // ctor
         {
-            busLine = _busLine;
+            busNum = _busNum;
             area = (Area)_area;
             stations = new List<BusLineStations>();
-
         }
         public override string ToString()
         {
-            string retStr = String.Format("Bus line: {0}, Area: {1} \n", busLine, area);
-            foreach(BusLineStations curr in stations)
+            int i = 1;
+            string retStr = String.Format("Bus line number: {0}, Area: {1} \n", busNum, area);
+            foreach (BusLineStations curr in stations)
             {
+                retStr += i.ToString() + ": ";
                 retStr += curr.ToString();
                 retStr += "\n";
             }
@@ -45,32 +49,70 @@ namespace dotNet5781_02_8745_8236
         /// <param name="_distance"></param>
         /// <param name="_drivingTime"></param>
         /// <param name="_stationName"></param>
-        public void addStation(int prevBusStation, int _busStationKey, double _latitude, double _longitude, int _distance, int _drivingTime, string _stationName = "")
+        public void addStation(int prevBusStationNumber, int _busStationKey, double _latitude, double _longitude, int _distance, int _drivingTime, int distanceToNext, int timeToNext,  string _stationName = "")
         {
+            if (_busStationKey < 0 || _latitude < 0 || _longitude < 0 || _distance <= 0 || _drivingTime <= 0 || distanceToNext <= 0 || timeToNext <= 0)
+                throw new ArgumentException("Illegal input!");
             if (stasionExist(_busStationKey))
                 throw new ArgumentException("Station already exist.");
-            if (prevBusStation == 0) 
-            {
-                stations.Insert(0, new BusLineStations(_busStationKey, _latitude, _longitude, _distance, _drivingTime, _stationName)); // insert at the front of the list
-            }
-            else
-            {
-                if (!stasionExist(prevBusStation))
-                    throw new ArgumentException("Previos station does not exist!");
-                int ind = stations.FindIndex(station => station.BusStationKey == prevBusStation);
-                if(ind == -1)
-                    throw new ArgumentException("Previos station does not exist!");
-                stations.Insert(ind + 1, new BusLineStations(_busStationKey, _latitude, _longitude, _distance, _drivingTime, _stationName)); // insert at the right place of the list
+            if (stations.Count < 2)
+                throw new ArgumentException("You have to input first/last station first.");
+            int ind = stations.FindIndex(station => station.BusStationKey == prevBusStationNumber);
+            if (ind == -1 || ind == stations.Count - 1)
+                throw new ArgumentException("Illegal previos bus number. (for last station input last station first)");
 
-            }
-
+            
+            stations.Insert(ind + 1, new BusLineStations(_busStationKey, _latitude, _longitude, _distance, _drivingTime, _stationName)); // insert at the right place of the list
+            stations[ind + 2].Distance = distanceToNext;
+            stations[ind + 2].DrivingTime = timeToNext;
         }
-        public void delStation(int _busStationKey)
-        { 
-            int ind = stations.FindIndex(station => station.BusStationKey == _busStationKey);
-            if(ind == -1)
+        public void addFirstStation(int _busStationKey, double _latitude, double _longitude, int distanceToNext = 0, int timeToNext = 0, string _stationName = "")
+        {
+            if (_busStationKey < 0 || _latitude < 0 ||_longitude < 0 || distanceToNext < 0 || timeToNext < 0)
+                throw new ArgumentException("Illegal input!");
+            if (stasionExist(_busStationKey))
                 throw new ArgumentException("Station already exist.");
+            if(stations.Count > 0 && (distanceToNext==0|| timeToNext == 0))
+                throw new ArgumentException("You have to input info about the next station!");
+            stations.Insert(0, new BusLineStations(_busStationKey, _latitude, _longitude,0, 0, _stationName));
+            if(stations.Count > 1)
+            {
+                stations[1].Distance = distanceToNext;
+                stations[1].DrivingTime = timeToNext;
+            }
+        }
+        public void addLastStation(int _busStationKey, double _latitude, double _longitude, int _distance, int _drivingTime, string _stationName = "")
+        {
+            if (_busStationKey < 0 || _latitude < 0 || _longitude < 0 || _distance <= 0 || _drivingTime <= 0)
+                throw new ArgumentException("Illegal input!");
+            if (stasionExist(_busStationKey))
+                throw new ArgumentException("Station already exist.");
+            if (stations.Count == 0)
+                throw new ArgumentException("You have to input first station first.");
+            stations.Add(new BusLineStations(_busStationKey, _latitude, _longitude, _distance, _drivingTime, _stationName));
+        }
+        public void deleteFirstOrLastStation(int _busStationKey)
+        {
+            int ind = stations.FindIndex(station => station.BusStationKey == _busStationKey);
+            if (ind == -1 || (ind != 0 && ind != stations.Count - 1))
+                throw new ArgumentException("Station does not exist in the beggining or int the end.");
             stations.RemoveAt(ind); // insert at the right place of the list
+            if(ind == 0 && stations.Count > 0)
+            {
+                stations[0].DrivingTime = 0;
+                stations[0].Distance = 0;
+            }
+        }
+        public void deleteStation(int _busStationKey, int newDistance, int newTime)
+        {
+            int ind = stations.FindIndex(station => station.BusStationKey == _busStationKey);
+            if (newDistance <= 0 || newTime <= 0)
+                throw new ArgumentException("Illegal input!");
+            if (ind == -1 || ind == 0 || ind == stations.Count - 1)
+                throw new ArgumentException("Station does not exist in the middle of the list!");
+            stations.RemoveAt(ind); // insert at the right place of the list
+            stations[ind].Distance = newDistance;
+            stations[ind].DrivingTime = newTime;
         }
         public bool stasionExist(int _busStationKey)
         {
@@ -79,11 +121,11 @@ namespace dotNet5781_02_8745_8236
         public int distance(int station1Key, int station2Key)
         {
             int dis = 0;
-            int ind1 = stations.FindIndex(station =>station.BusStationKey == station1Key);
+            int ind1 = stations.FindIndex(station => station.BusStationKey == station1Key);
             int ind2 = stations.FindIndex(station => station.BusStationKey == station2Key);
 
-            if (ind1 == -1 ||ind2 == -1)
-                throw new ArgumentException("at least one of the stations isn't exist.");
+            if (ind1 == -1 || ind2 == -1)
+                throw new ArgumentException("at least one of the stations does not exist.");
             for (int i = Math.Min(ind1, ind2) + 1; i <= Math.Max(ind1, ind2); i++)
                 dis += stations[i].Distance;
             return dis;
@@ -95,28 +137,38 @@ namespace dotNet5781_02_8745_8236
             int ind2 = stations.FindIndex(station => station.BusStationKey == station2Key);
 
             if (ind1 == -1 || ind2 == -1)
-                throw new ArgumentException("at least one of the stations isn't exist.");
+                throw new ArgumentException("at least one of the stations does not exist.");
             for (int i = Math.Min(ind1, ind2) + 1; i <= Math.Max(ind1, ind2); i++)
                 time += stations[i].DrivingTime;
             return time;
         }
         public BusLine subRoute(int station1Key, int station2Key)
         {
-            BusLine retBus = new BusLine(this.busLine, (int)this.area);
+            BusLine retBus = new BusLine(this.busNum, (int)this.area);
             int ind1 = stations.FindIndex(station => station.BusStationKey == station1Key);
             int ind2 = stations.FindIndex(station => station.BusStationKey == station2Key);
 
             if (ind1 == -1 || ind2 == -1)
                 throw new ArgumentException("at least one of the stations isn't exist.");
-            for (int i = Math.Min(ind1, ind2); i <= Math.Max(ind1, ind2); i++)                retBus.addLast(stations[i]);
+            for (int i = Math.Min(ind1, ind2); i <= Math.Max(ind1, ind2); i++) 
+                retBus.stations.Add(stations[i]);
             return retBus;
         }
-        public void addLast(BusLineStations busLineStations)
+
+        public int CompareTo(object obj)
         {
-            stations.Add(busLineStations);
+            int time1 = 0;
+            int time2 = 0;
+            foreach (BusLineStations curr in stations)
+            {
+                time1 += curr.DrivingTime;
+            }
+            foreach (BusLineStations curr in ((BusLine)obj).stations)
+            {
+                time2 += curr.DrivingTime;
+            }
+            return time1.CompareTo(time2);
         }
-
-
     }
 
 }

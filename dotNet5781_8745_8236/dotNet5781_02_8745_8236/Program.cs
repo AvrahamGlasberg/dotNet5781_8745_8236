@@ -10,6 +10,7 @@ namespace dotNet5781_02_8745_8236
     {
         static void Main(string[] args)
         {
+
         }
     }
 }

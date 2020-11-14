@@ -17,11 +17,12 @@ namespace dotNet5781_02_8745_8236
         public double Longitude { get { return longitude; } }
         private string stationName;
         public string StationName { get { return stationName; } }
-        public BusStation(int _busStationKey, double _latitude, double _longitude, string _stationName = "")
+        public BusStation(int _busStationKey, double _latitude, double _longitude, string _stationName)
         {
             busStationKey = _busStationKey;
             latitude = _latitude;
             longitude = _longitude;
+            stationName = _stationName;
 
         }
         public override string ToString()
