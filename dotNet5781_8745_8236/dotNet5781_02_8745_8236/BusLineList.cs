@@ -4,13 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+//Itamar Cohen 318558236 & Avraham Glasberg 206218745
 namespace dotNet5781_02_8745_8236
 {
+    /// <summary>
+    /// a collection of bus lines.
+    /// </summary>
     class BusLineList : IEnumerable
     {
+        /// <summary>
+        /// list of the bus lines
+        /// </summary>
         List<BusLine> busLst;
-        BusLineList() { busLst = new List<BusLine>(); }
+        /// <summary>
+        /// property of buslst
+        /// </summary>
+        public BusLineList() { busLst = new List<BusLine>(); }
+        /// <summary>
+        /// implimenting IEnumerable interface
+        /// </summary>
+        /// <returns>list enumerator</returns>
         public IEnumerator GetEnumerator()
         {
             return busLst.GetEnumerator();
@@ -18,7 +31,7 @@ namespace dotNet5781_02_8745_8236
         //not checking "haloch-chazor" according to dan z.
         public void addLine(int busNum, int area)
         {
-            if (busNum < 0 || area < 0 || area > 3)
+            if (busNum < 0 || area < 0 || area > 4)
                 throw new ArgumentException("Illegal Input!");
             busLst.Add(new BusLine(busNum, area));
         }
@@ -35,9 +48,23 @@ namespace dotNet5781_02_8745_8236
             BusLineList retLst = new BusLineList();
             retLst.busLst = busLst.FindAll(bus => bus.stasionExist(station));
             if(retLst.busLst.Count == 0)
-                throw new ArgumentException("No buses go in that station!");
+                throw new ArgumentException("No buses drive in that station!");
             return retLst;
         }
+
+        public BusLineList findBusesInTwoStations(int first, int second)
+        {
+            BusLineList retLst = new BusLineList();
+            foreach(BusLine cur in busLst)
+            {
+                if (cur.subRoute(first, second) != null)
+                    retLst.busLst.Add(cur.subRoute(first, second));
+            }
+            if (retLst.busLst.Count == 0)
+                throw new ArgumentException("No buses drive in that stations!");
+            return retLst;
+        }
+
         public BusLineList sortedList()
         {
             BusLineList retLst = new BusLineList();
@@ -56,9 +83,9 @@ namespace dotNet5781_02_8745_8236
                 {
                     ind = busLst.FindIndex(ind + 1, bus => bus.BusNum == busNum);
                     if (ind == -1)
-                        throw new ArgumentException("Bus does not exists!");
+                        throw new ArgumentException("Bus does not exists in that index!");
                     index--;
-                } while (index > 0);
+                } while (index >= 0);
                 return busLst[ind];
             }
             set
@@ -70,9 +97,9 @@ namespace dotNet5781_02_8745_8236
                 {
                     ind = busLst.FindIndex(ind + 1, bus => bus.BusNum == busNum);
                     if (ind == -1)
-                        throw new ArgumentException("Bus does not exists!");
+                        throw new ArgumentException("Bus does not exists in that index!");
                     index--;
-                } while (index > 0);
+                } while (index >= 0);
                 busLst[ind] = value;
             }
         }
