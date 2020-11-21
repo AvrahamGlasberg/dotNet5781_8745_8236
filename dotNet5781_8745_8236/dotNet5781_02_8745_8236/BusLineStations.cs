@@ -9,7 +9,7 @@ namespace dotNet5781_02_8745_8236
     /// <summary>
     /// bus line station. inheritamce from busStation.
     /// </summary>
-    class BusLineStations : BusStation
+    public class BusLineStations : BusStation
     {
         /// <summary>
         /// the distance from last station in meters

@@ -10,7 +10,7 @@ namespace dotNet5781_02_8745_8236
     /// <summary>
     /// basic bus station class
     /// </summary>
-    class BusStation
+    public class BusStation
     {
         /// <summary>
         /// the bus station number key 

@@ -17,7 +17,7 @@ namespace dotNet5781_02_8745_8236
     /// <summary>
     /// bus line class. implimenting IComparable interface
     /// </summary>
-    class BusLine : IComparable
+    public class BusLine : IComparable
     {
         /// <summary>
         /// bus line key number
@@ -39,6 +39,10 @@ namespace dotNet5781_02_8745_8236
         /// the area of the bus. enum type.
         /// </summary>
         private Area area;
+        /// <summary>
+        /// property for area
+        /// </summary>
+        public Area Area { get { return area; } }
         /// <summary>
         /// a list of all the stations in that bus line
         /// </summary>
