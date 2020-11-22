@@ -13,17 +13,30 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using dotNet5781_02_8745_8236;
-
+//Itamar Cohen 318558236 & Avraham Glasberg 206218745.
 namespace dotNet5781_03A_8745_8236
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+	//this projects is for study the beggining og WPF.
+	/// <summary>
+	/// Interaction logic for MainWindow.xaml
+	/// </summary>
+	public partial class MainWindow : Window
     {
+		/// <summary>
+		/// collection from dotNet5781_02_8745_8236.conntain bus lines.
+		/// </summary>
 		private BusLineList busLines;
+		/// <summary>
+		/// randim number
+		/// </summary>
 		private Random rand;
+		/// <summary>
+		/// the current bus line number on display.
+		/// </summary>
 		private BusLine currentDisplayBusLine;
+		/// <summary>
+		/// constructor of main window
+		/// </summary>
 		public MainWindow()
         {
             InitializeComponent();
@@ -34,6 +47,9 @@ namespace dotNet5781_03A_8745_8236
 			cbBusLines.SelectedIndex = 0;
             RestartList();
 		}
+		/// <summary>
+		/// this function starts the bus collections with 10 bus lines.
+		/// </summary>
 		public void RestartList()
 		{
 			for (int i = 0; i < 10; i++)
@@ -57,7 +73,9 @@ namespace dotNet5781_03A_8745_8236
 				}
 			}
 		}
-		//the starting information of 40 stations, name and number.
+		/// <summary>
+		/// the starting information of 40 stations, name and number.
+		/// </summary>
 		static string[] info = new string[]
 			{
 			"Kiryat-Shemone 908444",
@@ -102,17 +120,24 @@ namespace dotNet5781_03A_8745_8236
 			"Yehud-Monosson 391212",
 			"Yokneam 596000"
 			};
-
+		/// <summary>
+		/// this function show the information of the chosen bus line.
+		/// </summary>
+		/// <param name="sender">the sender object</param>
+		/// <param name="e">list of args</param>
         private void cbBusLines_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 			ShowBusLine((cbBusLines.SelectedValue as BusLine).BusNum);
 		}
+		/// <summary>
+		/// this function put the information of the chosen bus line in the list box
+		/// </summary>
+		/// <param name="index">the chosen bus line number</param>
 		private void ShowBusLine(int index)
         {
 			currentDisplayBusLine = busLines[index];
 			UpGrid.DataContext = currentDisplayBusLine;
 			tbArea.Text = string.Format("{0}", currentDisplayBusLine.Area);
-
 			lbBusLineStations.DataContext = currentDisplayBusLine.Stations;
         }
 
