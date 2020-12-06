@@ -8,6 +8,6 @@
         Title="DrivingWindow" Height="300" Width="400">
     <Grid>
         <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Enter the distance of the drive&#x0a;Press Enter to start" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" TextAlignment="Center"/>
-        <TextBox x:Name="txtBox" HorizontalAlignment="Center" Height="23" Margin="0,0,0,50" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" TextAlignment="Center" FontSize="15" MaxLength="9" PreviewKeyDown="TxtBox_Prev_Key_Down" KeyDown="Key_Pressed"/>
+        <TextBox x:Name="txtBox" HorizontalAlignment="Center" Height="23" Margin="0,0,0,50" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" TextAlignment="Center" FontSize="15" MaxLength="4" PreviewKeyDown="TxtBox_Prev_Key_Down" KeyDown="Key_Pressed"/>
     </Grid>
 </Window>

@@ -1,0 +1,46 @@
+﻿<Window x:Class="dotNet5781_03B_8745_8236.BusData"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dotNet5781_03B_8745_8236"
+        mc:Ignorable="d"
+        Title="BusData" Height="550" Width="800" Closing="Window_closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Bus information:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="0" Grid.ColumnSpan="2"/>
+        <Label Content="License number:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="1" Grid.Column="0"/>
+        <Label Content="Total Km:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="2" Grid.Column="0"/>
+        <Label Content="Starting Date:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="3" Grid.Column="0"/>
+        <Label Content="Km since last refuel:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="4" Grid.Column="0"/>
+        <Label Content="Km since last treatment:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="5" Grid.Column="0"/>
+        <Label Content="Last treatment's date:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="6" Grid.Column="0"/>
+        <Label Content="Time until bus is ready:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="7" Grid.Column="0"/>
+
+        
+        <TextBlock x:Name="license" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="1" Grid.Column="1"/>
+        <TextBlock x:Name="totalKm" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="2" Grid.Column="1"/>
+        <TextBlock x:Name="startD" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="3" Grid.Column="1"/>
+        <TextBlock x:Name="KmRef" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="4" Grid.Column="1"/>
+        <TextBlock x:Name="Kmtreat" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="5" Grid.Column="1"/>
+        <TextBlock x:Name="treatD" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="6" Grid.Column="1"/>
+        <TextBlock x:Name="time" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="7" Grid.Column="1"/>
+
+        <Button Content="Treatment" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="8" Grid.Column="0" Click="Treatment_Click"/>
+        <Button Content="Refuel" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="8" Grid.Column="1" Click="Refuel_Click"/>
+    </Grid>
+</Window>

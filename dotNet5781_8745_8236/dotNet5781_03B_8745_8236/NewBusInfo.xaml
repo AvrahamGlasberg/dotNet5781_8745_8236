@@ -1,0 +1,32 @@
+﻿<Window x:Class="dotNet5781_03B_8745_8236.NewBusInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dotNet5781_03B_8745_8236"
+        mc:Ignorable="d"
+        Title="NewBusInfo" Height="350" Width="450">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Label Content="Enter license number:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="20" Grid.Row="0" Grid.Column="0"/>
+        <Label Content="Enter Total Km driven:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="20" Grid.Row="1" Grid.Column="0"/>
+        <Label Content="Enter Starting Date:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="20" Grid.Row="2" Grid.Column="0"/>
+
+        <TextBox x:Name="licenseNumber" Text="7-8 digits" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="120" Height="35" FontSize="20" Grid.Row="0" Grid.Column="1" TextAlignment="Center" MaxLength="8"/>
+        <TextBox x:Name="totalKm" Text="Max 6 digits" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="120" Height="35" FontSize="20" Grid.Row="1" Grid.Column="1" TextAlignment="Center" MaxLength="6"/>
+        <TextBox x:Name="startDate" Text="dd/mm/yyyy" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="120" Height="35" FontSize="20" Grid.Row="2" Grid.Column="1" TextAlignment="Center" MaxLength="10"/>
+
+        <Button Content="ADD" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Click="Button_Click"/>
+
+
+    </Grid>
+</Window>

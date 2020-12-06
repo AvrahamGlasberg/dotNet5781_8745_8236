@@ -20,15 +20,17 @@ namespace dotNet5781_03B_8745_8236
     public partial class DrivingWindow : Window
     {
         Bus curBus;
+        Random Rand;
         public DrivingWindow(Bus cur)
         {
             InitializeComponent();
             curBus = cur;
+            Rand = new Random(DateTime.Now.Millisecond);
         }
 
         private void TxtBox_Prev_Key_Down(object sender, KeyEventArgs e)
         {
-            if (e.Key != Key.D0 && e.Key != Key.D1 && e.Key != Key.D2 && e.Key != Key.D3 && e.Key != Key.D4 && e.Key != Key.D5 && e.Key != Key.D6 && e.Key != Key.D7 && e.Key != Key.D8 && e.Key != Key.D9 && e.Key != Key.Enter)
+            if (e.Key != Key.D0 && e.Key != Key.D1 && e.Key != Key.D2 && e.Key != Key.D3 && e.Key != Key.D4 && e.Key != Key.D5 && e.Key != Key.D6 && e.Key != Key.D7 && e.Key != Key.D8 && e.Key != Key.D9 && e.Key != Key.Enter && e.Key != Key.Escape && e.Key != Key.Back)
                 e.Handled = true;
         }
 
@@ -56,14 +58,15 @@ namespace dotNet5781_03B_8745_8236
                     else
                     {
                         canDrive = true;
-                        ((MainWindow)Application.Current.MainWindow).startDrive(curBus.LicNum, distance);
+                        int speed = Rand.Next(20, 51);
+                        int time = (int)(((double)distance / speed) * 6);
+                        curBus.AddKm(distance);
+                        curBus.Drive(time);
                         this.Close();
                     }
                 }
                 if (!canDrive)
                     MessageBox.Show(message);
-
-                
             }
         }
     }

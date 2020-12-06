@@ -7,10 +7,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="50,50,50,50" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="20,0,20,0" Grid.Row="0">
             <Grid x:Name="busGrid">
                 <Grid.RowDefinitions></Grid.RowDefinitions>
             </Grid>
         </ScrollViewer>
+        <Button x:Name="add" Content="Add bus" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Height="auto" Width="auto" FontSize="20" Click="Add_Bus" />
     </Grid>
 </Window>
