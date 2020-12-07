@@ -25,8 +25,10 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <!--the title of the window-->
         <Label Content="Bus company information:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="0" Grid.ColumnSpan="2" FontWeight="ExtraBold"/>
-
+        
+        <!--\the labels of the data that need to be present in the window:-->
         <Label Content="Buses in the company:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="1" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
         <Label Content="Total Earnings:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="2" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
         <Label Content="Total passengers:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="3" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
@@ -36,7 +38,7 @@
         <Label Content="Most valuable bus:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="7" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
         <Label Content="Less valuable bus:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="8" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
 
-
+        <!--the text block with the bus info:-->
         <TextBlock x:Name="NumBuses" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="1" Grid.Column="1" FontWeight="ExtraBold" Foreground="Brown"/>
         <TextBlock x:Name="totalEarnings" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="2" Grid.Column="1" FontWeight="ExtraBold" Foreground="Brown"/>
         <TextBlock x:Name="totalPass" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="3" Grid.Column="1" FontWeight="ExtraBold" Foreground="Brown"/>
