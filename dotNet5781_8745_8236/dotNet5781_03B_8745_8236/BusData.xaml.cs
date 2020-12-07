@@ -25,6 +25,7 @@ namespace dotNet5781_03B_8745_8236
             InitializeComponent();
             curBus = cur;
             UpdateInfo();
+            updateColor();
         }
         public void UpdateInfo()
         {
@@ -34,6 +35,7 @@ namespace dotNet5781_03B_8745_8236
             KmRef.Text = curBus.KmFromFuel.ToString();
             Kmtreat.Text = curBus.KmFromtreat.ToString();
             treatD.Text = curBus.LastTreat.ToShortDateString();
+            totalE.Text = curBus.TotalEarnings.ToString();
             time.Text = "0";
         }
         public void UpdateTime(int timeToReady)
@@ -53,9 +55,13 @@ namespace dotNet5781_03B_8745_8236
             else
                 ready = true;
             if (ready)
+            {
                 curBus.Treatment();
+                ((MainWindow)Application.Current.MainWindow).TreatSound();
+            }
             else
                 MessageBox.Show(message);
+            
         }
         private void Refuel_Click(object sender, RoutedEventArgs e)
         {
@@ -70,9 +76,13 @@ namespace dotNet5781_03B_8745_8236
             else
                 ready = true;
             if (ready)
+            {
                 curBus.ReFual();
+                ((MainWindow)Application.Current.MainWindow).RefuelSound();
+            }
             else
                 MessageBox.Show(message);
+            
         }
 
         private void Window_closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -84,6 +94,26 @@ namespace dotNet5781_03B_8745_8236
         {
             if (e.Key == Key.Escape)
                 Application.Current.Shutdown();
+        }
+        public void updateColor()
+        {
+            Brush br = (default);
+            switch (curBus.State)
+            {
+                case BusState.Ready:
+                    br = Brushes.LightGreen;
+                    break;
+                case BusState.Driving:
+                    br = Brushes.LightYellow;
+                    break;
+                case BusState.Treatment:
+                    br = Brushes.PaleVioletRed;
+                    break;
+                case BusState.Refueling:
+                    br = Brushes.LightBlue;
+                    break;
+            }
+            this.Background = br;
         }
     }
 }

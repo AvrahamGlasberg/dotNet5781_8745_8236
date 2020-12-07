@@ -37,6 +37,15 @@ namespace dotNet5781_03B_8745_8236
 
         private BackgroundWorker worker;
         private int counter;
+        public int Counter { get {return counter;} }
+        private int drives = 0;
+        public int Drives { get {return drives;} }
+
+        private int totalPass = 0;
+        public int TotalPass { get {return totalPass;} }
+
+        private int totalEarnings = 0;
+        public int TotalEarnings { get {return totalEarnings;} }
 
         /// <summary>
         /// constructor for Bus cless
@@ -71,7 +80,11 @@ namespace dotNet5781_03B_8745_8236
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
             worker.RunWorkerAsync(12);
             state = BusState.Refueling;
-            _kmFromFuel = 0; 
+            _kmFromFuel = 0;
+            mainW.UpdateColor(this);
+            if (BusDat != null)
+                BusDat.updateColor();
+            UpdateEarns(-500);
         }
 
         /// <summary>
@@ -87,7 +100,14 @@ namespace dotNet5781_03B_8745_8236
             worker.RunWorkerAsync(144);
             state = BusState.Treatment;
             _kmFromtreat = 0;
+            //how we undrstood the assignment.
+            _kmFromFuel = 0;
+            //
             _lastTreat = DateTime.Now;
+            mainW.UpdateColor(this);
+            if (BusDat != null)
+                BusDat.updateColor();
+            UpdateEarns(-2000);
         }
 
         public string LicToString()
@@ -110,7 +130,7 @@ namespace dotNet5781_03B_8745_8236
             mainW = window;
         }
 
-        public void Drive(int Length)
+        public void Drive(int Length, int passengers)
         {
             worker = new BackgroundWorker();
             worker.WorkerReportsProgress = true;
@@ -119,6 +139,17 @@ namespace dotNet5781_03B_8745_8236
             worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
             worker.RunWorkerAsync(Length);
             state = BusState.Driving;
+            mainW.UpdateColor(this);
+            if (BusDat != null)
+                BusDat.updateColor();
+
+            UpdateEarns(passengers * 20 - Length);
+            totalPass += passengers;
+            drives++;
+        }
+        private void UpdateEarns(int value)
+        {
+            totalEarnings += value;
         }
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -141,11 +172,15 @@ namespace dotNet5781_03B_8745_8236
         }
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            mainW.UpdatePB(_licNum, 0);
             state = BusState.Ready;
+            mainW.UpdatePB(_licNum, 0);
             mainW.UpdateTime(_licNum);
+            mainW.UpdateColor(this);
             if (busDat != null)
+            {
                 busDat.UpdateInfo();
+                BusDat.updateColor();
+            }
         }
         public void AddKm(int distance)
         {

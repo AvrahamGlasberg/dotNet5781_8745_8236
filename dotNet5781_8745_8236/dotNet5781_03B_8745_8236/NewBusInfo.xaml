@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_8745_8236"
         mc:Ignorable="d"
-        Title="NewBusInfo" Height="350" Width="450" KeyDown="Window_Key_Down">
+        Title="Add New Bus" Height="350" Width="450" KeyDown="Window_Key_Down">
+    <Window.Background>
+        <ImageBrush ImageSource="Images/bus1.jpg"/>
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -14,12 +17,12 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Label Content="Enter license number:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="20" Grid.Row="0" Grid.Column="0"/>
-        <Label Content="Enter Total Km driven:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="20" Grid.Row="1" Grid.Column="0"/>
-        <Label Content="Enter Starting Date:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="20" Grid.Row="2" Grid.Column="0"/>
+        <Label Content="Enter license number:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="0" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
+        <Label Content="Enter Total Km driven:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="1" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
+        <Label Content="Enter Starting Date:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="2" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
 
         <TextBox x:Name="licenseNumber" Text="7-8 digits" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="120" Height="35" FontSize="20" Grid.Row="0" Grid.Column="1" TextAlignment="Center" MaxLength="8" PreviewKeyDown="Prev_Key_Down_Number"/>
         <TextBox x:Name="totalKm" Text="Max 6 digits" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="120" Height="35" FontSize="20" Grid.Row="1" Grid.Column="1" TextAlignment="Center" MaxLength="6" PreviewKeyDown="Prev_Key_Down_Number"/>

@@ -6,8 +6,24 @@
         xmlns:local="clr-namespace:dotNet5781_03B_8745_8236"
         mc:Ignorable="d"
         Title="DrivingWindow" Height="300" Width="400" KeyDown="Window_Key_Down">
+    <Window.Background>
+        <ImageBrush ImageSource="Images/bus2.jpg"/>
+    </Window.Background>
     <Grid>
-        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Enter the distance of the drive&#x0a;Press Enter to start" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" TextAlignment="Center"/>
-        <TextBox x:Name="txtBox" HorizontalAlignment="Center" Height="23" Margin="0,0,0,50" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="120" TextAlignment="Center" FontSize="15" MaxLength="4" PreviewKeyDown="TxtBox_Prev_Key_Down" KeyDown="Key_Pressed"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Press Enter to start" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" TextAlignment="Center" FontWeight="ExtraBold" Foreground="#FFE4160E" Grid.Row="0" Grid.ColumnSpan="2"/>
+
+        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Enter distance in Km:" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="20" TextAlignment="Center" FontWeight="ExtraBold" Foreground="#FFE4160E" Grid.Row="1" Grid.Column="0"/>
+        <TextBox x:Name="txtBox" HorizontalAlignment="Center" Height="23" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" TextAlignment="Center" FontSize="15" MaxLength="4" PreviewKeyDown="TxtBox_Prev_Key_Down" KeyDown="Key_Pressed" Grid.Row="1" Grid.Column="1" />
+        <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="Enter the number of passengers:" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="20" TextAlignment="Center" FontWeight="ExtraBold" Foreground="#FFE4160E" Grid.Row="2" Grid.Column="0"/>
+        <TextBox x:Name="passTxtBox" HorizontalAlignment="Center" Height="23" Margin="0,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="120" TextAlignment="Center" FontSize="15" MaxLength="2" PreviewKeyDown="TxtBox_Prev_Key_Down" KeyDown="Key_Pressed" Grid.Row="2" Grid.Column="1" />
     </Grid>
 </Window>

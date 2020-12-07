@@ -21,6 +21,7 @@ namespace dotNet5781_03B_8745_8236
     {
         Bus curBus;
         Random Rand;
+        
         public DrivingWindow(Bus cur)
         {
             InitializeComponent();
@@ -38,35 +39,45 @@ namespace dotNet5781_03B_8745_8236
         {
             if(e.Key == Key.Enter)
             {
-                bool canDrive = false;
-                string message = "";
-                int distance = int.Parse(txtBox.Text);
-                if (curBus.State == BusState.Driving)
-                    message = "Bus is currently driving!";
-                if (curBus.State == BusState.Refueling)
-                    message = "Bus is currently Refueling!";
-                if (curBus.State == BusState.Treatment)
-                    message = "Bus is currently in Treatment!";
-                if(curBus.State == BusState.Ready)
+                if (txtBox.Text == "")
+                    MessageBox.Show("Enter driving distance!");
+                else if (passTxtBox.Text == "")
+                    MessageBox.Show("Enter number of passengers!");
+                else
                 {
-                    if (curBus.KmFromFuel + distance > 1200)
-                        message = "Bus does not have enough fuel!";
-                    else if (curBus.KmFromtreat + distance > 20000)
-                        message = "Bus cannot drive this far without treatment!";
-                    else if (DateTime.Now.AddYears(-1) > curBus.LastTreat)
-                        message = "Bus needs treatment!";
-                    else
+                    bool canDrive = false;
+                    string message = "";
+                    int distance = int.Parse(txtBox.Text);
+                    int pass = int.Parse(passTxtBox.Text);
+                    if (curBus.State == BusState.Driving)
+                        message = "Bus is currently driving!";
+                    if (curBus.State == BusState.Refueling)
+                        message = "Bus is currently Refueling!";
+                    if (curBus.State == BusState.Treatment)
+                        message = "Bus is currently in Treatment!";
+                    if (curBus.State == BusState.Ready)
                     {
-                        canDrive = true;
-                        int speed = Rand.Next(20, 51);
-                        int time = (int)(((double)distance / speed) * 6);
-                        curBus.AddKm(distance);
-                        curBus.Drive(time);
-                        this.Close();
+                        if (curBus.KmFromFuel + distance > 1200)
+                            message = "Bus does not have enough fuel!";
+                        else if (curBus.KmFromtreat + distance > 20000)
+                            message = "Bus cannot drive this far without treatment!";
+                        else if (DateTime.Now.AddYears(-1) > curBus.LastTreat)
+                            message = "Bus needs treatment!";
+                        else
+                        {
+                            canDrive = true;
+                            int speed = Rand.Next(20, 51);
+                            int time = (int)(((double)distance / speed) * 6);
+                            curBus.AddKm(distance);
+                            curBus.Drive(time, pass);
+
+                            ((MainWindow)(Application.Current.MainWindow)).DriveSound();
+                            this.Close();
+                        }
                     }
+                    if (!canDrive)
+                        MessageBox.Show(message);
                 }
-                if (!canDrive)
-                    MessageBox.Show(message);
             }
         }
 

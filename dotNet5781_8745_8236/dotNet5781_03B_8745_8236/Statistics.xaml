@@ -1,0 +1,49 @@
+﻿<Window x:Class="dotNet5781_03B_8745_8236.Statistics"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:dotNet5781_03B_8745_8236"
+        mc:Ignorable="d"
+        Title="Statistics" Height="550" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="Images/buses.jpg"/>
+    </Window.Background>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Bus company information:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="0" Grid.ColumnSpan="2" FontWeight="ExtraBold"/>
+
+        <Label Content="Buses in the company:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="1" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
+        <Label Content="Total Earnings:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="2" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
+        <Label Content="Total passengers:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="3" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
+        <Label Content="Total drives:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="4" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
+        <Label Content="Average passengers per drive:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="5" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
+        <Label Content="Average earnings per drive:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="6" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
+        <Label Content="Most valuable bus:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="7" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
+        <Label Content="Less valuable bus:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="8" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
+
+
+        <TextBlock x:Name="NumBuses" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="1" Grid.Column="1" FontWeight="ExtraBold" Foreground="Brown"/>
+        <TextBlock x:Name="totalEarnings" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="2" Grid.Column="1" FontWeight="ExtraBold" Foreground="Brown"/>
+        <TextBlock x:Name="totalPass" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="3" Grid.Column="1" FontWeight="ExtraBold" Foreground="Brown"/>
+        <TextBlock x:Name="totalDrives" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="4" Grid.Column="1" FontWeight="ExtraBold" Foreground="Brown"/>
+        <TextBlock x:Name="avgPass" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="5" Grid.Column="1" FontWeight="ExtraBold" Foreground="Brown"/>
+        <TextBlock x:Name="avgEarn" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="6" Grid.Column="1" FontWeight="ExtraBold" Foreground="Brown"/>
+        <TextBlock x:Name="bestBus" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="7" Grid.Column="1" FontWeight="ExtraBold" Foreground="Brown"/>
+        <TextBlock x:Name="worstBus" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="8" Grid.Column="1" FontWeight="ExtraBold" Foreground="Brown"/>
+    </Grid>
+</Window>
