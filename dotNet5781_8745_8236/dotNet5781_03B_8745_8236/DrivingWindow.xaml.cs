@@ -30,7 +30,7 @@ namespace dotNet5781_03B_8745_8236
 
         private void TxtBox_Prev_Key_Down(object sender, KeyEventArgs e)
         {
-            if (e.Key != Key.D0 && e.Key != Key.D1 && e.Key != Key.D2 && e.Key != Key.D3 && e.Key != Key.D4 && e.Key != Key.D5 && e.Key != Key.D6 && e.Key != Key.D7 && e.Key != Key.D8 && e.Key != Key.D9 && e.Key != Key.Enter && e.Key != Key.Escape && e.Key != Key.Back)
+            if (((int)e.Key < (int)Key.D0 || (int)e.Key > (int)Key.D9) && ((int)e.Key < (int)Key.NumPad0 || (int)e.Key > (int)Key.NumPad9) && e.Key != Key.Enter && e.Key != Key.Escape && e.Key != Key.Back)
                 e.Handled = true;
         }
 
@@ -68,6 +68,12 @@ namespace dotNet5781_03B_8745_8236
                 if (!canDrive)
                     MessageBox.Show(message);
             }
+        }
+
+        private void Window_Key_Down(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                Application.Current.Shutdown();
         }
     }
 }

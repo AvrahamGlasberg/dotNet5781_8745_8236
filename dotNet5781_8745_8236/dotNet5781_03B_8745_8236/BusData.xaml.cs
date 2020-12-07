@@ -79,5 +79,11 @@ namespace dotNet5781_03B_8745_8236
         {
             curBus.BusDat = null;
         }
+
+        private void Window_Key_Down(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                Application.Current.Shutdown();
+        }
     }
 }

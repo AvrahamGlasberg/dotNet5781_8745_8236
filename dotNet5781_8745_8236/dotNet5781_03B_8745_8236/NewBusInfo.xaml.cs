@@ -46,12 +46,30 @@ namespace dotNet5781_03B_8745_8236
 
             else
                 legalInput = true;
-            if(legalInput)
+            if (legalInput)
             {
                 Bus newB = new Bus(license, start, km);
                 ((MainWindow)System.Windows.Application.Current.MainWindow).AddBus(newB);
                 this.Close();
             }
+        }
+
+        private void Prev_Key_Down_Number(object sender, KeyEventArgs e)
+        {
+            if(((int)e.Key < (int)Key.D0 || (int)e.Key > (int)Key.D9) && ((int)e.Key < (int)Key.NumPad0 || (int)e.Key > (int)Key.NumPad9) && e.Key != Key.Enter && e.Key != Key.Escape && e.Key != Key.Back)
+                e.Handled = true;
+        }
+
+        private void Prev_Key_Down_Date(object sender, KeyEventArgs e)
+        {
+            if (((int)e.Key < (int)Key.D0 || (int)e.Key > (int)Key.D9) && ((int)e.Key < (int)Key.NumPad0 || (int)e.Key > (int)Key.NumPad9) && e.Key != Key.Enter && e.Key != Key.Escape && e.Key != Key.Back && e.Key != Key.OemQuestion)
+                e.Handled = true;
+        }
+
+        private void Window_Key_Down(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                Application.Current.Shutdown();
         }
     }
 }

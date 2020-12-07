@@ -270,5 +270,11 @@ namespace dotNet5781_03B_8745_8236
             int ind = BusLst.FindIndex(bus => bus.LicNum == lic);
             return ind != -1;
         }
+
+        private void Window_Key_Down(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+                Application.Current.Shutdown();
+        }
     }
 }
