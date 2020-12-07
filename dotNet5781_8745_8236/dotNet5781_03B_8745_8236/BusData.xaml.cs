@@ -19,7 +19,14 @@ namespace dotNet5781_03B_8745_8236
     /// </summary>
     public partial class BusData : Window
     {
+        /// <summary>
+        /// The bus presented in the window
+        /// </summary>
         Bus curBus;
+        /// <summary>
+        /// constructor for busdata window
+        /// </summary>
+        /// <param name="cur">the bus to represent</param>
         public BusData(Bus cur)
         {
             InitializeComponent();
@@ -27,6 +34,9 @@ namespace dotNet5781_03B_8745_8236
             UpdateInfo();
             updateColor();
         }
+        /// <summary>
+        /// Updates the bus's information in the window.
+        /// </summary>
         public void UpdateInfo()
         {
             license.Text = curBus.LicToString();
@@ -38,10 +48,19 @@ namespace dotNet5781_03B_8745_8236
             totalE.Text = curBus.TotalEarnings.ToString();
             time.Text = "0";
         }
+        /// <summary>
+        /// Update the time until bus is ready on the window.
+        /// </summary>
+        /// <param name="timeToReady">the new time to update</param>
         public void UpdateTime(int timeToReady)
         {
             time.Text = timeToReady.ToString();
         }
+        /// <summary>
+        /// Click event on the treatment button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Treatment_Click(object sender, RoutedEventArgs e)
         {
             string message = "";
@@ -56,13 +75,20 @@ namespace dotNet5781_03B_8745_8236
                 ready = true;
             if (ready)
             {
+                //start treatment
                 curBus.Treatment();
+                //play sound
                 ((MainWindow)Application.Current.MainWindow).TreatSound();
             }
             else
-                MessageBox.Show(message);
+                MessageBox.Show(message);//error
             
         }
+        /// <summary>
+        /// Click event on the refueling button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Refuel_Click(object sender, RoutedEventArgs e)
         {
             string message = "";
@@ -77,24 +103,37 @@ namespace dotNet5781_03B_8745_8236
                 ready = true;
             if (ready)
             {
+                //start refueling
                 curBus.ReFual();
+                //play sound
                 ((MainWindow)Application.Current.MainWindow).RefuelSound();
             }
             else
-                MessageBox.Show(message);
+                MessageBox.Show(message);//error
             
         }
-
+        /// <summary>
+        /// Event when window is closing. update the bus data window property in current bus (to null).
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             curBus.BusDat = null;
         }
-
+        /// <summary>
+        /// Key pressed event, chceck if pressed esc and then shut down the application.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Key_Down(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
                 Application.Current.Shutdown();
         }
+        /// <summary>
+        /// Update the back ground window color according to the bus current state
+        /// </summary>
         public void updateColor()
         {
             Brush br = (default);

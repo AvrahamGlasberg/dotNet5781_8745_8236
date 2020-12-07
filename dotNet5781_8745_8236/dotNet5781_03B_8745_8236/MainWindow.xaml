@@ -8,15 +8,20 @@
         Title="Bus manager" Height="450" Width="800" KeyDown="Window_Key_Down">
     <Grid>
         <Grid.RowDefinitions>
+            <!-- the buses info in scroll view -->
             <RowDefinition Height="10*" />
+            <!-- the buttons -->
             <RowDefinition Height="2*" />
+            <!-- color information for user. -->
             <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
+        <!-- scroll view -->
         <ScrollViewer HorizontalScrollBarVisibility="Auto" Margin="20,0,20,0" Grid.Row="0">
             <Grid x:Name="busGrid">
                 <Grid.RowDefinitions></Grid.RowDefinitions>
             </Grid>
         </ScrollViewer>
+        <!-- inner grid for 2 buttons -->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -25,6 +30,7 @@
             <Button x:Name="add" Content="Add bus" HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="auto" FontSize="20" Click="Add_Bus" />
             <Button x:Name="stat" Content="Statistics" HorizontalAlignment="Center" VerticalAlignment="Center" Height="auto" Width="auto" FontSize="20" Click="Open_statistics" Grid.Column="1" />
         </Grid>
+        <!-- inner grid for color labels info -->
         <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
