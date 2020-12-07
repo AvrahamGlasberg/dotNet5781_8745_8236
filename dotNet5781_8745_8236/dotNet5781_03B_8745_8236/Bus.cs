@@ -262,6 +262,7 @@ namespace dotNet5781_03B_8745_8236
         {
             _kmFromFuel += distance;
             _kmFromtreat += distance;
+            _kmTotal += distance;
         }
     }
 }
