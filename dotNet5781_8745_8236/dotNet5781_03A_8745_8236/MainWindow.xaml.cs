@@ -137,7 +137,6 @@ namespace dotNet5781_03A_8745_8236
         {
 			currentDisplayBusLine = busLines[index];
 			UpGrid.DataContext = currentDisplayBusLine;
-			tbArea.Text = string.Format("{0}", currentDisplayBusLine.Area);
 			lbBusLineStations.DataContext = currentDisplayBusLine.Stations;
         }
 

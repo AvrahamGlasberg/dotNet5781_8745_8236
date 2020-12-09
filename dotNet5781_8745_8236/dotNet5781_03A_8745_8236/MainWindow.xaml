@@ -23,7 +23,7 @@
             <Label Content="Bus Line Number:" FontStretch="ExtraExpanded" FontStyle="Italic" FontSize="22" FontFamily="Arial" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFD62709"/>
             <ComboBox x:Name="cbBusLines" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="auto" SelectionChanged="cbBusLines_SelectionChanged" FontFamily="Arial" FontSize="22" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Background="#FFD62709"/>
             <Label Content="Area:" Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial" FontSize="22" FontStyle="Italic" Background="#FFD62709"/>
-            <TextBox x:Name="tbArea" Grid.Column="3" HorizontalAlignment="Stretch" TextWrapping="{Binding Path=Area}" Text="Here Will be area" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial" FontSize="22" Background="#FFD62709" FontStyle="Italic" FontWeight="Bold"/>
+            <TextBox x:Name="tbArea" Grid.Column="3" HorizontalAlignment="Stretch" Text="{Binding Path=Area}" VerticalAlignment="Stretch" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontFamily="Arial" FontSize="22" Background="#FFD62709" FontStyle="Italic" FontWeight="Bold"/>
         </Grid>
         <ListBox x:Name="lbBusLineStations" ItemsSource="{Binding}" HorizontalAlignment="Stretch" Height="auto" Grid.Row="1" VerticalAlignment="Stretch" Width="auto" FontSize="22" FontFamily="Arial" FontStyle="Italic" FontWeight="Bold" Background="#FFBD523B"/>
     </Grid>

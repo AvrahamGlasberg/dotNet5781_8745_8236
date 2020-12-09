@@ -42,7 +42,7 @@ namespace dotNet5781_02_8745_8236
         /// <summary>
         /// property for area
         /// </summary>
-        public Area Area { get { return area; } }
+        public Area Area { get { return area; } set { area = value; } }
         /// <summary>
         /// a list of all the stations in that bus line
         /// </summary>
