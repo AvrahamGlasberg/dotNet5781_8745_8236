@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_8745_8236"
         mc:Ignorable="d"
-        Title="Add New Bus" Height="350" Width="450" KeyDown="Window_Key_Down">
+        Title="Add New Bus" Height="350" Width="450" KeyDown="Window_Key_Down" Topmost="True">
     <Window.Background>
         <ImageBrush ImageSource="Images/bus1.jpg"/>
     </Window.Background>
