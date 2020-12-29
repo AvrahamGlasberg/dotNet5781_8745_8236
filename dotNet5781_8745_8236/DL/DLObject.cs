@@ -208,6 +208,23 @@ namespace DL
                 return retValue.Clone();
             else throw new LineTripExceptions(id, false);
         }
+
+        public void UpdateLineTrip(LineTrip NewLineTrip)
+        {
+            LineTrip cur = DataSource.LinesTrip.FirstOrDefault(curLineTrip => curLineTrip.Id == NewLineTrip.Id && !curLineTrip.Deleted);
+            if (cur == null)
+                throw new LineTripExceptions(NewLineTrip.Id, false);
+            DataSource.LinesTrip.Remove(cur);
+            DataSource.LinesTrip.Add(NewLineTrip);
+        }
+
+        public void DeleteLineTrip(int id)
+        {
+            LineTrip cur = DataSource.LinesTrip.FirstOrDefault(curLineTrip => curLineTrip.Id == id && !curLineTrip.Deleted);
+            if (cur == null)
+                throw new LineTripExceptions(id, false);
+            cur.Deleted = true;
+        }
         #endregion
 
         #region Station
@@ -228,6 +245,23 @@ namespace DL
                 return retValue.Clone();
             else throw new StationExceptions(code, false);
         }
+
+        public void UpdateStation(Station NewStation)
+        {
+            Station cur = DataSource.Stations.FirstOrDefault(curStation => curStation.Code == NewStation.Code && !curStation.Deleted);
+            if (cur == null)
+                throw new StationExceptions(NewStation.Code, false);
+            DataSource.Stations.Remove(cur);
+            DataSource.Stations.Add(NewStation);
+        }
+
+        public void DeleteStation(int code)
+        {
+            Station cur = DataSource.Stations.FirstOrDefault(curStation => curStation.Code == code && !curStation.Deleted);
+            if (cur == null)
+                throw new StationExceptions(code, false);
+            cur.Deleted = true;
+        }
         #endregion
 
         #region Trip
@@ -246,6 +280,23 @@ namespace DL
                 return retValue.Clone();
             else throw new TripExceptions(lineId, false);
         }
+
+        public void UpdateTrip(Trip NewTrip)
+        {
+            Trip cur = DataSource.Trips.FirstOrDefault(curTrip => curTrip.LineId == NewTrip.LineId && !curTrip.Deleted);
+            if (cur == null)
+                throw new TripExceptions(NewTrip.LineId, false);
+            DataSource.Trips.Remove(cur);
+            DataSource.Trips.Add(NewTrip);
+        }
+
+        public void DeleteTrip(int lineId)
+        {
+            Trip cur = DataSource.Trips.FirstOrDefault(curTrip => curTrip.LineId == lineId && !curTrip.Deleted);
+            if (cur == null)
+                throw new TripExceptions(lineId, false);
+            cur.Deleted = true;
+        }
         #endregion
 
         #region User
@@ -263,6 +314,23 @@ namespace DL
             if (retValue != null)
                 return retValue.Clone();
             else throw new UserExceptions(name, false);
+        }
+
+        public void UpdateUser(User NewUser)
+        {
+            User cur = DataSource.Users.FirstOrDefault(curUser => curUser.UserName == NewUser.UserName && !curUser.Deleted);
+            if (cur == null)
+                throw new UserExceptions(NewUser.UserName, false);
+            DataSource.Users.Remove(cur);
+            DataSource.Users.Add(NewUser);
+        }
+
+        public void DeleteUser(string userName)
+        {
+            User cur = DataSource.Users.FirstOrDefault(curUser => curUser.UserName == userName && !curUser.Deleted);
+            if (cur == null)
+                throw new UserExceptions(userName, false);
+            cur.Deleted = true;
         }
         #endregion
     }
