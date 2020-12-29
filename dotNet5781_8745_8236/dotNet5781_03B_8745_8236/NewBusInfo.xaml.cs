@@ -71,6 +71,14 @@ namespace dotNet5781_03B_8745_8236
             if(((int)e.Key < (int)Key.D0 || (int)e.Key > (int)Key.D9) && ((int)e.Key < (int)Key.NumPad0 || (int)e.Key > (int)Key.NumPad9) && e.Key != Key.Enter && e.Key != Key.Escape && e.Key != Key.Back)
                 e.Handled = true;
         }
+
+        
+        private void LicTBKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+                totalKm.Focus();
+        }
+
         /// <summary>
         /// preview key down event for date textboxe - checking that only numbers and '/' can be typed.
         /// </summary>
