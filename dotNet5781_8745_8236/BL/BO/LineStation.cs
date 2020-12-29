@@ -8,7 +8,7 @@ namespace BO
 {
     public class LineStation : Station
     {
-        public int DitanceFromPrev { get; set; }
-        public int TimeFromPrev { get; set; }
+        public int DitanceFromPrev { get; set; }// meters
+        public int TimeFromPrev { get; set; }// minutes
     }
 }
