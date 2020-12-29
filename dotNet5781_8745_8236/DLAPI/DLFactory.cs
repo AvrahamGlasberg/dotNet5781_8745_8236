@@ -40,7 +40,7 @@ namespace DLAPI
             string dlNameSpace = dlPackage.NameSpace;
             string dlClass = dlPackage.ClassName;
 
-            try // Load into CLR the dal implementation assembly according to dll file name (taken above)
+            try // Load into CLR the dal implementation assembly according to dll file name (taken above)//
             {
                 Assembly.Load(dlPackageName);
             }
