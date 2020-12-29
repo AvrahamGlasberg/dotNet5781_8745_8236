@@ -18,5 +18,19 @@ namespace DS
         public static List<Station> Stations;
         public static List<Trip> Trips;
         public static List<User> Users;
+
+        static DataSource()
+        {
+            AdjacentStations = new List<AdjacentStation>();
+            Buses = new List<Bus>();
+            BusesOnTrip = new List<BusOnTrip>();
+            Lines = new List<Line>();
+            LineStations = new List<LineStation>();
+            LinesTrip = new List<LineTrip>();
+            Stations = new List<Station>();
+            Trips = new List<Trip>();
+            Users = new List<User>();
+        }
     }
+    
 }

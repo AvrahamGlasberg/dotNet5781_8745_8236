@@ -16,6 +16,6 @@ namespace DO
         public int PrevStation { get; set; } // station code 
         public TimeSpan PrevStationAt { get; set; }
         public TimeSpan NextStationAt { get; set; }
-
+        public bool Deleted { get; set; }
     }
 }

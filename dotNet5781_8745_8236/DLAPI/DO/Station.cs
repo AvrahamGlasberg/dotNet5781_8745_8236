@@ -12,5 +12,6 @@ namespace DO
         public string Name { get; set; }
         public int Longitude { get; set; }
         public int Latitude { get; set; }
+        public bool Deleted { get; set; }
     }
 }

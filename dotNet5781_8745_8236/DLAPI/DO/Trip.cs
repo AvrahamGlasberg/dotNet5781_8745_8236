@@ -15,5 +15,6 @@ namespace DO
         public TimeSpan InAt { get; set; }
         public int OutStation { get; set; }//station code
         public TimeSpan OutAt { get; set; }
+        public bool Deleted { get; set; }
     }
 }

@@ -4,13 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DLAPI
+namespace BO
 {
-    public static class DalFactory
+    public class BusLine
     {
-        //public static IDL GetDAL()
-        //{
-        //    return;
-        //}
+        public IEnumerable<BusStation> busStations { get; set; }
     }
 }

@@ -13,5 +13,6 @@ namespace DO
         public Areas Area { get; set; }
         public int FirstStation { get; set; } // station code
         public int LastStation { get; set; }
+        public bool Deleted { get; set; }
     }
 }

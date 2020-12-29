@@ -12,6 +12,6 @@ namespace DO
         public int Station2 { get; set; } // station code
         public double Distance { get; set; }
         public TimeSpan Time { get; set; }
-
+        public bool Deleted { get; set; }
     }
 }

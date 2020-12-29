@@ -9,76 +9,94 @@ namespace DO
     public class AdjacentStationExceptions : Exception
     {
         public int station1, station2;
-        public AdjacentStationExceptions(int stat1, int stat2) : base()
+        public bool isExists;
+        public AdjacentStationExceptions(int stat1, int stat2, bool Exists) : base()
         {
             station1 = stat1;
             station2 = stat2;
+            isExists = Exists;
         }
     }
     public class BusExceptions : Exception
     {
         public int lic;
-        public BusExceptions(int license):base()
+        public bool isExists;
+        public BusExceptions(int license, bool Exists) : base()
         {
             lic = license;
+            isExists = Exists;
         }
     }
     public class BusOnTripExceptions : Exception
     {
         public int lic;
-        public BusOnTripExceptions(int license) :base()
+        public bool isExists;
+        public BusOnTripExceptions(int license, bool Exists) : base()
         {
             lic = license;
+            isExists = Exists;
         }
     }
     public class LineExceptions : Exception
     {
         int id;
-        public LineExceptions(int ID):base()
+        public bool isExists;
+        public LineExceptions(int ID, bool Exists) : base()
         {
             id = ID;
+            isExists = Exists;
         }
     }
     public class LineStationExceptions : Exception
     {
         public int station;
-        public LineStationExceptions(int station):base()
+        public bool isExists;
+        public LineStationExceptions(int station, bool Exists) : base()
         {
             this.station = station;
+            isExists = Exists;
         }
     }
     public class LineTripExceptions : Exception
     {
         public int lineId;
-        public LineTripExceptions(int lineid):base()
+        public bool isExists;
+        public LineTripExceptions(int lineid, bool Exists) : base()
         {
             lineId = lineid;
+            isExists = Exists;
         }
     }
     public class StationExceptions : Exception
     {
         public int code;
-        public StationExceptions(int code):base()
+        public bool isExists;
+        public StationExceptions(int code, bool Exists) : base()
         {
-            this.code = code; 
+            this.code = code;
+            isExists = Exists;
         }
     }
                                 
     public class TripExceptions : Exception
     {
         public int lineId;
-        public TripExceptions(int lineid):base()
+        public bool isExists;
+        public TripExceptions(int lineid, bool Exists) : base()
         {
             lineId = lineid;
+            isExists = Exists;
         }
 
     }
     public class UserExceptions : Exception
     {
         public string name;
-        public UserExceptions(string username):base()
+        public bool isExists;
+        public UserExceptions(string username, bool Exists) : base()
         {
             name = username;
+            isExists = Exists;
         }
     }
     
