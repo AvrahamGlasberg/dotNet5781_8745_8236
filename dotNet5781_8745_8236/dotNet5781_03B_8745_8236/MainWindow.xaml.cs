@@ -264,7 +264,6 @@ namespace dotNet5781_03B_8745_8236
             Grid.SetColumn(tB, 4);
             innerGrid.Children.Add(tB);
             tBlocks.Add(tB);
-
             //adding the new inner grid.
             busesGrids.Add(innerGrid);
         }
@@ -301,6 +300,11 @@ namespace dotNet5781_03B_8745_8236
         /// <param name="e"></param>
         private void Drive(object sender, RoutedEventArgs e)
         {
+            //Button bt = (Button)sender;
+            //Grid gr = (Grid)bt.Parent;
+            //gr.Background = Brushes.Red;
+
+
             //getting the license from the button sender's name.
             int license = int.Parse(((Button)sender).Name.Substring(3));
             int ind = FindBus(license);
@@ -541,6 +545,7 @@ namespace dotNet5781_03B_8745_8236
         /// <param name="e"></param>
         private void Open_statistics(object sender, RoutedEventArgs e)
         {
+            //((ProgressBar)(busesGrids[0].Children.Cast<UIElement>().First(el => Grid.GetRow(el) == 0 && Grid.GetColumn(el) == 3))).Value = 50;
             Statistics st = new Statistics(BusLst);
             st.Show();
         }

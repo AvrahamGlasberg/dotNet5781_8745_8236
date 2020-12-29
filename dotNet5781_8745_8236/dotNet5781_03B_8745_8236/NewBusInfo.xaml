@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:dotNet5781_03B_8745_8236"
         mc:Ignorable="d"
-        Title="Add New Bus" Height="350" Width="450" KeyDown="Window_Key_Down">
+        Title="Add New Bus" Height="350" Width="450" KeyDown="Window_Key_Down" Topmost="True">
     <Window.Background>
         <ImageBrush ImageSource="Images/bus1.jpg"/>
     </Window.Background>
@@ -26,7 +26,7 @@
         <Label Content="Enter Starting Date:" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="auto" Height="auto" FontSize="25" Grid.Row="2" Grid.Column="0" FontWeight="ExtraBold" Foreground="#FFE4160E"/>
 
         <!-- the 3 textboxes -->
-        <TextBox x:Name="licenseNumber" Text="7-8 digits" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="120" Height="35" FontSize="20" Grid.Row="0" Grid.Column="1" TextAlignment="Center" MaxLength="8" PreviewKeyDown="Prev_Key_Down_Number"/>
+        <TextBox x:Name="licenseNumber" Text="7-8 digits" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="120" Height="35" FontSize="20" Grid.Row="0" Grid.Column="1" TextAlignment="Center" MaxLength="8" PreviewKeyDown="Prev_Key_Down_Number" KeyDown="LicTBKeyDown"/>
         <TextBox x:Name="totalKm" Text="Max 6 digits" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="120" Height="35" FontSize="20" Grid.Row="1" Grid.Column="1" TextAlignment="Center" MaxLength="6" PreviewKeyDown="Prev_Key_Down_Number"/>
         <TextBox x:Name="startDate" Text="dd/mm/yyyy" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Center" Width="120" Height="35" FontSize="20" Grid.Row="2" Grid.Column="1" TextAlignment="Center" MaxLength="10" PreviewKeyDown="Prev_Key_Down_Date"/>
 
