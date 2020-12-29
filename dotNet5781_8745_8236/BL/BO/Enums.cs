@@ -6,8 +6,5 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    public class BusStation : Station
-    {
-        public IEnumerable<Line> LinesInstation;
-    }
+    
 }

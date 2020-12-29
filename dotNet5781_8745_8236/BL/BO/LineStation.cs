@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    public class BusStation : Station
+    public class LineStation : Station
     {
-        public IEnumerable<Line> LinesInstation;
+        public int DitanceFromPrev { get; set; }
+        public int TimeFromPrev { get; set; }
     }
 }
