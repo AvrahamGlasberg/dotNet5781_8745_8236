@@ -44,6 +44,11 @@
     <Compile Include="BLAPI\IBL.cs" />
     <Compile Include="BO\BusLine.cs" />
     <Compile Include="BO\BusStation.cs" />
+    <Compile Include="BO\Enums.cs" />
+    <Compile Include="BO\Exceptions.cs" />
+    <Compile Include="BO\Line.cs" />
+    <Compile Include="BO\LineStation.cs" />
+    <Compile Include="BO\Station.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
