@@ -20,10 +20,67 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        IBL bl = BLFactory.GetBL();
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void OpenManagerOptions(object sender, RoutedEventArgs e)
+        {
+            ShowManagerOptions();
+        }
+        private void OpenUserOptions(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not implented yet!");
+        }
+        private void ShowManagerOptions()
+        {
+            HideAll();
+            BusesBtn.Visibility = Visibility.Visible;
+            LinesBtn.Visibility = Visibility.Visible;
+            StationsBtn.Visibility = Visibility.Visible;
+            BackBtn.Visibility = Visibility.Visible;
+        }
+        private void HideAll()
+        {
+            ManagerBtn.Visibility = Visibility.Collapsed;
+            UserBtn.Visibility = Visibility.Collapsed;
+            ExitBtn.Visibility = Visibility.Collapsed;
+            BusesBtn.Visibility = Visibility.Collapsed;
+            LinesBtn.Visibility = Visibility.Collapsed;
+            StationsBtn.Visibility = Visibility.Collapsed;
+            BackBtn.Visibility = Visibility.Collapsed;
+        }
+        
+        private void ShowBuses(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not implented yet!");
+        }
+        private void ShowLines(object sender, RoutedEventArgs e)
+        {
+            LinesPresentaion window = new LinesPresentaion();
+            window.Show();
+            this.Close();
+        }
+        private void ShowStations(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not implented yet!");
+        }
+        private void Back(object sender, RoutedEventArgs e)
+        {
+            HideAll();
+            ManagerBtn.Visibility = Visibility.Visible;
+            UserBtn.Visibility = Visibility.Visible;
+            ExitBtn.Visibility = Visibility.Visible;
+        }
+
+        private void Exit(object sender, RoutedEventArgs e)
+        {
+            ExitApp();
+        }
+        private void ExitApp()
+        {
+            Application.Current.Shutdown();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace DO
 {
     public class BusOnTrip
     {
-        public int Id { get; set; }
+        public int Id { get; set; } // run
         public int LicenseNum { get; set; } // bus license
         public int LineId { get; set; } // line id
         public TimeSpan PlannedTakeOff { get; set; }

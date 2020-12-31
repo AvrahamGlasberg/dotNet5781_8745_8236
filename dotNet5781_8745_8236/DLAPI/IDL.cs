@@ -8,6 +8,8 @@ namespace DLAPI
 {
     public interface IDL
     {
+        string Check();
+
         #region AdjacentStation
         void AddAdjacentStation(AdjacentStation adjacentStation);
         AdjacentStation GetAdjacentStation(int station1, int station2);
@@ -24,30 +26,33 @@ namespace DLAPI
 
         #region BusOnTrip
         void AddBusOnTrip(BusOnTrip busOnTrip);
-        BusOnTrip GetBusOnTrip(int license);
+        BusOnTrip GetBusOnTrip(int License, int LineID, TimeSpan TakeOff);
         void UpdateBusOnTrip(BusOnTrip NewBusOnTrip);
-        void DeleteBusOnTrip(int license);
+        void DeleteBusOnTrip(int License, int LineID, TimeSpan TakeOff);
         #endregion
 
         #region Line
         void AddLine(Line line);
         Line GetLine(int id);
+
+        IEnumerable<Line> GetAllLines();
         void UpdateLine(Line NewLine);
         void DeleteLine(int id);
         #endregion
 
         #region LineStation
         void AddLineStation(LineStation lineStation);
-        LineStation GetLineStation(int station);
+        LineStation GetLineStation(int lineId, int station);
+        IEnumerable<LineStation> GetAllLineStations(int lineId);
         void UpdateLineStation(LineStation NewLineStation);
-        void DeleteLineStation(int station);
+        void DeleteLineStation(int lineId, int station);
         #endregion
 
         #region LineTrip
         void AddLineTrip(LineTrip lineTrip);
-        LineTrip GetLineTrip(int lineId);
+        LineTrip GetLineTrip(int lineId, TimeSpan start);
         void UpdateLineTrip(LineTrip NewLineTrip);
-        void DeleteLineTrip(int lineId);
+        void DeleteLineTrip(int lineId, TimeSpan start);
         #endregion
 
         #region Station
@@ -59,9 +64,9 @@ namespace DLAPI
 
         #region Trip
         void AddTrip(Trip trip);
-        Trip GetTrip(int lineId);
+        Trip GetTrip(int id);
         void UpdateTrip(Trip NewTrip);
-        void DeleteTrip(int lineId);
+        void DeleteTrip(int id);
         #endregion
 
         #region User

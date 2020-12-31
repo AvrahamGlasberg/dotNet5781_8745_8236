@@ -88,37 +88,36 @@ namespace DL
         #region BusOnTrip
         public void AddBusOnTrip(BusOnTrip busOnTrip)
         {
-            if (DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == busOnTrip.LicenseNum && 
-            !curBus.Deleted) != null)
-                throw new BusOnTripExceptions(busOnTrip.LicenseNum, true);
+            if (DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == busOnTrip.LicenseNum
+            && curBus.LineId == busOnTrip.LineId && curBus.PlannedTakeOff == busOnTrip.PlannedTakeOff && !curBus.Deleted) != null)
+                throw new BusOnTripExceptions(busOnTrip.LicenseNum, busOnTrip.LineId, busOnTrip.PlannedTakeOff, true);
             else
                 DataSource.BusesOnTrip.Add(busOnTrip.Clone());
         }
 
-        public BusOnTrip GetBusOnTrip(int license)
+        public BusOnTrip GetBusOnTrip(int License, int LineID, TimeSpan TakeOff)
         {
-            BusOnTrip retValue = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == license && 
-            !curBus.Deleted);
+            BusOnTrip retValue = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == License 
+            && curBus.LineId == LineID && curBus.PlannedTakeOff == TakeOff && !curBus.Deleted);
             if (retValue != null)
                 return retValue.Clone();
-            else throw new BusOnTripExceptions(license, false);
+            else throw new BusOnTripExceptions(License, LineID, TakeOff, false);
         }
 
         public void UpdateBusOnTrip(BusOnTrip NewBusOnTrip)
         {
-            BusOnTrip cur = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == NewBusOnTrip.LicenseNum &&
-            !curBus.Deleted);
+            BusOnTrip cur = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == NewBusOnTrip.LicenseNum && curBus.LineId == NewBusOnTrip.LineId && curBus.PlannedTakeOff == NewBusOnTrip.PlannedTakeOff && !curBus.Deleted);
             if (cur == null)
-                throw new BusOnTripExceptions(NewBusOnTrip.LicenseNum, false);
+                throw new BusOnTripExceptions(NewBusOnTrip.LicenseNum,NewBusOnTrip.LineId, NewBusOnTrip.PlannedTakeOff, false);
             DataSource.BusesOnTrip.Remove(cur);
             DataSource.BusesOnTrip.Add(NewBusOnTrip.Clone());
         }
-        public void DeleteBusOnTrip(int license)
+        public void DeleteBusOnTrip(int License, int LineID, TimeSpan TakeOff)
         {
-            BusOnTrip cur = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == license &&
-            !curBus.Deleted);
+            BusOnTrip cur = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == License
+            && curBus.LineId == LineID && curBus.PlannedTakeOff == TakeOff && !curBus.Deleted);
             if (cur == null)
-                throw new BusOnTripExceptions(license, false);
+                throw new BusOnTripExceptions(License, LineID, TakeOff, false);
             cur.Deleted = true;
         }
         #endregion
@@ -140,6 +139,14 @@ namespace DL
             else throw new LineExceptions(id, false);
         }
 
+        public IEnumerable<Line> GetAllLines()
+        {
+            if (DataSource.Lines.Count == 0)
+                throw new LineExceptions(0, false);
+            return from CurLine in DataSource.Lines
+                   orderby CurLine.Code
+                   select CurLine;
+        }
         public void UpdateLine(Line NewLine)
         {
             Line cur = DataSource.Lines.FirstOrDefault(curLine => curLine.Id == NewLine.Id && !curLine.Deleted);
@@ -160,34 +167,44 @@ namespace DL
         #region LineStation
         public void AddLineStation(LineStation lineStation)
         {
-            if (DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.Station == lineStation.Station && !curLineStation.Deleted) != null)
-                throw new LineStationExceptions(lineStation.Station, true);
+            if (DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.LineId == lineStation.LineId && curLineStation.Station == lineStation.Station && !curLineStation.Deleted) != null)
+                throw new LineStationExceptions(lineStation.LineId, lineStation.Station, true);
             else
                 DataSource.LineStations.Add(lineStation.Clone());
         }
 
-        public LineStation GetLineStation(int station)
+        public LineStation GetLineStation(int lineId, int station)
         {
-            LineStation retValue = DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.Station == station && !curLineStation.Deleted);
+            LineStation retValue = DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.LineId == lineId && curLineStation.Station == station && !curLineStation.Deleted);
             if (retValue != null)
                 return retValue.Clone();
-            else throw new LineStationExceptions(station, false);
+            else throw new LineStationExceptions(lineId, station, false);
+        }
+        
+        public IEnumerable<LineStation> GetAllLineStations(int lineId)
+        {
+            if (DataSource.LineStations.Count == 0)
+                throw new LineStationExceptions(0, 0, false);
+            return from item in DataSource.LineStations
+                   where item.LineId == lineId
+                   orderby item.LineStationIndex
+                   select item;
         }
 
         public void UpdateLineStation(LineStation NewLineStation)
         {
-            LineStation cur = DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.Station == NewLineStation.Station && !curLineStation.Deleted);
+            LineStation cur = DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.LineId == NewLineStation.LineId && curLineStation.Station == NewLineStation.Station && !curLineStation.Deleted);
             if(cur == null)
-                throw new LineStationExceptions(NewLineStation.Station, false);
+                throw new LineStationExceptions(NewLineStation.LineId, NewLineStation.Station, false);
             DataSource.LineStations.Remove(cur);
             DataSource.LineStations.Add(NewLineStation);
         }
 
-        public void DeleteLineStation(int station)
+        public void DeleteLineStation(int lineId, int station)
         {
-            LineStation cur = DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.Station == station && !curLineStation.Deleted);
+            LineStation cur = DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.LineId == lineId && curLineStation.Station == station && !curLineStation.Deleted);
             if (cur == null)
-                throw new LineStationExceptions(station, false);
+                throw new LineStationExceptions(lineId, station, false);
             cur.Deleted = true;
         }
         #endregion
@@ -195,34 +212,34 @@ namespace DL
         #region LineTrip
         public void AddLineTrip(LineTrip lineTrip)
         {
-            if ((DataSource.LinesTrip.FirstOrDefault(curLine => curLine.Id == lineTrip.Id && !curLine.Deleted) != null))
-                throw new LineTripExceptions(lineTrip.LineId, true);
+            if ((DataSource.LinesTrip.FirstOrDefault(curLine => curLine.LineId == lineTrip.LineId && curLine.StartAt == lineTrip.StartAt && !curLine.Deleted) != null))
+                throw new LineTripExceptions(lineTrip.LineId, lineTrip.StartAt, true);
             else
                 DataSource.LinesTrip.Add(lineTrip.Clone());
         }
 
-        public LineTrip GetLineTrip(int id)
+        public LineTrip GetLineTrip(int lineId, TimeSpan start)
         {
-            LineTrip retValue = DataSource.LinesTrip.FirstOrDefault(curLine => curLine.Id == id && !curLine.Deleted);
+            LineTrip retValue = DataSource.LinesTrip.FirstOrDefault(curLine => curLine.LineId == lineId && curLine.StartAt == start && !curLine.Deleted);
             if (retValue != null)
                 return retValue.Clone();
-            else throw new LineTripExceptions(id, false);
+            else throw new LineTripExceptions(lineId, start, false);
         }
 
         public void UpdateLineTrip(LineTrip NewLineTrip)
         {
-            LineTrip cur = DataSource.LinesTrip.FirstOrDefault(curLineTrip => curLineTrip.Id == NewLineTrip.Id && !curLineTrip.Deleted);
+            LineTrip cur = DataSource.LinesTrip.FirstOrDefault(curLineTrip => curLineTrip.LineId == NewLineTrip.LineId && curLineTrip.StartAt == NewLineTrip.StartAt && !curLineTrip.Deleted);
             if (cur == null)
-                throw new LineTripExceptions(NewLineTrip.Id, false);
+                throw new LineTripExceptions(NewLineTrip.LineId, NewLineTrip.StartAt, false);
             DataSource.LinesTrip.Remove(cur);
             DataSource.LinesTrip.Add(NewLineTrip);
         }
 
-        public void DeleteLineTrip(int id)
+        public void DeleteLineTrip(int lineId, TimeSpan start)
         {
-            LineTrip cur = DataSource.LinesTrip.FirstOrDefault(curLineTrip => curLineTrip.Id == id && !curLineTrip.Deleted);
+            LineTrip cur = DataSource.LinesTrip.FirstOrDefault(curLineTrip => curLineTrip.LineId == lineId && curLineTrip.StartAt == start && !curLineTrip.Deleted);
             if (cur == null)
-                throw new LineTripExceptions(id, false);
+                throw new LineTripExceptions(lineId, start, false);
             cur.Deleted = true;
         }
         #endregion
@@ -267,34 +284,34 @@ namespace DL
         #region Trip
         public void AddTrip(Trip trip)
         {
-            if (DataSource.Trips.FirstOrDefault(curTrip => curTrip.LineId == trip.LineId && !curTrip.Deleted) != null)
-                throw new TripExceptions(trip.LineId, true);
+            if (DataSource.Trips.FirstOrDefault(curTrip => curTrip.Id == trip.Id && !curTrip.Deleted) != null)
+                throw new TripExceptions(trip.Id, true);
             else
                 DataSource.Trips.Add(trip.Clone());
         }
 
-        public Trip GetTrip(int lineId)
+        public Trip GetTrip(int id)
         {
-            Trip retValue = DataSource.Trips.FirstOrDefault(curTrip => curTrip.LineId == lineId && !curTrip.Deleted);
+            Trip retValue = DataSource.Trips.FirstOrDefault(curTrip => curTrip.Id == id && !curTrip.Deleted);
             if (retValue != null)
                 return retValue.Clone();
-            else throw new TripExceptions(lineId, false);
+            else throw new TripExceptions(id, false);
         }
 
         public void UpdateTrip(Trip NewTrip)
         {
-            Trip cur = DataSource.Trips.FirstOrDefault(curTrip => curTrip.LineId == NewTrip.LineId && !curTrip.Deleted);
+            Trip cur = DataSource.Trips.FirstOrDefault(curTrip => curTrip.Id == NewTrip.Id && !curTrip.Deleted);
             if (cur == null)
-                throw new TripExceptions(NewTrip.LineId, false);
+                throw new TripExceptions(NewTrip.Id, false);
             DataSource.Trips.Remove(cur);
             DataSource.Trips.Add(NewTrip);
         }
 
-        public void DeleteTrip(int lineId)
+        public void DeleteTrip(int id)
         {
-            Trip cur = DataSource.Trips.FirstOrDefault(curTrip => curTrip.LineId == lineId && !curTrip.Deleted);
+            Trip cur = DataSource.Trips.FirstOrDefault(curTrip => curTrip.Id == id && !curTrip.Deleted);
             if (cur == null)
-                throw new TripExceptions(lineId, false);
+                throw new TripExceptions(id, false);
             cur.Deleted = true;
         }
         #endregion
@@ -333,5 +350,23 @@ namespace DL
             cur.Deleted = true;
         }
         #endregion
+
+
+        public string Check()
+        {
+            string message = "";
+            foreach(Line line in DataSource.Lines)
+            {
+                message += "Bus " + line.Code.ToString() + ":   First: "+ line.FirstStation.ToString() +"  Last: "+ line.LastStation +"\n";
+                LineStation curStation = GetLineStation(line.Id, line.FirstStation);
+                message += curStation.Station.ToString() + "\n";
+                while (curStation.Station != line.LastStation)
+                {
+                    curStation = GetLineStation(line.Id, (int)curStation.NextStation);
+                    message += curStation.Station.ToString() + "\n";
+                }
+            }
+            return message;
+        }
     }
 }

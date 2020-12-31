@@ -8,95 +8,103 @@ namespace DO
 {
     public class AdjacentStationExceptions : Exception
     {
-        public int station1, station2;
-        public bool isExists;
-        public AdjacentStationExceptions(int stat1, int stat2, bool Exists) : base()
+        public int Station1, Station2;
+        public bool IsExists;
+        public AdjacentStationExceptions(int stat1, int stat2, bool exists) : base()
         {
-            station1 = stat1;
-            station2 = stat2;
-            isExists = Exists;
+            Station1 = stat1;
+            Station2 = stat2;
+            IsExists = exists;
         }
     }
     public class BusExceptions : Exception
     {
-        public int lic;
-        public bool isExists;
-        public BusExceptions(int license, bool Exists) : base()
+        public int License;
+        public bool IsExists;
+        public BusExceptions(int license, bool exists) : base()
         {
-            lic = license;
-            isExists = Exists;
+            License = license;
+            IsExists = exists;
         }
     }
     public class BusOnTripExceptions : Exception
     {
-        public int lic;
-        public bool isExists;
-        public BusOnTripExceptions(int license, bool Exists) : base()
+        int LineID;
+        TimeSpan TakeOff;
+        public int License;
+        public bool IsExists;
+        public BusOnTripExceptions(int license, int lineId, TimeSpan time, bool exists) : base()
         {
-            lic = license;
-            isExists = Exists;
+            this.License = license;
+            LineID = lineId;
+            TakeOff = time;
+            IsExists = exists;
         }
     }
     public class LineExceptions : Exception
     {
-        int id;
-        public bool isExists;
-        public LineExceptions(int ID, bool Exists) : base()
+        int Id;
+        public bool IsExists;
+        public LineExceptions(int id, bool exists) : base()
         {
-            id = ID;
-            isExists = Exists;
+            Id = id;
+            IsExists = exists;
         }
     }
     public class LineStationExceptions : Exception
     {
-        public int station;
-        public bool isExists;
-        public LineStationExceptions(int station, bool Exists) : base()
+        int LineId;
+        public int Station;
+        public bool IsExists;
+        public LineStationExceptions(int lineId, int station, bool exists) : base()
         {
-            this.station = station;
-            isExists = Exists;
+            this.LineId = lineId;
+            this.Station = station;
+            IsExists = exists;
         }
     }
     public class LineTripExceptions : Exception
     {
-        public int lineId;
-        public bool isExists;
-        public LineTripExceptions(int lineid, bool Exists) : base()
+        public int LineId;
+        TimeSpan StartTime;
+        public bool IsExists;
+        public LineTripExceptions(int lineid, TimeSpan start, bool exists) : base()
         {
-            lineId = lineid;
-            isExists = Exists;
+            LineId = lineid;
+            StartTime = start;
+            IsExists = exists;
         }
     }
     public class StationExceptions : Exception
     {
-        public int code;
-        public bool isExists;
-        public StationExceptions(int code, bool Exists) : base()
+        public int Code;
+        public bool IsExists;
+        public StationExceptions(int code, bool exists) : base()
         {
-            this.code = code;
-            isExists = Exists;
+            this.Code = code;
+            IsExists = exists;
         }
     }
                                 
     public class TripExceptions : Exception
     {
-        public int lineId;
-        public bool isExists;
-        public TripExceptions(int lineid, bool Exists) : base()
+        public int Id;
+        public bool IsExists;
+        public TripExceptions(int id, bool exists) : base()
         {
-            lineId = lineid;
-            isExists = Exists;
+            Id = id;
+            IsExists = exists;
         }
 
     }
     public class UserExceptions : Exception
     {
-        public string name;
-        public bool isExists;
-        public UserExceptions(string username, bool Exists) : base()
+        public string Name;
+        public bool IsExists;
+        public UserExceptions(string username, bool exists) : base()
         {
-            name = username;
-            isExists = Exists;
+            Name = username;
+            IsExists = exists;
         }
     }
     

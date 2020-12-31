@@ -8,7 +8,7 @@ namespace DO
 {
     public class Trip
     {
-        public int Id { get; set; }
+        public int Id { get; set; } // run
         public string UserName { get; set; }//user username
         public int LineId { get; set; }
         public int InStation { get; set; }//station code
