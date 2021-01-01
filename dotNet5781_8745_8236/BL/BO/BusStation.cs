@@ -9,5 +9,9 @@ namespace BO
     public class BusStation : Station
     {
         public IEnumerable<Line> LinesInstation;
+        public override string ToString()
+        {
+            return base.ToString();
+        }
     }
 }

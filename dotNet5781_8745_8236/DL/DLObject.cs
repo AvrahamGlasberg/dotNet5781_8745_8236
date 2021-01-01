@@ -20,9 +20,9 @@ namespace DL
         #region AdjacentStation
         public void AddAdjacentStation(AdjacentStation adjacentStation)
         {
-            if (DataSource.AdjacentStations.FirstOrDefault(stations => stations.Station1 == adjacentStation.Station1 && stations.Station2 == adjacentStation.Station2 && !stations.Deleted) != null)
-                throw new AdjacentStationExceptions(adjacentStation.Station1, adjacentStation.Station2, true);
-            else DataSource.AdjacentStations.Add(adjacentStation.Clone());
+            if (DataSource.AdjacentStations.FirstOrDefault(stations => stations.Station1 == adjacentStation.Station1 && stations.Station2 == adjacentStation.Station2 && !stations.Deleted) == null)
+                DataSource.AdjacentStations.Add(adjacentStation.Clone());
+
         }
 
         public AdjacentStation GetAdjacentStation(int station1, int station2)
@@ -144,6 +144,7 @@ namespace DL
             if (DataSource.Lines.Count == 0)
                 throw new LineExceptions(0, false);
             return from CurLine in DataSource.Lines
+                   where !CurLine.Deleted
                    orderby CurLine.Code
                    select CurLine;
         }
@@ -186,7 +187,7 @@ namespace DL
             if (DataSource.LineStations.Count == 0)
                 throw new LineStationExceptions(0, 0, false);
             return from item in DataSource.LineStations
-                   where item.LineId == lineId
+                   where item.LineId == lineId && !item.Deleted
                    orderby item.LineStationIndex
                    select item;
         }
@@ -206,6 +207,13 @@ namespace DL
             if (cur == null)
                 throw new LineStationExceptions(lineId, station, false);
             cur.Deleted = true;
+        }
+
+        public void DeleteAlLineStationslBy(Predicate<DO.LineStation> predicate)
+        {
+            foreach (var station in DataSource.LineStations)
+                if (predicate(station))
+                    station.Deleted = true;
         }
         #endregion
 
@@ -261,6 +269,12 @@ namespace DL
             if (retValue != null)
                 return retValue.Clone();
             else throw new StationExceptions(code, false);
+        }
+        public IEnumerable<DO.Station> GetAllStations()
+        {
+            return from station in DataSource.Stations
+                   where !station.Deleted
+                   select station;
         }
 
         public void UpdateStation(Station NewStation)
@@ -351,22 +365,5 @@ namespace DL
         }
         #endregion
 
-
-        public string Check()
-        {
-            string message = "";
-            foreach(Line line in DataSource.Lines)
-            {
-                message += "Bus " + line.Code.ToString() + ":   First: "+ line.FirstStation.ToString() +"  Last: "+ line.LastStation +"\n";
-                LineStation curStation = GetLineStation(line.Id, line.FirstStation);
-                message += curStation.Station.ToString() + "\n";
-                while (curStation.Station != line.LastStation)
-                {
-                    curStation = GetLineStation(line.Id, (int)curStation.NextStation);
-                    message += curStation.Station.ToString() + "\n";
-                }
-            }
-            return message;
-        }
     }
 }

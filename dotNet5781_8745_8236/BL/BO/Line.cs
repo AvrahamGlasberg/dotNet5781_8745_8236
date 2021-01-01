@@ -8,7 +8,7 @@ namespace BO
 {
     public class Line
     {
-        public int Id { get; set; }
+        public int DOLineId { get; set; }
         public int LineNumber { get; set; }
         public Station EndStation { get; set; }
     }

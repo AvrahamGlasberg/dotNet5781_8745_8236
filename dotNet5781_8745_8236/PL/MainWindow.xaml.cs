@@ -64,7 +64,9 @@ namespace PL
         }
         private void ShowStations(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not implented yet!");
+            StationsPresentaion window = new StationsPresentaion();
+            window.Show();
+            this.Close();
         }
         private void Back(object sender, RoutedEventArgs e)
         {

@@ -16,21 +16,21 @@ using BLAPI;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for LinesPresentaion.xaml
+    /// Interaction logic for StationsPresentaion.xaml
     /// </summary>
-    public partial class LinesPresentaion : Window
+    public partial class StationsPresentaion : Window
     {
         IBL bl = BLFactory.GetBL();
-        private ObservableCollection<BO.BusLine> Lines;
-        public LinesPresentaion()
+        private ObservableCollection<BO.BusStation> Stations;
+        public StationsPresentaion()
         {
             InitializeComponent();
-            Lines = new ObservableCollection<BO.BusLine>(bl.GetAllBusLines());
+            Stations = new ObservableCollection<BO.BusStation>(bl.GetAllBusStations());
             Start();
         }
         private void Start()
         {
-            LineListBox.DataContext = Lines;
+            StationsListBox.DataContext = Stations;
         }
         private void Back(object sender, RoutedEventArgs e)
         {
@@ -38,20 +38,16 @@ namespace PL
             window.Show();
             this.Close();
         }
-        private void DeleteLine(object sender, RoutedEventArgs e)
+        private void DeleteStation(object sender, RoutedEventArgs e)
         {
             Button bt = sender as Button;
-            BO.BusLine LineToDel = bt.DataContext as BO.BusLine;
-            bl.DeleteBusLine(LineToDel);
-            Lines.Remove(LineToDel);
+            BO.BusStation station = bt.DataContext as BO.BusStation;
+            bl.DeleteBusStation(station);
+            Stations.Remove(station);
         }
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(LineListBox.SelectedItem != null)// to prevent bug. event happened when item is removed from the list.
-            {
-                BO.BusLine LineSelected = LineListBox.SelectedItem as BO.BusLine;
-                MessageBox.Show(LineSelected.LineNumber.ToString());
-            }
+            
         }
     }
 }

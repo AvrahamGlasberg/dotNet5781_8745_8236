@@ -8,9 +8,11 @@ namespace BLAPI
 {
     public interface IBL
     {
-        string Check();
         IEnumerable<BO.BusLine> GetAllBusLines();
+        void DeleteBusLine(BO.BusLine line);
+        IEnumerable<BO.BusStation> GetAllBusStations();
         BO.BusStation GetBusStation(int code);
+        void DeleteBusStation(BO.BusStation busStation);
     }
 }
 

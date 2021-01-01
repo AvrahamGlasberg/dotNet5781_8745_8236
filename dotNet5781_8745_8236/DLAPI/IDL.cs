@@ -8,7 +8,6 @@ namespace DLAPI
 {
     public interface IDL
     {
-        string Check();
 
         #region AdjacentStation
         void AddAdjacentStation(AdjacentStation adjacentStation);
@@ -34,7 +33,6 @@ namespace DLAPI
         #region Line
         void AddLine(Line line);
         Line GetLine(int id);
-
         IEnumerable<Line> GetAllLines();
         void UpdateLine(Line NewLine);
         void DeleteLine(int id);
@@ -46,6 +44,7 @@ namespace DLAPI
         IEnumerable<LineStation> GetAllLineStations(int lineId);
         void UpdateLineStation(LineStation NewLineStation);
         void DeleteLineStation(int lineId, int station);
+        void DeleteAlLineStationslBy(Predicate<DO.LineStation> predicate);
         #endregion
 
         #region LineTrip
@@ -58,6 +57,7 @@ namespace DLAPI
         #region Station
         void AddStation(Station station);
         Station GetStation(int code);
+        IEnumerable<DO.Station> GetAllStations();
         void UpdateStation(Station NewStation);
         void DeleteStation(int code);
         #endregion

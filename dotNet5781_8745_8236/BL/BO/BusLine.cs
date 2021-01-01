@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    public class BusLine
+    public class BusLine : Line
     {
-        public int LineNumber { get; set; }
         public IEnumerable<LineStation> LineStations { get; set; }
         public override string ToString()
         {

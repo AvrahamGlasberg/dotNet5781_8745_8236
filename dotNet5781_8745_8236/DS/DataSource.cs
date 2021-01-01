@@ -292,7 +292,7 @@ namespace DS
                     {
                         LineId = Lines[i].Id,
                         Station = Stations[i * 3 + j].Code,
-                        LineStationIndex = j,
+                        LineStationIndex = j
                     };
                     if (j == 0)
                         NewLineStation.PrevStation = null;
@@ -313,6 +313,7 @@ namespace DS
             {
                 if(LineStations[i].NextStation != null)
                 {
+                    if(!AdjacentStations.Exists(stations=>stations.Station1 == LineStations[i].Station && stations.Station2 == (int)LineStations[i].NextStation))
                     AdjacentStations.Add(new AdjacentStation()
                     {
                         Station1 = LineStations[i].Station,

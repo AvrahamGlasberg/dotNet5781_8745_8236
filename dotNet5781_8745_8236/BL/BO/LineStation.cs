@@ -15,11 +15,6 @@ namespace BO
         public override string ToString()
         {
             return base.ToString();
-            //string str = ""; 
-            //if (DistanceFromPrev != null && TimeFromPrev != null)
-            //    str += string.Format("-> Distance: {0}, Time: {1} -> ", DistanceFromPrev, TimeFromPrev);
-            //str += base.ToString();
-            //return str + '\n';
         }
     }
 }
