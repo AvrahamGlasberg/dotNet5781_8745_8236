@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DO
 {
+    [Serializable]
     public class AdjacentStationExceptions : Exception
     {
         public int Station1, Station2;
@@ -17,6 +18,7 @@ namespace DO
             IsExists = exists;
         }
     }
+    [Serializable]
     public class BusExceptions : Exception
     {
         public int License;
@@ -27,6 +29,7 @@ namespace DO
             IsExists = exists;
         }
     }
+    [Serializable]
     public class BusOnTripExceptions : Exception
     {
         int LineID;
@@ -41,6 +44,7 @@ namespace DO
             IsExists = exists;
         }
     }
+    [Serializable]
     public class LineExceptions : Exception
     {
         int Id;
@@ -51,6 +55,7 @@ namespace DO
             IsExists = exists;
         }
     }
+    [Serializable]
     public class LineStationExceptions : Exception
     {
         int LineId;
@@ -63,6 +68,7 @@ namespace DO
             IsExists = exists;
         }
     }
+    [Serializable]
     public class LineTripExceptions : Exception
     {
         public int LineId;
@@ -75,6 +81,7 @@ namespace DO
             IsExists = exists;
         }
     }
+    [Serializable]
     public class StationExceptions : Exception
     {
         public int Code;
@@ -85,7 +92,7 @@ namespace DO
             IsExists = exists;
         }
     }
-                                
+    [Serializable]
     public class TripExceptions : Exception
     {
         public int Id;
@@ -97,6 +104,7 @@ namespace DO
         }
 
     }
+    [Serializable]
     public class UserExceptions : Exception
     {
         public string Name;

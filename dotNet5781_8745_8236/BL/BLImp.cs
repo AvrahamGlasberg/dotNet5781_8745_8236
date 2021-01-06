@@ -43,112 +43,222 @@ namespace BL
         }
         private BO.LineStation DOLineStationsToBoFirstLineStation(DO.LineStation DOLineStation)
         {
-            DO.Station station = dl.GetStation(DOLineStation.Station);
-            return new BO.LineStation()
+            try
             {
-                Code = station.Code,
-                Name = station.Name,
-                DOLineId = DOLineStation.LineId,
-                DistanceFromPrev = null,
-                TimeFromPrev = null
-            };
+                DO.Station station = dl.GetStation(DOLineStation.Station);
+                return new BO.LineStation()
+                {
+                    Code = station.Code,
+                    Name = station.Name,
+                    DOLineId = DOLineStation.LineId,
+                    DistanceFromPrev = null,
+                    TimeFromPrev = null
+                };
+            }
+            catch(DO.StationExceptions ex)
+            {
+                throw new BO.StationNotFound("Station not found!", DOLineStation.Station, ex);
+            }
+            
         }
         private BO.LineStation DOLineStationsToBoLineStation(DO.LineStation FirstStation, DO.LineStation NextStation)
         {
-            DO.Station baseStation = dl.GetStation(NextStation.Station);
-            DO.AdjacentStation nearStations = dl.GetAdjacentStation(FirstStation.Station, NextStation.Station);
-            return new BO.LineStation()
+            try
             {
-                Code = baseStation.Code,
-                Name = baseStation.Name,
-                DOLineId = NextStation.LineId,
-                DistanceFromPrev = nearStations.Distance,
-                TimeFromPrev = nearStations.Time
-            };
+                DO.Station baseStation = dl.GetStation(NextStation.Station);
+                DO.AdjacentStation nearStations = dl.GetAdjacentStation(FirstStation.Station, NextStation.Station);
+                return new BO.LineStation()
+                {
+                    Code = baseStation.Code,
+                    Name = baseStation.Name,
+                    DOLineId = NextStation.LineId,
+                    DistanceFromPrev = nearStations.Distance,
+                    TimeFromPrev = nearStations.Time
+                };
+            }
+            catch(DO.StationExceptions ex)
+            {
+                throw new BO.StationNotFound("Station not found!", NextStation.Station, ex);
+            }
+            catch(DO.AdjacentStationExceptions ex)
+            {
+                throw new BO.MissingData(string.Format("Time and distance between {0} and {1} stations could not be found!", FirstStation.Station, NextStation.Station), ex);
+            }
         }
         public void DeleteBusLine(BO.BusLine line)
         {
-            dl.DeleteLine(line.DOLineId);
-            dl.DeleteAlLineStationslBy(lineStation => lineStation.LineId == line.DOLineId);
+            try
+            {
+                dl.DeleteLine(line.DOLineId);
+                dl.DeleteAlLineStationslBy(lineStation => lineStation.LineId == line.DOLineId);
+            }
+            catch(DO.LineExceptions ex)
+            {
+                throw new BO.BusLineNotFound("Line could not be found!", line.LineNumber, ex);
+            }
         }
 
         public void DeleteLineStation(BO.LineStation lineStation)
         {
-            DO.Line line = dl.GetLine(lineStation.DOLineId);
-            DO.LineStation DOlineStation = dl.GetLineStation(lineStation.DOLineId, lineStation.Code);
+            DO.Line line;
+            DO.LineStation DOlineStation;
 
-            //delete line if too short - less than 2 stations
-            if (dl.GetLineStation(line.Id, line.LastStation).LineStationIndex == 1)
+            try
             {
-                //delete DO Line
-                dl.DeleteLine(line.Id);
-                dl.DeleteAlLineStationslBy(station => station.LineId == line.Id);
+                line = dl.GetLine(lineStation.DOLineId);
+                DOlineStation = dl.GetLineStation(lineStation.DOLineId, lineStation.Code);
             }
-            else
+            catch(DO.LineExceptions ex)
             {
-                //delete DO.LineStation
-                dl.DeleteLineStation(lineStation.DOLineId, lineStation.Code);
+                throw new BO.BusLineNotFound("Line from station could not be found!", lineStation.Code, ex);
+            }
+            catch(DO.LineStationExceptions ex)
+            {
+                throw new BO.StationNotFound("Line Station could not be found!", lineStation.Code, ex);
+            }
 
-                //update all line stations indexes.
-                DO.LineStation tempLineStation = DOlineStation;
-                while (tempLineStation.Station != line.LastStation)
+            try
+            {
+                //delete line if too short - less than 2 stations
+                if (dl.GetLineStation(line.Id, line.LastStation).LineStationIndex == 1)
                 {
-                    tempLineStation = dl.GetLineStation(line.Id, (int)tempLineStation.NextStation);
-                    tempLineStation.LineStationIndex -= 1;
-                    dl.UpdateLineStation(tempLineStation);
-                }
-
-                //update Line first/last startion
-                if (lineStation.Code == line.FirstStation)
-                {
-                    //update line
-                    line.FirstStation = (int)DOlineStation.NextStation;
-                    dl.UpdateLine(line);
-
-                    //update next station
-                    tempLineStation = dl.GetLineStation(line.Id, (int)DOlineStation.NextStation);
-                    tempLineStation.PrevStation = null;
-                    dl.UpdateLineStation(tempLineStation);
-                }
-                else if (lineStation.Code == line.LastStation)
-                {
-                    //update line
-                    line.LastStation = (int)DOlineStation.PrevStation;
-                    dl.UpdateLine(line);
-
-                    //update next station
-                    tempLineStation = dl.GetLineStation(line.Id, (int)DOlineStation.PrevStation);
-                    tempLineStation.NextStation = null;
-                    dl.UpdateLineStation(tempLineStation);
+                    try
+                    {
+                        //delete DO Line
+                        dl.DeleteLine(line.Id);
+                        dl.DeleteAlLineStationslBy(station => station.LineId == line.Id);
+                    }
+                    catch(DO.LineExceptions ex)
+                    {
+                        throw new BO.BusLineNotFound("Line could not be found!", line.Code, ex);
+                    }
                 }
                 else
                 {
-                    //update next station
-                    tempLineStation = dl.GetLineStation(line.Id, (int)DOlineStation.NextStation);
-                    tempLineStation.PrevStation = DOlineStation.PrevStation;
-                    dl.UpdateLineStation(tempLineStation);
-
-                    //update prev station
-                    tempLineStation = dl.GetLineStation(line.Id, (int)DOlineStation.PrevStation);
-                    tempLineStation.NextStation = DOlineStation.NextStation;
-                    dl.UpdateLineStation(tempLineStation);
-
-                    //update DO.adj stations
-                    dl.AddAdjacentStation(new DO.AdjacentStation()
+                    try
                     {
-                        Station1 = (int)DOlineStation.PrevStation,
-                        Station2 = (int)DOlineStation.NextStation,
-                        Distance = 500,
-                        Time = new TimeSpan(0, 10, 0),
-                    });
+                        //delete DO.LineStation
+                        dl.DeleteLineStation(lineStation.DOLineId, lineStation.Code);
+                    }
+                    catch(DO.LineStationExceptions ex)
+                    {
+                        throw new BO.StationNotFound("Line station could not be found!", lineStation.Code, ex);
+                    }
+
+                    //update all line stations indexes.
+                    DO.LineStation tempLineStation = DOlineStation;
+                    while (tempLineStation.Station != line.LastStation)
+                    {
+                        try
+                        {
+                            tempLineStation = dl.GetLineStation(line.Id, (int)tempLineStation.NextStation);
+                            tempLineStation.LineStationIndex -= 1;
+                            dl.UpdateLineStation(tempLineStation);
+                        }
+                        catch(DO.LineStationExceptions ex)
+                        {
+                            throw new BO.StationNotFound("Line station could not be found!", (int)tempLineStation.NextStation, ex);
+                        }
+                    }
+                    try
+                    {
+                        //update Line first/last startion
+                        if (lineStation.Code == line.FirstStation)
+                        {
+                            //update line
+                            line.FirstStation = (int)DOlineStation.NextStation;
+                            dl.UpdateLine(line);
+
+                            try
+                            {
+                                //update next station
+                                tempLineStation = dl.GetLineStation(line.Id, (int)DOlineStation.NextStation);
+                                tempLineStation.PrevStation = null;
+                                dl.UpdateLineStation(tempLineStation);
+                            }
+                            catch(DO.LineStationExceptions ex)
+                            {
+                                throw new BO.StationNotFound("Line station could not be found!", (int)DOlineStation.NextStation, ex);
+                            }
+                        }
+                        else if (lineStation.Code == line.LastStation)
+                        {
+                            //update line
+                            line.LastStation = (int)DOlineStation.PrevStation;
+                            dl.UpdateLine(line);
+
+                            try
+                            {
+                                //update next station
+                                tempLineStation = dl.GetLineStation(line.Id, (int)DOlineStation.PrevStation);
+                                tempLineStation.NextStation = null;
+                                dl.UpdateLineStation(tempLineStation);
+                            }
+                            catch (DO.LineStationExceptions ex)
+                            {
+                                throw new BO.StationNotFound("Line station could not be found!", (int)DOlineStation.PrevStation, ex);
+                            }
+                        }
+                        else
+                        {
+                            try
+                            {
+                                //update next station
+                                tempLineStation = dl.GetLineStation(line.Id, (int)DOlineStation.NextStation);
+                                tempLineStation.PrevStation = DOlineStation.PrevStation;
+                                dl.UpdateLineStation(tempLineStation);
+                            }
+                            catch (DO.LineStationExceptions ex)
+                            {
+                                throw new BO.StationNotFound("Line station could not be found!", (int)DOlineStation.NextStation, ex);
+                            }
+
+                            try
+                            {
+                                //update prev station
+                                tempLineStation = dl.GetLineStation(line.Id, (int)DOlineStation.PrevStation);
+                                tempLineStation.NextStation = DOlineStation.NextStation;
+                                dl.UpdateLineStation(tempLineStation);
+                            }
+                            catch (DO.LineStationExceptions ex)
+                            {
+                                throw new BO.StationNotFound("Line station could not be found!", (int)DOlineStation.PrevStation, ex);
+                            }
+
+                            //update DO.adj stations
+                            dl.AddAdjacentStation(new DO.AdjacentStation()
+                            {
+                                Station1 = (int)DOlineStation.PrevStation,
+                                Station2 = (int)DOlineStation.NextStation,
+                                Distance = 500,
+                                Time = new TimeSpan(0, 10, 0),
+                            });
+                        }
+                    }
+                    catch(DO.LineExceptions ex)
+                    {
+                        throw new BO.BusLineNotFound("Line could not be found!", line.Code, ex);
+                    }
+                    
                 }
+            }
+            catch(DO.LineStationExceptions ex)
+            {
+                throw new BO.StationNotFound("Line Station could not be found!", line.LastStation, ex);
             }
         }
         public bool IsTwoStationsInLine(int DOLineId)
         {
-            DO.Line line = dl.GetLine(DOLineId);
-            DO.LineStation lastStation = dl.GetLineStation(line.Id, line.LastStation);
-            return lastStation.LineStationIndex == 1;
+            try
+            {
+                DO.Line line = dl.GetLine(DOLineId);
+                DO.LineStation lastStation = dl.GetLineStation(line.Id, line.LastStation);
+                return lastStation.LineStationIndex == 1;
+            }
+            catch(DO.LineExceptions ex)
+            {
+                throw new BO.BusLineNotFound("Line could not be found!", DOLineId, ex);
+            }
         }
         #endregion
 
@@ -160,32 +270,46 @@ namespace BL
         }
         public BO.BusStation GetBusStation(int code)
         {
-            DO.Station DOstation = dl.GetStation(code);
-            BO.BusStation busStation = new BO.BusStation()
+            try
             {
-                Code = DOstation.Code,
-                Name = DOstation.Name,
-                Location = new GeoCoordinate(DOstation.Latitude, DOstation.Longitude)
-            };
-            busStation.LinesInstation = from line in dl.GetAllLines()
-                                        from lineStation in dl.GetAllLineStations(line.Id)
-                                        where lineStation.Station == code
-                                        select DOLineToBOLine(line);
-            return busStation;
+                DO.Station DOstation = dl.GetStation(code);
+                BO.BusStation busStation = new BO.BusStation()
+                {
+                    Code = DOstation.Code,
+                    Name = DOstation.Name,
+                    Location = new GeoCoordinate(DOstation.Latitude, DOstation.Longitude)
+                };
+                busStation.LinesInstation = from line in dl.GetAllLines()
+                                            from lineStation in dl.GetAllLineStations(line.Id)
+                                            where lineStation.Station == code
+                                            select DOLineToBOLine(line);
+                return busStation;
+            }
+            catch(DO.StationExceptions ex)
+            {
+                throw new BO.StationNotFound("Station not Found!", code, ex);
+            }
         }
         private BO.Line DOLineToBOLine(DO.Line line)
         {
-            DO.Station lastStation = dl.GetStation(line.LastStation);
-            return new BO.Line()
+            try
             {
-                DOLineId = line.Id,
-                LineNumber = line.Code,
-                EndStation = new BO.Station()
+                DO.Station lastStation = dl.GetStation(line.LastStation);
+                return new BO.Line()
                 {
-                    Code = lastStation.Code,
-                    Name = lastStation.Name
-                }
-            };
+                    DOLineId = line.Id,
+                    LineNumber = line.Code,
+                    EndStation = new BO.Station()
+                    {
+                        Code = lastStation.Code,
+                        Name = lastStation.Name
+                    }
+                };
+            }
+            catch(DO.StationExceptions ex)
+            {
+                throw new BO.StationNotFound("Station not Found!", line.LastStation, ex);
+            }
         }
 
         public void DeleteBusStation(BO.BusStation busStation)
@@ -205,31 +329,52 @@ namespace BL
                 };
                 DeleteLineStation(tempBOLineStation);
             }
-
-            //delete DO.station
-            dl.DeleteStation(busStation.Code);
+            try
+            {
+                //delete DO.station
+                dl.DeleteStation(busStation.Code);
+            }
+            catch(DO.StationExceptions ex)
+            {
+                throw new BO.StationNotFound("Station not Found!", busStation.Code, ex);
+            }
+            
         }
         #endregion
 
         #region BO.User
         public BO.User GetUser(string userName)
         {
-            DO.User user = dl.GetUser(userName);
-            return new BO.User()
+            try
             {
-                UserName = user.UserName,
-                Password = user.Password, 
-                Admin = user.Admin
-            };
+                DO.User user = dl.GetUser(userName);
+                return new BO.User()
+                {
+                    UserName = user.UserName,
+                    Password = user.Password,
+                    Admin = user.Admin
+                };
+            }
+            catch(DO.UserExceptions ex)
+            {
+                 throw new BO.UserNotFound("User Not Found!", userName, ex);
+            }
         }
         public void AddUser(BO.User user)
         {
-            dl.AddUser(new DO.User()
+            try
             {
-                UserName = user.UserName,
-                Password = user.Password,
-                Admin = user.Admin
-            });
+                dl.AddUser(new DO.User()
+                {
+                    UserName = user.UserName,
+                    Password = user.Password,
+                    Admin = user.Admin
+                });
+            }
+            catch(DO.UserExceptions ex)
+            {
+                throw new BO.UserExists("User Already Exists.", user.UserName, ex);
+            }
         }
         #endregion
 

@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="Login" Height="200" Width="400">
     <Grid>
         <Grid.RowDefinitions>
@@ -19,10 +20,10 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <Label Content="Don't have accout yet? click here to " FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">  
+            <Label Content="Don't have an accout yet? click here to" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label HorizontalAlignment="Center" VerticalAlignment="Center">  
                  <Hyperlink Click="buttonRegister_Click" FontSize="15" FontStyle="Normal">Register</Hyperlink>
-            </TextBlock>
+            </Label>
         </StackPanel>
         
         <Label Content="Name:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
