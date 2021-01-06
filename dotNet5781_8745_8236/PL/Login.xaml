@@ -1,0 +1,36 @@
+﻿<Window x:Class="PL.Dialogs.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="Login" Height="200" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Label Content="Don't have accout yet? click here to " FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">  
+                 <Hyperlink Click="buttonRegister_Click" FontSize="15" FontStyle="Normal">Register</Hyperlink>
+            </TextBlock>
+        </StackPanel>
+        
+        <Label Content="Name:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Content="Passowrd:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+
+        <TextBox x:Name="NameTB" Text="Avraham" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="150" KeyDown="Key_Down"/>
+        <TextBox x:Name="PassTB" Text="1" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="150"/>
+
+        <Button Grid.Row="3" Grid.Column="0" Content="Log-in" FontSize="23" Height="35" Width="150" Grid.ColumnSpan="2" Click="Log_In" />
+    </Grid>
+</Window>

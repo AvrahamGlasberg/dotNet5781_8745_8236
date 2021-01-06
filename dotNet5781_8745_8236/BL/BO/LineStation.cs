@@ -8,7 +8,7 @@ namespace BO
 {
     public class LineStation : Station
     {
-        public int Id { get; set; } 
+        public int DOLineId { get; set; } 
         public double? DistanceFromPrev { get; set; }
         public TimeSpan? TimeFromPrev { get; set; }
 

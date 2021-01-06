@@ -189,7 +189,7 @@ namespace DL
             return from item in DataSource.LineStations
                    where item.LineId == lineId && !item.Deleted
                    orderby item.LineStationIndex
-                   select item;
+                   select item.Clone();
         }
 
         public void UpdateLineStation(LineStation NewLineStation)
@@ -214,6 +214,13 @@ namespace DL
             foreach (var station in DataSource.LineStations)
                 if (predicate(station))
                     station.Deleted = true;
+        }
+
+        public IEnumerable<LineStation> GetAllLineStationsBy(Predicate<DO.LineStation> predicate)
+        {
+            return from lineStation in DataSource.LineStations
+                   where predicate(lineStation) && !lineStation.Deleted
+                   select lineStation.Clone();
         }
         #endregion
 
