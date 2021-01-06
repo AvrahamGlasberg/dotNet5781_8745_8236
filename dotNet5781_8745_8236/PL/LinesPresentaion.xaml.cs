@@ -21,7 +21,7 @@ namespace PL
     public partial class LinesPresentaion : Window
     {
         IBL bl = BLFactory.GetBL();
-        private ObservableCollection<BO.BusLine> Lines;
+        private ObservableCollection<BO.BusLine> Lines; 
         public LinesPresentaion()
         {
             InitializeComponent();
