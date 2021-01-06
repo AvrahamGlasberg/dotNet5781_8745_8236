@@ -351,7 +351,18 @@ namespace DS
             BusesOnTrip = new List<BusOnTrip>();
             LinesTrip = new List<LineTrip>();
             Trips = new List<Trip>();
-            Users = new List<User>();
+
+            #region User
+            Users = new List<User>()
+            {
+                new User()
+                {
+                    UserName = "Avraham", 
+                    Password = "1", 
+                    Admin = true
+                }
+            };
+            #endregion
         }
     }
     

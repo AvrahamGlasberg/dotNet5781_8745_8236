@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PL.Dialogs;
 using BLAPI;
 namespace PL
 {
@@ -27,53 +28,22 @@ namespace PL
 
         private void OpenManagerOptions(object sender, RoutedEventArgs e)
         {
-            ShowManagerOptions();
+            Login dialog = new Login();
+            if(dialog.ShowDialog() == true)
+            {
+                if (dialog.IsAdmin)
+                {
+                    ManagerPresentation window = new ManagerPresentation();
+                    window.Show();
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("You don't have access to manager app.");
+            }
         }
         private void OpenUserOptions(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Not implented yet!");
-        }
-        private void ShowManagerOptions()
-        {
-            HideAll();
-            BusesBtn.Visibility = Visibility.Visible;
-            LinesBtn.Visibility = Visibility.Visible;
-            StationsBtn.Visibility = Visibility.Visible;
-            BackBtn.Visibility = Visibility.Visible;
-        }
-        private void HideAll()
-        {
-            ManagerBtn.Visibility = Visibility.Collapsed;
-            UserBtn.Visibility = Visibility.Collapsed;
-            ExitBtn.Visibility = Visibility.Collapsed;
-            BusesBtn.Visibility = Visibility.Collapsed;
-            LinesBtn.Visibility = Visibility.Collapsed;
-            StationsBtn.Visibility = Visibility.Collapsed;
-            BackBtn.Visibility = Visibility.Collapsed;
-        }
-        
-        private void ShowBuses(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Not implented yet!");
-        }
-        private void ShowLines(object sender, RoutedEventArgs e)
-        {
-            LinesPresentaion window = new LinesPresentaion();
-            window.Show();
-            this.Close();
-        }
-        private void ShowStations(object sender, RoutedEventArgs e)
-        {
-            StationsPresentaion window = new StationsPresentaion();
-            window.Show();
-            this.Close();
-        }
-        private void Back(object sender, RoutedEventArgs e)
-        {
-            HideAll();
-            ManagerBtn.Visibility = Visibility.Visible;
-            UserBtn.Visibility = Visibility.Visible;
-            ExitBtn.Visibility = Visibility.Visible;
         }
 
         private void Exit(object sender, RoutedEventArgs e)
