@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DO;
-
+using System.Device.Location;
 namespace DS
 {
     public static class DataSource
@@ -313,16 +313,30 @@ namespace DS
             {
                 if(LineStations[i].NextStation != null)
                 {
-                    if(!AdjacentStations.Exists(stations=>stations.Station1 == LineStations[i].Station && stations.Station2 == (int)LineStations[i].NextStation))
-                    AdjacentStations.Add(new AdjacentStation()
                     {
-                        Station1 = LineStations[i].Station,
-                        Station2 = (int)LineStations[i].NextStation,
-                        Distance = 500,
-                        Time = new TimeSpan(0, 10, 0)
-                        //calculating time and distance - asking kadron.
-                        //
-                    });
+                        GeoCoordinate p1;
+                        GeoCoordinate p2;
+                        DO.Station st1 = Stations.FirstOrDefault(st => st.Code == LineStations[i].Station);
+                        DO.Station st2 = Stations.FirstOrDefault(st => st.Code == (int)LineStations[i].NextStation);
+                        p1 = new GeoCoordinate(st1.Latitude, st1.Longitude);
+                        p2 = new GeoCoordinate(st2.Latitude, st2.Longitude);
+                        double dis = p1.GetDistanceTo(p2) / 1000; //m*1000= km
+                        dis *= 1.3; // real
+                        int speed = rand.Next(20, 60); // km/h
+                        double time = dis / speed; // h
+                        int h = (int)time;
+                        int m = (int)(time * 60 - h * 60);
+                        int s = (int)(time * 360)%60;
+                        TimeSpan t = new TimeSpan(h, m, s);
+                        if (!AdjacentStations.Exists(stations => stations.Station1 == LineStations[i].Station && stations.Station2 == (int)LineStations[i].NextStation))
+                            AdjacentStations.Add(new AdjacentStation()
+                            {
+                                Station1 = LineStations[i].Station,
+                                Station2 = (int)LineStations[i].NextStation,
+                                Distance = dis,
+                                Time = t
+                            });
+                    }
                 }
             }
             #endregion

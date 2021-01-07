@@ -9,9 +9,8 @@
     <Window.Resources>
         <DataTemplate x:Key="StationsDataTemplate">
             <StackPanel Orientation="Horizontal">
-                <Label x:Name="Station" Content="{Binding}" Width="400"/>
-                <Button Content="Delete" Click="DeleteStation" Height="50" Width="100"/>
-                <Button Content="Update" Height="50" Width="100"/>
+                <Label x:Name="Station" Content="{Binding}" Width="500" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                <Button Content="Delete" Click="DeleteStation" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0"/>
             </StackPanel>
         </DataTemplate>
 
@@ -21,9 +20,8 @@
 
         <DataTemplate x:Key="LinesDataTemplate">
             <StackPanel Orientation="Horizontal">
-                <Label x:Name="Line" Content="{Binding}" Width="400"/>
-                <Button Content="Delete" Click="DeleteLine" Height="50" Width="100"/>
-                <Button Content="Update" Height="50" Width="100"/>
+                <Label x:Name="Line" Content="{Binding}" Width="500" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                <Button Content="Delete" Click="DeleteLine" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0"/>
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
@@ -44,7 +42,7 @@
             <RadioButton x:Name="BusesRB" Content="Buses" Height="50" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Checked="Radio_Button_Changed"/>
         </StackPanel>
 
-        <ListBox x:Name="ManagerListBox" ItemsSource="{Binding}" SelectionChanged="ListBox_SelectionChanged" Grid.Row="0" Grid.Column="1"/>
+        <ListBox x:Name="ManagerListBox" ItemsSource="{Binding}" SelectionChanged="ListBox_SelectionChanged" Grid.Row="0" Grid.Column="1" MouseDoubleClick="Open_Info"/>
 
         <Button x:Name = "addBus" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Bus" Click="Add_Bus" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed"/>
         <Button x:Name = "addLine" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Line" Click="Add_Line" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed"/>

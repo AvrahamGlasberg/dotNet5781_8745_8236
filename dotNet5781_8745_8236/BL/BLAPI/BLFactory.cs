@@ -11,7 +11,14 @@ namespace BLAPI
     {
         public static IBL GetBL()
         {
-            return new BLImp();
+            try
+            {
+                return new BLImp();
+            }
+            catch//creating dal/ds failed
+            {
+                throw new BO.MissingData("DL could not open!");
+            }
         }
     }
 }

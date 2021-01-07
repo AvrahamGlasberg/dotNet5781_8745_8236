@@ -25,7 +25,14 @@ namespace PL.Dialogs
         public Login()
         {
             InitializeComponent();
-            bl = BLFactory.GetBL();
+            try
+            {
+                bl = BLFactory.GetBL();
+            }
+            catch(BO.MissingData ex)//creating bo failed
+            {
+                MessageBox.Show(ex.Message);
+            }
             NameTB.Focus();
             NameTB.SelectAll();
         }
@@ -45,9 +52,9 @@ namespace PL.Dialogs
                 else
                     MessageBox.Show("Incorrect Password!");
             }
-            catch
+            catch(BO.UserNotFound ex)
             {
-                MessageBox.Show("This user does not exists!");
+                MessageBox.Show(ex.Message + string.Format(" Name {0} is not exists. choose another or register.", ex.Name));
             }
             
         }

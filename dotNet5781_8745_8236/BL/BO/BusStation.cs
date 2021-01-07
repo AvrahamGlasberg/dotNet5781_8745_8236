@@ -10,7 +10,7 @@ namespace BO
     public class BusStation : Station
     {
         public IEnumerable<Line> LinesInstation{ get; set; }
-        public GeoCoordinate Location { get; set; }
+        public GeoCoordinate Position { get; set; }
         public override string ToString()
         {
             return base.ToString();

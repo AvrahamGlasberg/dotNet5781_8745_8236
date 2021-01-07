@@ -40,9 +40,9 @@ namespace PL.Dialogs
                 });
                 this.DialogResult = true;
             }
-            catch
+            catch(BO.UserExists ex)
             {
-                MessageBox.Show("This user already exists.");
+                MessageBox.Show(ex.Message + string.Format(" Name {0} already exists as a member. please choose another or log-in.", ex.Name));
             }
         }
         private void Key_Down(object sender, KeyEventArgs e)

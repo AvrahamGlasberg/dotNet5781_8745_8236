@@ -29,7 +29,7 @@ namespace PL
             e.Handled = true;
             Point p = e.GetPosition(MyMap);
             Location l = MyMap.ViewportPointToLocation(p);
-            Pin.Location = l;
+            //Pin.Location = l;
         }
     }
 }

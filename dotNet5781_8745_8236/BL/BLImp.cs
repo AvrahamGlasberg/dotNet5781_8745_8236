@@ -226,12 +226,33 @@ namespace BL
                             }
 
                             //update DO.adj stations
+                            DO.Station st1, st2;
+                            try
+                            {
+                                st1 = dl.GetStation((int)DOlineStation.PrevStation);
+                                st2 = dl.GetStation((int)DOlineStation.NextStation);
+                            }
+                            catch(DO.StationExceptions ex)
+                            {
+                                throw new BO.StationNotFound("Station was not found to calculate distance!", ex.Code, ex);
+                            }
+                            GeoCoordinate p1 = new GeoCoordinate(st1.Latitude, st1.Longitude);
+                            GeoCoordinate p2 = new GeoCoordinate(st2.Latitude, st2.Longitude);
+                            double dis = p1.GetDistanceTo(p2) / 1000; //m*1000= km
+                            dis *= 1.3; // real
+                            Random rand = new Random(DateTime.Now.Millisecond);
+                            int speed = rand.Next(20, 60); // km/h
+                            double time = dis / speed; // h
+                            int h = (int)time;
+                            int m = (int)(time * 60 - h * 60);
+                            int s = (int)(time * 360) % 60;
+                            TimeSpan t = new TimeSpan(h, m, s);
                             dl.AddAdjacentStation(new DO.AdjacentStation()
                             {
                                 Station1 = (int)DOlineStation.PrevStation,
                                 Station2 = (int)DOlineStation.NextStation,
-                                Distance = 500,
-                                Time = new TimeSpan(0, 10, 0),
+                                Distance = dis,
+                                Time = t
                             });
                         }
                     }
@@ -266,6 +287,7 @@ namespace BL
         public IEnumerable<BO.BusStation> GetAllBusStations()
         {
             return from item in dl.GetAllStations()
+                   orderby item.Code
                    select GetBusStation(item.Code);
         }
         public BO.BusStation GetBusStation(int code)
@@ -277,7 +299,7 @@ namespace BL
                 {
                     Code = DOstation.Code,
                     Name = DOstation.Name,
-                    Location = new GeoCoordinate(DOstation.Latitude, DOstation.Longitude)
+                    Position = new GeoCoordinate(DOstation.Latitude, DOstation.Longitude)
                 };
                 busStation.LinesInstation = from line in dl.GetAllLines()
                                             from lineStation in dl.GetAllLineStations(line.Id)
@@ -338,7 +360,42 @@ namespace BL
             {
                 throw new BO.StationNotFound("Station not Found!", busStation.Code, ex);
             }
-            
+        }
+        public void UpdateBusStation(BO.BusStation busStation)
+        {
+            try
+            {
+                dl.UpdateStation(new DO.Station()
+                {
+                    Code = busStation.Code,
+                    Name = busStation.Name,
+                    Latitude = busStation.Position.Latitude,
+                    Longitude = busStation.Position.Longitude
+                });
+            }
+            catch(DO.StationExceptions)
+            {
+                throw new BO.StationNotFound("Station to update not found!", busStation.Code);
+            }
+        }
+        public void AddBusStation(BO.BusStation busStation)
+        {
+            try
+            {
+                dl.AddStation(
+                    new DO.Station()
+                    {
+                        Code = busStation.Code,
+                        Name = busStation.Name, 
+                        Latitude = busStation.Position.Latitude, 
+                        Longitude = busStation.Position.Longitude
+                    }
+                    );
+            }
+            catch(DO.StationExceptions ex)
+            {
+                throw new BO.StationExists("Station already exists!", busStation.Code, ex);
+            }
         }
         #endregion
 
