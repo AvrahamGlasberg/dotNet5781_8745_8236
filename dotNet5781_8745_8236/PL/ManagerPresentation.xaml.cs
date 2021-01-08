@@ -163,7 +163,9 @@ namespace PL
 
         private void Add_Line(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not implented yet!");
+                NewLineInfo win = new NewLineInfo();
+                win.ShowDialog();
+                ShowStations();
         }
 
         private void Add_Bus(object sender, RoutedEventArgs e)
@@ -186,7 +188,14 @@ namespace PL
         }
         private void ShowLinesInfo()
         {
-            MessageBox.Show("Not implented yet!");
+            BO.BusLine busLine = ManagerListBox.SelectedItem as BO.BusLine;
+            if (busLine != null)//prevent delete+double click
+            {
+                LineInfo win = new LineInfo(busLine);
+                win.ShowDialog();
+                ShowLines();
+            }
+            // MessageBox.Show("Not implented yet!");
         }
         private void ShowStationsInfo()
         {

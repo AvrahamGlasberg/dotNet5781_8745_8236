@@ -60,11 +60,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GeoCoordinateToLocationConvertor.cs" />
+    <Compile Include="LineInfo.xaml.cs">
+      <DependentUpon>LineInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManagerPresentation.xaml.cs">
       <DependentUpon>ManagerPresentation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewLineInfo.xaml.cs">
+      <DependentUpon>NewLineInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="NewStationInfo.xaml.cs">
       <DependentUpon>NewStationInfo.xaml</DependentUpon>
@@ -78,6 +84,10 @@
     <Compile Include="Window1.xaml.cs">
       <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
+    <Page Include="LineInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -95,6 +105,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="ManagerPresentation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewLineInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
