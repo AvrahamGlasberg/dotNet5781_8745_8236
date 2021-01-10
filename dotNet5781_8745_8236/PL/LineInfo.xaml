@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="LinesInfo" Height="650" Width="1250">
+        Title="LinesInfo" Height="650" Width="1250" Closing="UpdateArea">
     <Window.Resources>
 
         <DataTemplate x:Key="LineDataTemplate">
@@ -63,9 +63,18 @@
 
         <ListBox x:Name="StationsListBox" Grid.Column= "0" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding}" ItemTemplate ="{StaticResource LineDataTemplate}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" />
         <ComboBox x:Name="NewStationsComboBox" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <ComboBox x:Name="ExistingStations" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <Button Grid.Column="1" Grid.Row="3" Content="Add" Click="Add_Staton" Width="100" Height="50" FontSize="25" />
-        <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="Update" Click="Update_Line" Width="200" Height="50" FontSize="25" />
+        <ComboBox x:Name="ExistingStations" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <Label Content="{Binding Path=Code}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="Add before" Click="Add_Station_Before" Width="150" Height="50" FontSize="25" />
+            <Button Content="Add after" Click="Add_Station_After" Width="150" Height="50" FontSize="25" />
+        </StackPanel>
+        <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="Back" Click="GoBack" Width="200" Height="50" FontSize="25" />
     </Grid>
     
 </Window>

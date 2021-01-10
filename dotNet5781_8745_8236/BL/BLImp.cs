@@ -13,6 +13,90 @@ namespace BL
         IDL dl = DLFactory.GetDL();
 
         #region BO.BusLine
+        public void AddLineStationToBusLine(BO.BusLine busLine, BO.Station station, int index)
+        {
+            try
+            {
+                var stations = busLine.LineStations.ToList();
+                DO.LineStation newLineStation = new DO.LineStation()
+                {
+                    LineId = busLine.DOLineId,
+                    LineStationIndex = index,
+                    Station = station.Code,
+                    PrevStation = null,
+                    NextStation = null
+                };
+                for (int i = index; i < stations.Count; i++)
+                {
+                    DO.LineStation DOLineStation = dl.GetLineStation(busLine.DOLineId, stations[i].Code);
+                    DOLineStation.LineStationIndex += 1;
+                    dl.UpdateLineStation(DOLineStation);
+                }
+                if (index != 0)
+                {
+                    newLineStation.PrevStation = stations[index - 1].Code;
+                    DO.LineStation prev = dl.GetLineStation(busLine.DOLineId, stations[index - 1].Code);
+                    prev.NextStation = station.Code;
+                    dl.UpdateLineStation(prev);
+
+                    double dis = CalcDis(station.Code, prev.Station);
+                    TimeSpan time = CalcTime(dis);
+                    dl.AddAdjacentStation(new DO.AdjacentStation()
+                    {
+                        Station1 = station.Code,
+                        Station2 = prev.Station,
+                        Distance = dis,
+                        Time = time
+                    });
+                }
+                if (index != stations.Count)
+                {
+                    newLineStation.NextStation = stations[index].Code;
+                    DO.LineStation next = dl.GetLineStation(busLine.DOLineId, stations[index].Code);
+                    next.PrevStation = station.Code;
+                    dl.UpdateLineStation(next);
+
+                    double dis = CalcDis(station.Code, next.Station);
+                    TimeSpan time = CalcTime(dis);
+                    dl.AddAdjacentStation(new DO.AdjacentStation()
+                    {
+                        Station1 = station.Code,
+                        Station2 = next.Station,
+                        Distance = dis,
+                        Time = time
+                    });
+                }
+                dl.AddLineStation(newLineStation);
+            }
+            catch(DO.LineStationExceptions ex)
+            {
+                throw new BO.MissingData(string.Format("Could not found {0} line station", ex.Station), ex);
+            }
+        }
+        public BO.BusLine GetUpdatedBOBusLine(int dolineId)
+        {
+            try
+            {
+                return LineDOToBusLineBO(dl.GetLine(dolineId));
+            }
+            catch(DO.LineExceptions ex)
+            {
+                throw new BO.BusLineNotFound("Busline not found! sendind his ID", dolineId, ex);
+            }
+        }
+        public void UpdateBusLineArea(BO.BusLine busLine)
+        {
+            try
+            {
+                DO.Line line = dl.GetLine(busLine.DOLineId);
+                line.Area = (DO.Areas)(int)busLine.Area;
+                dl.UpdateLine(line);
+            }
+            catch(DO.LineExceptions ex)
+            {
+                throw new BO.BusLineNotFound("Could not update bus line ", busLine.LineNumber, ex);
+            }
+        }
         public void AddBusLine(BO.BusLine busLine)
         {
             List<BO.LineStation> stations = busLine.LineStations.ToList();
@@ -445,6 +529,10 @@ namespace BL
             catch(DO.StationExceptions)
             {
                 throw new BO.StationNotFound("Station to update not found!", busStation.Code);
+            }
+            catch(DO.AdjacentStationExceptions ex)
+            {
+                throw new BO.MissingData(string.Format("Missing time & distance information about {0} and {1} stations", ex.Station1, ex.Station2));
             }
         }
         public void AddBusStation(BO.BusStation busStation)

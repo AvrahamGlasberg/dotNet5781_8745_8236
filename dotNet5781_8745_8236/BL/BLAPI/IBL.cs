@@ -10,10 +10,13 @@ namespace BLAPI
     {
         #region BO.BusLine
         void AddBusLine(BO.BusLine busLine);
+        BO.BusLine GetUpdatedBOBusLine(int dolineId);
+        void UpdateBusLineArea(BO.BusLine busLine);
         IEnumerable<BO.BusLine> GetAllBusLines();
         void DeleteBusLine(BO.BusLine line);
         void DeleteLineStation(BO.LineStation lineStation);
         bool IsTwoStationsInLine(int DOLineId);
+        void AddLineStationToBusLine(BO.BusLine busLine, BO.Station station, int index);
         #endregion
 
         #region BO.BusStation

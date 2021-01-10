@@ -41,7 +41,7 @@ namespace DL
         }
         public void UpdateAdjacentStation(AdjacentStation NewAdjacentStation)
         {
-            AdjacentStation cur = DataSource.AdjacentStations.FirstOrDefault(stations => stations.Station1 == NewAdjacentStation.Station1 && stations.Station2 == NewAdjacentStation.Station2 && !stations.Deleted);
+            AdjacentStation cur = DataSource.AdjacentStations.FirstOrDefault(stations => (stations.Station1 == NewAdjacentStation.Station1 && stations.Station2 == NewAdjacentStation.Station2) || (stations.Station1 == NewAdjacentStation.Station2 && stations.Station2 == NewAdjacentStation.Station1) && !stations.Deleted);
             if (cur == null)
                 throw new AdjacentStationExceptions(NewAdjacentStation.Station1, NewAdjacentStation.Station2, false);
             DataSource.AdjacentStations.Remove(cur);

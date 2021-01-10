@@ -40,15 +40,30 @@ namespace PL
                 MessageBox.Show(ex.Message);
             }
             curBusLine = busLine;
-            lineStations = new ObservableCollection<BO.LineStation>(busLine.LineStations);
-            newStations = new ObservableCollection<BO.Station>(bl.GetAllStationsNotInLine(curBusLine.DOLineId));
             AreasCB.ItemsSource = Enum.GetValues(typeof(BO.Areas));
-            mainGrid.DataContext = busLine;
-            StationsListBox.DataContext = lineStations;
-            NewStationsComboBox.DataContext = newStations;
-            ExistingStations.DataContext = lineStations;
+            UpdateData();
         }
-
+        private void UpdateData()
+        {
+            try
+            {
+                curBusLine = bl.GetUpdatedBOBusLine(curBusLine.DOLineId);
+                lineStations = new ObservableCollection<BO.LineStation>(curBusLine.LineStations);
+                newStations = new ObservableCollection<BO.Station>(bl.GetAllStationsNotInLine(curBusLine.DOLineId));
+                mainGrid.DataContext = curBusLine;
+                StationsListBox.DataContext = lineStations;
+                NewStationsComboBox.DataContext = newStations;
+                ExistingStations.DataContext = lineStations;
+            }
+            catch(BO.BusLineNotFound ex)
+            {
+                MessageBox.Show(ex.Message + string.Format(" Line: {0}", ex.LineNumber));
+            }
+            catch(BO.MissingData ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         private void Delete_station(object sender, RoutedEventArgs e)
         {
             if(bl.IsTwoStationsInLine(curBusLine.DOLineId))
@@ -66,14 +81,13 @@ namespace PL
                 Button bt = sender as Button;
                 BO.LineStation stToDelete = bt.DataContext as BO.LineStation;
                 bl.DeleteLineStation(stToDelete);
-                lineStations.Remove(stToDelete);
+                UpdateData();
             }
-            //MessageBox.Show("Not implamented yet!");
         }
 
-        private void Update_Line(object sender, RoutedEventArgs e)
+        private void GoBack(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not implamented yet!");
+            this.Close();
         }
 
         private void UpdateTimeDistance(object sender, RoutedEventArgs e)
@@ -86,9 +100,38 @@ namespace PL
             MessageBox.Show("Not implamented yet!");
         }
 
-        private void Add_Staton(object sender, RoutedEventArgs e)
+        private void UpdateArea(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            MessageBox.Show("Not implamented yet!");
+            bl.UpdateBusLineArea(curBusLine);
+        }
+
+        private void Add_Station_Before(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int index = ExistingStations.SelectedIndex;
+                BO.Station newStation = NewStationsComboBox.SelectedItem as BO.Station;
+                bl.AddLineStationToBusLine(curBusLine, newStation, index);
+                UpdateData();
+            }
+            catch(BO.MissingData ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        private void Add_Station_After(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int index = ExistingStations.SelectedIndex + 1;
+                BO.Station newStation = NewStationsComboBox.SelectedItem as BO.Station;
+                bl.AddLineStationToBusLine(curBusLine, newStation, index);
+                UpdateData();
+            }
+            catch (BO.MissingData ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

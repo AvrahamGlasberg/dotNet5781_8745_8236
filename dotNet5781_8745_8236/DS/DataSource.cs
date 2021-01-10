@@ -325,8 +325,8 @@ namespace DS
                         int speed = rand.Next(20, 60); // km/h
                         double time = dis / speed; // h
                         int h = (int)time;
-                        int m = (int)(time * 60 - h * 60);
-                        int s = (int)(time * 360)%60;
+                        int m = (int)Math.Round(time * 60 - h * 60);//solves for close stations
+                        int s = (int)(time * 360)%60 + 1;
                         TimeSpan t = new TimeSpan(h, m, s);
                         if (!AdjacentStations.Exists(stations => stations.Station1 == LineStations[i].Station && stations.Station2 == (int)LineStations[i].NextStation))
                             AdjacentStations.Add(new AdjacentStation()
