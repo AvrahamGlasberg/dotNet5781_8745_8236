@@ -9,6 +9,7 @@ namespace BO
     public class BusLine : Line
     {
         public IEnumerable<LineStation> LineStations { get; set; }
+        public Areas Area { get; set; }
         public override string ToString()
         {
             string str = "Line " + LineNumber.ToString() + ": ";

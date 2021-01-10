@@ -75,10 +75,5 @@ namespace PL
             if((sender as TextBox).Text != busStation.Name)
                 UpdateBtn.IsEnabled = true;
         }
-
-        private void OpenLineInfo(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("Notimplemented yet!");
-        }
     }
 }

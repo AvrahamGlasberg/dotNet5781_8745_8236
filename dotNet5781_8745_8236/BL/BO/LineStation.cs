@@ -9,8 +9,8 @@ namespace BO
     public class LineStation : Station
     {
         public int DOLineId { get; set; } 
-        public double? DistanceFromPrev { get; set; }
-        public TimeSpan? TimeFromPrev { get; set; }
+        public double? DistanceToNext { get; set; }
+        public TimeSpan? TimeToNext { get; set; }
 
         public override string ToString()
         {

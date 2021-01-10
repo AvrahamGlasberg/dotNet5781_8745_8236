@@ -13,6 +13,48 @@ namespace BL
         IDL dl = DLFactory.GetDL();
 
         #region BO.BusLine
+        public void AddBusLine(BO.BusLine busLine)
+        {
+            List<BO.LineStation> stations = busLine.LineStations.ToList();
+            foreach (var line in dl.GetAllLines())
+            {
+                if (line.Code == busLine.LineNumber && line.FirstStation == stations.First<BO.LineStation>().Code && line.LastStation == stations.Last<BO.LineStation>().Code)
+                    throw new BO.BusLineExists("Line with that last and start stations exists!", busLine.LineNumber);
+            }
+            DO.Line newLine = new DO.Line()
+            {
+                Id = DO.Config.LineId,
+                Code = busLine.LineNumber,
+                Area = (DO.Areas)(int)busLine.Area,
+                FirstStation = stations.First<BO.LineStation>().Code,
+                LastStation = stations.Last<BO.LineStation>().Code
+            };
+            dl.AddLine(newLine);
+            for (int i = 0; i < stations.Count; i++)
+            {
+                dl.AddLineStation(new DO.LineStation()
+                {
+                    LineId = newLine.Id,
+                    Station = stations[i].Code,
+                    LineStationIndex = i,
+                    PrevStation = i == 0 ? (int?)null : stations[i - 1].Code,
+                    NextStation = i == stations.Count - 1 ? (int?)null : stations[i + 1].Code
+                });
+                if (i != 0)
+                {
+                    double dis = CalcDis(stations[i].Code, stations[i - 1].Code);
+                    TimeSpan time = CalcTime(dis);
+                    dl.AddAdjacentStation(new DO.AdjacentStation()
+                    {
+                        Station1 = stations[i].Code,
+                        Station2 = stations[i - 1].Code,
+                        Distance = dis,
+                        Time = time
+                    });
+                }
+            }
+        }
+
         public IEnumerable<BO.BusLine> GetAllBusLines()
         {
             return from CurLine in dl.GetAllLines()
@@ -20,18 +62,16 @@ namespace BL
         }
         private BO.BusLine LineDOToBusLineBO(DO.Line line)
         {
-            BO.BusLine newBusLine = new BO.BusLine() { DOLineId = line.Id, LineNumber = line.Code };
+            BO.BusLine newBusLine = new BO.BusLine() { DOLineId = line.Id, LineNumber = line.Code,
+                Area = (BO.Areas)(int)line.Area};
             newBusLine.LineStations = GetAllBOLineStationsInDOLine(line.Id);
             newBusLine.EndStation = newBusLine.LineStations.Last<BO.LineStation>();
             return newBusLine;
         }
         private IEnumerable<BO.LineStation> GetAllBOLineStationsInDOLine(int DOLineId)
         {
-            
+            var DOline = dl.GetLine(DOLineId);
             var Linestations = dl.GetAllLineStations(DOLineId);
-            IEnumerable<BO.LineStation> firstStation = from DOstation in Linestations
-                                                       where DOstation.LineStationIndex == 0
-                                                       select DOLineStationsToBoFirstLineStation(DOstation);
             IEnumerable<BO.LineStation> stations = from item1 in Linestations
                                                    let ind1 = item1.LineStationIndex
                                                    from item2 in Linestations
@@ -39,9 +79,12 @@ namespace BL
                                                    where ind2 == ind1 + 1
                                                    orderby ind1 
                                                    select DOLineStationsToBoLineStation(item1, item2);
-            return firstStation.Concat(stations);
+            IEnumerable<BO.LineStation> lastStation =   from DOstation in Linestations
+                                                        where DOstation.Station == DOline.LastStation
+                                                        select DOLineStationsToBoLastLineStation(DOstation);
+            return stations.Concat(lastStation);
         }
-        private BO.LineStation DOLineStationsToBoFirstLineStation(DO.LineStation DOLineStation)
+        private BO.LineStation DOLineStationsToBoLastLineStation(DO.LineStation DOLineStation)
         {
             try
             {
@@ -51,29 +94,28 @@ namespace BL
                     Code = station.Code,
                     Name = station.Name,
                     DOLineId = DOLineStation.LineId,
-                    DistanceFromPrev = null,
-                    TimeFromPrev = null
+                    DistanceToNext = null,
+                    TimeToNext = null
                 };
             }
             catch(DO.StationExceptions ex)
             {
                 throw new BO.StationNotFound("Station not found!", DOLineStation.Station, ex);
             }
-            
         }
         private BO.LineStation DOLineStationsToBoLineStation(DO.LineStation FirstStation, DO.LineStation NextStation)
         {
             try
             {
-                DO.Station baseStation = dl.GetStation(NextStation.Station);
+                DO.Station baseStation = dl.GetStation(FirstStation.Station);
                 DO.AdjacentStation nearStations = dl.GetAdjacentStation(FirstStation.Station, NextStation.Station);
                 return new BO.LineStation()
                 {
                     Code = baseStation.Code,
                     Name = baseStation.Name,
                     DOLineId = NextStation.LineId,
-                    DistanceFromPrev = nearStations.Distance,
-                    TimeFromPrev = nearStations.Time
+                    DistanceToNext = nearStations.Distance,
+                    TimeToNext = nearStations.Time
                 };
             }
             catch(DO.StationExceptions ex)
@@ -225,28 +267,8 @@ namespace BL
                                 throw new BO.StationNotFound("Line station could not be found!", (int)DOlineStation.PrevStation, ex);
                             }
 
-                            //update DO.adj stations
-                            DO.Station st1, st2;
-                            try
-                            {
-                                st1 = dl.GetStation((int)DOlineStation.PrevStation);
-                                st2 = dl.GetStation((int)DOlineStation.NextStation);
-                            }
-                            catch(DO.StationExceptions ex)
-                            {
-                                throw new BO.StationNotFound("Station was not found to calculate distance!", ex.Code, ex);
-                            }
-                            GeoCoordinate p1 = new GeoCoordinate(st1.Latitude, st1.Longitude);
-                            GeoCoordinate p2 = new GeoCoordinate(st2.Latitude, st2.Longitude);
-                            double dis = p1.GetDistanceTo(p2) / 1000; //m*1000= km
-                            dis *= 1.3; // real
-                            Random rand = new Random(DateTime.Now.Millisecond);
-                            int speed = rand.Next(20, 60); // km/h
-                            double time = dis / speed; // h
-                            int h = (int)time;
-                            int m = (int)(time * 60 - h * 60);
-                            int s = (int)(time * 360) % 60;
-                            TimeSpan t = new TimeSpan(h, m, s);
+                            double dis = CalcDis((int)DOlineStation.PrevStation, (int)DOlineStation.NextStation);
+                            TimeSpan t = CalcTime(dis);
                             dl.AddAdjacentStation(new DO.AdjacentStation()
                             {
                                 Station1 = (int)DOlineStation.PrevStation,
@@ -284,6 +306,32 @@ namespace BL
         #endregion
 
         #region BO.BusStaion
+        public IEnumerable<BO.Station> GetAllStationsNotInLine(int DOLineId)
+        {
+            var baseStations = dl.GetAllStations();
+            var lineStations = dl.GetAllLineStations(DOLineId).ToList();
+            return from item1 in baseStations
+                   where (lineStations.FirstOrDefault(st => st.Station == item1.Code) == null)
+                   select DOStationToBOStation(item1);
+        }
+        private BO.Station DOStationToBOStation(DO.Station st)
+        {
+            return new BO.Station()
+            {
+                Code = st.Code,
+                Name = st.Name
+            };
+        }
+        public BO.LineStation StationToLineStation(BO.Station st)
+        {
+            return new BO.LineStation()
+            {
+                Code = st.Code, 
+                Name = st.Name, 
+                DistanceToNext = null,
+                TimeToNext = null
+            };
+        }
         public IEnumerable<BO.BusStation> GetAllBusStations()
         {
             return from item in dl.GetAllStations()
@@ -372,6 +420,27 @@ namespace BL
                     Latitude = busStation.Position.Latitude,
                     Longitude = busStation.Position.Longitude
                 });
+                var allStations = dl.GetAdjacentStationsBy(st => st.Station1 == busStation.Code || st.Station2 == busStation.Code).ToList();
+                foreach (DO.AdjacentStation stations in allStations)
+                {
+                    double dis;
+                    TimeSpan t;
+                    int secStationCode;
+                    if (stations.Station1 == busStation.Code)
+                        secStationCode = stations.Station2;
+                    else
+                        secStationCode = stations.Station1;
+                    dis = CalcDis(busStation.Code, secStationCode);
+                    t = CalcTime(dis);
+                    dl.UpdateAdjacentStation(new DO.AdjacentStation()
+                    {
+                        Station1 = busStation.Code,
+                        Station2 = secStationCode,
+                        Distance = dis,
+                        Time = t
+                    }
+                    );
+                }
             }
             catch(DO.StationExceptions)
             {
@@ -432,6 +501,39 @@ namespace BL
             {
                 throw new BO.UserExists("User Already Exists.", user.UserName, ex);
             }
+        }
+        #endregion
+
+        #region Time & Distance
+        private double CalcDis(int StCode1, int StCode2)
+        {
+            Random rand = new Random(DateTime.Now.Millisecond);
+            DO.Station st1, st2;
+            double dis;
+            try
+            {
+                st1 = dl.GetStation(StCode1);
+                st2 = dl.GetStation(StCode2);
+            }
+            catch (DO.StationExceptions ex)
+            {
+                throw new BO.StationNotFound("Station was not found to calculate distance!", ex.Code, ex);
+            }
+            GeoCoordinate point1 = new GeoCoordinate(st1.Latitude, st1.Longitude);
+            GeoCoordinate point2 = new GeoCoordinate(st2.Latitude, st2.Longitude);
+            dis = point1.GetDistanceTo(point2) / 1000;
+            dis *= rand.NextDouble() / 2 + 1; // real. random between 1 and 1.5
+            return dis;
+        }
+        private TimeSpan CalcTime(double distance)
+        {
+            Random rand = new Random(DateTime.Now.Millisecond);
+            int speed = rand.Next(20, 60); // km/h
+            double time = distance / speed; // h
+            int h = (int)time;
+            int m = (int)(time * 60 - h * 60);
+            int s = (int)(time * 360) % 60;
+            return new TimeSpan(h, m, s);
         }
         #endregion
 

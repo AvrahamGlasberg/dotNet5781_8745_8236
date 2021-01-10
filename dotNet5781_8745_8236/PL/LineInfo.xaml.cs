@@ -26,6 +26,8 @@ namespace PL
     {
         IBL bl;
         ObservableCollection<BO.LineStation> lineStations;
+        ObservableCollection<BO.Station> newStations;
+        BO.BusLine curBusLine;
         public LineInfo(BusLine busLine)
         {
             InitializeComponent();
@@ -37,26 +39,56 @@ namespace PL
             {
                 MessageBox.Show(ex.Message);
             }
-            mainGrid.DataContext = busLine;
+            curBusLine = busLine;
             lineStations = new ObservableCollection<BO.LineStation>(busLine.LineStations);
-            StationsListBox.ItemTemplate = (DataTemplate)this.Resources["LineDataTemplate"];
+            newStations = new ObservableCollection<BO.Station>(bl.GetAllStationsNotInLine(curBusLine.DOLineId));
+            AreasCB.ItemsSource = Enum.GetValues(typeof(BO.Areas));
+            mainGrid.DataContext = busLine;
             StationsListBox.DataContext = lineStations;
+            NewStationsComboBox.DataContext = newStations;
+            ExistingStations.DataContext = lineStations;
         }
 
         private void Delete_station(object sender, RoutedEventArgs e)
         {
+            if(bl.IsTwoStationsInLine(curBusLine.DOLineId))
+            {
+                var answer = MessageBox.Show(string.Format("Are you sure you want to delete? this line will be deleted!"), "Attention!", MessageBoxButton.YesNo);
+
+                if (answer == MessageBoxResult.Yes)
+                {
+                    bl.DeleteBusLine(curBusLine);
+                    this.Close();
+                }
+            }
+            else
+            {
+                Button bt = sender as Button;
+                BO.LineStation stToDelete = bt.DataContext as BO.LineStation;
+                bl.DeleteLineStation(stToDelete);
+                lineStations.Remove(stToDelete);
+            }
+            //MessageBox.Show("Not implamented yet!");
+        }
+
+        private void Update_Line(object sender, RoutedEventArgs e)
+        {
             MessageBox.Show("Not implamented yet!");
         }
 
-        private void station_Double_click(object sender, MouseButtonEventArgs e)
+        private void UpdateTimeDistance(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Not implamented yet!");
-            //BO.BusStation busStation = StationsListBox.SelectedItem as BO.BusStation;
-            //if (busStation != null)//prevent delete+double click
-            //{
-            //    StationInfo win = new StationInfo(busStation);
-            //    win.ShowDialog();
-        
+        }
+
+        private void AddStation(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not implamented yet!");
+        }
+
+        private void Add_Staton(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not implamented yet!");
         }
     }
 }

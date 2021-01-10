@@ -4,26 +4,38 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="NewLineInfo" Height="450" Width="800">
     <Window.Resources>
+
+        <!--<ObjectDataProvider x:Key="areas"
+                            MethodName="GetValues" 
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:BO.Areas"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>-->
+
         <DataTemplate x:Key="StationDataTemplate">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Code:"/>
-                <Label Content="{Binding Path=Code}" Width="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                <Label Content="Name:"/>
-                <Label Content="{Binding Path=Name}" Width="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                <Button Content="Add" Height="40" Width="80" FontSize="15" Click="Add_StationToBusLine"/>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label Content="{Binding}" VerticalContentAlignment="Center" Grid.Column="0"/>
+                <Button Content="Add" Height="40" FontSize="15" Click="Add_StationToBusLine" Grid.Column="1"/>
+            </Grid>
         </DataTemplate>
         <DataTemplate x:Key="NewStationDataTemplate">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Code:"/>
-                <Label Content="{Binding Path= Code}" Width="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                <Label Content="Name:"/>
-                <Label Content="{Binding Path= Name}" Width="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                <Button Content="remove" Height="40" Width="80" FontSize="15" Click="Remove_Station"/>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label Content="{Binding}" VerticalContentAlignment="Center" Grid.Column="0"/>
+                <Button Content="remove" Height="40" FontSize="15" Click="Remove_Station" Grid.Column="1"/>
+            </Grid>
         </DataTemplate>
     </Window.Resources>
     <Grid>
@@ -37,15 +49,24 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.Row="0" Grid.ColumnSpan ="2" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="Enter line code: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Width="250"/>
-            <TextBox x:Name="LineCodeTB" HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" FontSize="25" PreviewKeyDown="Numbers_Enter_Only" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxLength="7"/>
+        
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Content="Enter line code: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
+            <TextBox x:Name="LineCodeTB" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="25" PreviewKeyDown="Numbers_Enter_Only" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxLength="3"/>
         </StackPanel>
-            <Label Content="choose station for adding in the line: " Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Width="300"/>
-        <ListBox x:Name="StationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="1" ItemTemplate ="{StaticResource StationDataTemplate}" />
+
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Label Content="Choose line area: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
+            <ComboBox x:Name="AreasCB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        </StackPanel>
+        
+        <Label Content="choose station for adding in the line: " Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Width="300"/>
         <Label Content="station for adding to the line:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Width="300"/>
-        <ListBox x:Name="NewStationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="0" ItemTemplate ="{StaticResource NewStationDataTemplate}" />
-        <Button Grid.Row="4" Grid.ColumnSpan="2" Width="200" Height="35" Content="Add" FontSize="27" Click="Add_Line"/>
+
+        <ListBox x:Name="StationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="1" ItemTemplate ="{StaticResource StationDataTemplate}" HorizontalContentAlignment="Stretch"/>
+        <ListBox x:Name="NewStationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="0" ItemTemplate ="{StaticResource NewStationDataTemplate}" HorizontalContentAlignment="Stretch"/>
+        
+        <Button Grid.Row="4" Grid.ColumnSpan="2" Width="200" Height="35" Content="Add line" FontSize="27" Click="Add_Line"/>
 
     </Grid>
 </Window>

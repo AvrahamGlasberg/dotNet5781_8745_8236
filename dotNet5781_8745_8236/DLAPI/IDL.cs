@@ -12,6 +12,7 @@ namespace DLAPI
         #region AdjacentStation
         void AddAdjacentStation(AdjacentStation adjacentStation);
         AdjacentStation GetAdjacentStation(int station1, int station2);
+        IEnumerable<DO.AdjacentStation> GetAdjacentStationsBy(Predicate<DO.AdjacentStation> predicate);
         void UpdateAdjacentStation(AdjacentStation NewAdjacentStation);
         void DeleteAdjacentStation(int station1, int station2);
         #endregion

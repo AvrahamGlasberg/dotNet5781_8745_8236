@@ -321,7 +321,7 @@ namespace DS
                         p1 = new GeoCoordinate(st1.Latitude, st1.Longitude);
                         p2 = new GeoCoordinate(st2.Latitude, st2.Longitude);
                         double dis = p1.GetDistanceTo(p2) / 1000; //m*1000= km
-                        dis *= 1.3; // real
+                        dis *= rand.NextDouble() / 2 + 1; // real. random between 1 and 1.5
                         int speed = rand.Next(20, 60); // km/h
                         double time = dis / speed; // h
                         int h = (int)time;

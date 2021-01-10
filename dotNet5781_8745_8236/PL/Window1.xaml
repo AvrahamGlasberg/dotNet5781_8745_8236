@@ -7,6 +7,11 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="Window1" Height="450" Width="800">
+    <Window.Resources>
+        <DataTemplate x:Key="MapPins">
+            <m:Pushpin x:Name="Pin" Location="{Binding MyMap, XPath=Center}" />
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <m:Map CredentialsProvider="bwOhJg6YwpN98Xgc2JuL~DL5wkcHgZLByzO6IGWylrQ~AniHokr5tXQwCq0pybZ0fbJWzSekZ-ppx-hhb2kkcc4z8wDZ32sz-fC-TeJU5QzN" x:Name="MyMap" Center="{Binding Path=Location}" ZoomLevel="14.000" MouseDoubleClick="Map_Double_click">
             <m:Pushpin x:Name="Pin" Location="{Binding MyMap, XPath=Center}" />

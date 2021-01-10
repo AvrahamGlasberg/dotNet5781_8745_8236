@@ -58,19 +58,33 @@ namespace PL
         }
         private void ShowStations()
         {
-            HideButtons();
-            Stations = new ObservableCollection<BO.BusStation>(bl.GetAllBusStations());
-            ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["StationsDataTemplate"];
-            ManagerListBox.DataContext = Stations;
-            addStation.Visibility = Visibility.Visible;
+            try
+            {
+                HideButtons();
+                Stations = new ObservableCollection<BO.BusStation>(bl.GetAllBusStations());
+                ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["StationsDataTemplate"];
+                ManagerListBox.DataContext = Stations;
+                addStation.Visibility = Visibility.Visible;
+            }
+            catch(BO.MissingData ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private void ShowLines()
         {
-            HideButtons();
-            Lines = new ObservableCollection<BO.BusLine>(bl.GetAllBusLines());
-            ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["LinesDataTemplate"];
-            ManagerListBox.DataContext = Lines;
-            addLine.Visibility = Visibility.Visible;
+            try
+            {
+                HideButtons();
+                Lines = new ObservableCollection<BO.BusLine>(bl.GetAllBusLines());
+                ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["LinesDataTemplate"];
+                ManagerListBox.DataContext = Lines;
+                addLine.Visibility = Visibility.Visible;
+            }
+            catch (BO.MissingData ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
         private void ShowBuses()
@@ -100,7 +114,6 @@ namespace PL
             {
                 MessageBox.Show(ex.Message + string.Format(" wrong {0} Line to delete", ex.LineNumber));
             }
-            
         }
 
         //Stations
@@ -165,7 +178,7 @@ namespace PL
         {
                 NewLineInfo win = new NewLineInfo();
                 win.ShowDialog();
-                ShowStations();
+                ShowLines();
         }
 
         private void Add_Bus(object sender, RoutedEventArgs e)

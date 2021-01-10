@@ -23,8 +23,8 @@ namespace PL
     public partial class NewLineInfo : Window
     {
         IBL bl;
-        ObservableCollection<BO.BusStation> NewbusStationsList;
-        ObservableCollection<BO.BusStation> busStationsList;
+        ObservableCollection<BO.Station> newbusStationsList;
+        ObservableCollection<BO.Station> busStationsList;
         public NewLineInfo()
         {
             InitializeComponent();
@@ -37,31 +37,43 @@ namespace PL
                 MessageBox.Show(ex.Message);
             }
             
-            busStationsList = new ObservableCollection<BO.BusStation>(bl.GetAllBusStations()); // for hidden the station that choose
-            NewbusStationsList = new ObservableCollection<BO.BusStation>();
-            StationsListBox.ItemTemplate = (DataTemplate)this.Resources["StationDataTemplate"];
+            busStationsList = new ObservableCollection<BO.Station>(bl.GetAllBusStations()); // for hidden the station that choose
+            newbusStationsList = new ObservableCollection<BO.Station>();
             StationsListBox.DataContext = busStationsList;
-            NewStationsListBox.ItemTemplate = (DataTemplate)this.Resources["NewStationDataTemplate"];
-            NewStationsListBox.DataContext = NewbusStationsList;
+            NewStationsListBox.DataContext = newbusStationsList;
+            AreasCB.ItemsSource = Enum.GetValues(typeof(BO.Areas));
         }
 
         private void Add_Line(object sender, RoutedEventArgs e)
         {
             int code;
             string message = "";
-            if (!int.TryParse(LineCodeTB.Text, out code) || (NewbusStationsList.Count <= 2))
+            if (!int.TryParse(LineCodeTB.Text, out code) || (newbusStationsList.Count < 2) || AreasCB.SelectedItem == null)
             {
                 if (!int.TryParse(LineCodeTB.Text, out code))
                     message += "Please enter station's code!\n";
-                if (NewbusStationsList.Count <= 2)
-                    message += "Please choose 3 station at least!";
+                if (newbusStationsList.Count < 2)
+                    message += "Please choose 2 station at least!\n";
+                if(AreasCB.SelectedItem == null)
+                    message += "Please choose area!\n";
                 MessageBox.Show(message);
             }
             else
             {
-                MessageBox.Show("Not implamented yet!");
-                // more check that the code number is exist? 
-                //bl.addBusLine(new BO.BusLine() { });
+                BO.BusLine line = new BO.BusLine();
+                line.Area = (BO.Areas)AreasCB.SelectedItem;
+                line.LineNumber = int.Parse(LineCodeTB.Text);
+                line.LineStations = from station in newbusStationsList
+                                    select bl.StationToLineStation(station);
+                try
+                {
+                    bl.AddBusLine(line);
+                    this.Close();
+                }
+                catch(BO.BusLineExists ex)
+                {
+                    MessageBox.Show(ex.Message + string.Format(" Choose different line number than {0} or change it's route!", ex.LineNumber));
+                }
             }
 
         }
@@ -70,7 +82,7 @@ namespace PL
         {
             Button bt = sender as Button;
             BO.BusStation busStation = bt.DataContext as BO.BusStation;
-            NewbusStationsList.Add(busStation);
+            newbusStationsList.Add(busStation);
             busStationsList.Remove(busStation);
         }
 
@@ -85,7 +97,7 @@ namespace PL
         {
             Button bt = sender as Button;
             BO.BusStation busStation = bt.DataContext as BO.BusStation;
-            NewbusStationsList.Remove(busStation);
+            newbusStationsList.Remove(busStation);
             busStationsList.Add(busStation);
         }
     }

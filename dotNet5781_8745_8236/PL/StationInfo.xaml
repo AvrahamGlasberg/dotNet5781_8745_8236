@@ -47,7 +47,7 @@
         <m:Map CredentialsProvider="bwOhJg6YwpN98Xgc2JuL~DL5wkcHgZLByzO6IGWylrQ~AniHokr5tXQwCq0pybZ0fbJWzSekZ-ppx-hhb2kkcc4z8wDZ32sz-fC-TeJU5QzN" x:Name="MyMap" Center="{Binding Path=Position, Converter={StaticResource geoCoordinateToLocationConvertor}}" ZoomLevel="16.000" MouseDoubleClick="Map_Double_click" Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="15, 15, 15, 15">
             <m:Pushpin x:Name="Pin" Location="{Binding Path=Position, Converter={StaticResource geoCoordinateToLocationConvertor}, Mode=TwoWay}" />
         </m:Map>
-        <ListBox x:Name="ManagerListBox" ItemsSource="{Binding}" Grid.Row="0" Grid.RowSpan="5" Grid.Column="2" ItemTemplate ="{StaticResource LinesDataTemplate}" MouseDoubleClick="OpenLineInfo">
+        <ListBox x:Name="ManagerListBox" ItemsSource="{Binding}" Grid.Row="0" Grid.RowSpan="5" Grid.Column="2" ItemTemplate ="{StaticResource LinesDataTemplate}">
             
         </ListBox>
         <Button x:Name="UpdateBtn" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Content="Update" IsEnabled="False" Width="150" Height="50" FontSize="30" Click="Update"/>

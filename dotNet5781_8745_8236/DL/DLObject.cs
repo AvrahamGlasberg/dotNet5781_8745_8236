@@ -27,12 +27,18 @@ namespace DL
 
         public AdjacentStation GetAdjacentStation(int station1, int station2)
         {
-            AdjacentStation retValue = DataSource.AdjacentStations.FirstOrDefault(stations => stations.Station1 == station1 && stations.Station2 == station2 && !stations.Deleted);
+            AdjacentStation retValue = DataSource.AdjacentStations.FirstOrDefault(stations => (stations.Station1 == station1 && stations.Station2 == station2) || (stations.Station1 == station2 && stations.Station2 == station1) && !stations.Deleted);
             if (retValue != null)
                 return retValue.Clone();
             else throw new AdjacentStationExceptions(station1, station2, false);
         }
 
+        public IEnumerable<DO.AdjacentStation> GetAdjacentStationsBy(Predicate<DO.AdjacentStation> predicate)
+        {
+            return from stations in DataSource.AdjacentStations
+                   where predicate(stations) && !stations.Deleted
+                   select stations.Clone();
+        }
         public void UpdateAdjacentStation(AdjacentStation NewAdjacentStation)
         {
             AdjacentStation cur = DataSource.AdjacentStations.FirstOrDefault(stations => stations.Station1 == NewAdjacentStation.Station1 && stations.Station2 == NewAdjacentStation.Station2 && !stations.Deleted);
@@ -125,10 +131,7 @@ namespace DL
         #region Line
         public void AddLine(Line line)
         {
-            if (DataSource.Lines.FirstOrDefault(curLine => curLine.Id == line.Id && !curLine.Deleted) != null)
-                throw new LineExceptions(line.Id, true);
-            else
-                DataSource.Lines.Add(line.Clone());
+             DataSource.Lines.Add(line.Clone());
         }
 
         public Line GetLine(int id)
@@ -141,8 +144,6 @@ namespace DL
 
         public IEnumerable<Line> GetAllLines()
         {
-            if (DataSource.Lines.Count == 0)
-                throw new LineExceptions(0, false);
             return from CurLine in DataSource.Lines
                    where !CurLine.Deleted
                    orderby CurLine.Code

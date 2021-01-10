@@ -4,20 +4,47 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="LinesInfo" Height="450" Width="800">
+        Title="LinesInfo" Height="650" Width="1250">
     <Window.Resources>
+
         <DataTemplate x:Key="LineDataTemplate">
-          <StackPanel Orientation="Horizontal">
-               <Label x:Name="Line" Content="{Binding}" Width="500" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-              <Button Content="Delete"  Height="50" Width="100" HorizontalAlignment="Right" Click="Delete_station" Margin="0, 0, 50, 0"/>
-            </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label Content="{Binding}" Grid.Column="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <Label Content="-->" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <Label Content="{Binding Path=DistanceToNext}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <Label Content="-->" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    <Label Content="{Binding Path=TimeToNext}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                </StackPanel>
+                <Button Content="Delete" Grid.Column="2"  Height="50" Width="70" HorizontalAlignment="Center" Click="Delete_station"/>
+                <Button Content="Update time &amp; distance" Grid.Column="3" Height="50" Width="150" VerticalAlignment="Center" HorizontalAlignment="Center" Click="UpdateTimeDistance" />
+            </Grid>
         </DataTemplate>
+
+        <!--<DataTemplate x:Key="StationToAddDataTemplate">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="8*" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+                <Label Content="{Binding}" Grid.Column="0" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                <Button Content="Add" Grid.Column="1"  Height="50" Width="70" HorizontalAlignment="Center" Click="AddStation"/>
+            </Grid>
+        </DataTemplate>-->
+
     </Window.Resources>
     
     <Grid x:Name="mainGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -26,14 +53,19 @@
             <RowDefinition Height="2*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Grid.ColumnSpan="2" Orientation="Horizontal">
-        <Label Content="Line number:"  FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
-        <TextBlock x:Name="LineNumTB"  Text="{Binding Path=LineNumber}"  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25"/>
 
+        <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
+            <Label Content="Line number:"  FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBlock x:Name="LineNumTB"  Text="{Binding Path=LineNumber}"  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25"/>
+            <Label Content="Line area: " Margin="50, 0, 0, 0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <ComboBox x:Name="AreasCB" FontSize="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectedItem="{Binding Path=Area, Mode=TwoWay}" Height="50"/>
         </StackPanel>
-        <ListBox x:Name="StationsListBox" Grid.Column= "0" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="2" MouseDoubleClick="station_Double_click" ItemsSource="{Binding}" ItemTemplate ="{StaticResource LineDataTemplate}" Margin="40,0,40,0" />
-        
-    
+
+        <ListBox x:Name="StationsListBox" Grid.Column= "0" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding}" ItemTemplate ="{StaticResource LineDataTemplate}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" />
+        <ComboBox x:Name="NewStationsComboBox" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <ComboBox x:Name="ExistingStations" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Button Grid.Column="1" Grid.Row="3" Content="Add" Click="Add_Staton" Width="100" Height="50" FontSize="25" />
+        <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="Update" Click="Update_Line" Width="200" Height="50" FontSize="25" />
     </Grid>
     
 </Window>

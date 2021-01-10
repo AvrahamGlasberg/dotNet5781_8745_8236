@@ -9,6 +9,7 @@ namespace BLAPI
     public interface IBL
     {
         #region BO.BusLine
+        void AddBusLine(BO.BusLine busLine);
         IEnumerable<BO.BusLine> GetAllBusLines();
         void DeleteBusLine(BO.BusLine line);
         void DeleteLineStation(BO.LineStation lineStation);
@@ -21,6 +22,8 @@ namespace BLAPI
         void AddBusStation(BO.BusStation busStation);
         void DeleteBusStation(BO.BusStation busStation);
         void UpdateBusStation(BO.BusStation busStation);
+        BO.LineStation StationToLineStation(BO.Station st);
+        IEnumerable<BO.Station> GetAllStationsNotInLine(int DOLineId);
         #endregion
 
         #region BO.User

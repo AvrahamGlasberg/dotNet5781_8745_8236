@@ -59,7 +59,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GeoCoordinateToLocationConvertor.cs" />
+    <Compile Include="Convertors\GeoCoordinateToLocationConvertor.cs" />
     <Compile Include="LineInfo.xaml.cs">
       <DependentUpon>LineInfo.xaml</DependentUpon>
     </Compile>
