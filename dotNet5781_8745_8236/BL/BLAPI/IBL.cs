@@ -17,6 +17,7 @@ namespace BLAPI
         void DeleteLineStation(BO.LineStation lineStation);
         bool IsTwoStationsInLine(int DOLineId);
         void AddLineStationToBusLine(BO.BusLine busLine, BO.Station station, int index);
+        void UpdateTimeAndDis(BO.LineStation first, BO.LineStation second);
         #endregion
 
         #region BO.BusStation

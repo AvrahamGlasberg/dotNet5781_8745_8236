@@ -73,6 +73,7 @@ namespace PL
                 if (answer == MessageBoxResult.Yes)
                 {
                     bl.DeleteBusLine(curBusLine);
+                    this.Closing -= UpdateArea; // no needing event if line is being deleted
                     this.Close();
                 }
             }
@@ -92,41 +93,59 @@ namespace PL
 
         private void UpdateTimeDistance(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not implamented yet!");
+            Button bt = sender as Button;
+            BO.LineStation firstSt = bt.DataContext as BO.LineStation;
+            var lst = lineStations.ToList<BO.LineStation>();
+            int ind = lst.FindIndex(st=>st.Code==firstSt.Code);
+            if (ind == lst.Count - 1)
+                MessageBox.Show("Cannot update time & distance to last station!");
+            else
+            {
+                BO.LineStation secSt = lst[ind + 1];
+                UpdateTimeAndDistance win = new UpdateTimeAndDistance(firstSt, secSt);
+                win.ShowDialog();
+                UpdateData();
+            }
         }
-
-        private void AddStation(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Not implamented yet!");
-        }
-
         private void UpdateArea(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            bl.UpdateBusLineArea(curBusLine);
+            try
+            {
+                bl.UpdateBusLineArea(curBusLine);
+            }
+            catch (BO.BusLineNotFound ex)
+            {
+                MessageBox.Show(ex.Message + string.Format(" {0}", ex.LineNumber));
+            }
         }
 
         private void Add_Station_Before(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                int index = ExistingStations.SelectedIndex;
-                BO.Station newStation = NewStationsComboBox.SelectedItem as BO.Station;
-                bl.AddLineStationToBusLine(curBusLine, newStation, index);
-                UpdateData();
-            }
-            catch(BO.MissingData ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            AddStation(ExistingStations.SelectedIndex);
         }
         private void Add_Station_After(object sender, RoutedEventArgs e)
         {
+            AddStation(ExistingStations.SelectedIndex + 1);
+        }
+        private void AddStation(int index)
+        {
             try
             {
-                int index = ExistingStations.SelectedIndex + 1;
-                BO.Station newStation = NewStationsComboBox.SelectedItem as BO.Station;
-                bl.AddLineStationToBusLine(curBusLine, newStation, index);
-                UpdateData();
+                string message = "";
+                if (NewStationsComboBox.SelectedItem == null || ExistingStations.SelectedItem == null)
+                {
+                    if (NewStationsComboBox.SelectedItem == null)
+                        message = "Please choose station to add!\n";
+                    if (ExistingStations.SelectedItem == null)
+                        message += "Please choose exisiting station for index!";
+                    MessageBox.Show(message);
+                }
+                else
+                {
+                    BO.Station newStation = NewStationsComboBox.SelectedItem as BO.Station;
+                    bl.AddLineStationToBusLine(curBusLine, newStation, index);
+                    UpdateData();
+                }
             }
             catch (BO.MissingData ex)
             {

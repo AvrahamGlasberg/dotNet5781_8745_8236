@@ -13,6 +13,23 @@ namespace BL
         IDL dl = DLFactory.GetDL();
 
         #region BO.BusLine
+        public void UpdateTimeAndDis(BO.LineStation first, BO.LineStation second)
+        {
+            try
+            {
+                dl.UpdateAdjacentStation(new DO.AdjacentStation()
+                {
+                    Station1 = first.Code, 
+                    Station2 = second.Code, 
+                    Distance = (Double)first.DistanceToNext,
+                    Time = (TimeSpan)first.TimeToNext
+                });
+            }
+            catch(DO.AdjacentStationExceptions ex)
+            {
+                throw new BO.MissingData(string.Format("Missing information about the stations {0} and {1} to update!", ex.Station1, ex.Station2), ex);
+            }
+        }
         public void AddLineStationToBusLine(BO.BusLine busLine, BO.Station station, int index)
         {
             try

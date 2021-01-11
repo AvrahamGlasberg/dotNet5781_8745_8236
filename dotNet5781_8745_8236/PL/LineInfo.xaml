@@ -62,14 +62,23 @@
         </StackPanel>
 
         <ListBox x:Name="StationsListBox" Grid.Column= "0" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding}" ItemTemplate ="{StaticResource LineDataTemplate}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" />
-        <ComboBox x:Name="NewStationsComboBox" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <ComboBox x:Name="ExistingStations" Grid.Row="2" Grid.Column="1" ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-                    <Label Content="{Binding Path=Code}"/>
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
-        </ComboBox>
+
+        <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Choose station to add:"  FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ComboBox x:Name="NewStationsComboBox" ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        </StackPanel>
+
+        <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Label Content="Choose relative existing station:"  FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <ComboBox x:Name="ExistingStations"  ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Label Content="{Binding Path=Code}"/>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+        
         <StackPanel Orientation="Horizontal" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Button Content="Add before" Click="Add_Station_Before" Width="150" Height="50" FontSize="25" />
             <Button Content="Add after" Click="Add_Station_After" Width="150" Height="50" FontSize="25" />
