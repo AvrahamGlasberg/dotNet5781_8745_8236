@@ -573,6 +573,87 @@ namespace BL
         }
         #endregion
 
+        #region BO.Bus
+        public void AddBus(BO.Bus bus)
+        {
+            try
+            {
+                dl.AddBus(new DO.Bus()
+                {
+                    LicenseNum = bus.LicenseNum,
+                    FromDate = bus.FromDate,
+                    LastTreatmentDate = bus.LastTreatmentDate,
+                    TripSinceTreatment = bus.TripSinceTreatment,
+                    TotalTrip = bus.TotalTrip,
+                    BusStatus = (DO.Status)(int)bus.BusStatus,
+                    FuelRemain = bus.FuelRemain
+                });
+            }
+            catch(DO.BusExceptions ex)
+            {
+                throw new BO.BusExists("Bus is already exists!", ex.License, ex);
+            }
+        }
+        public IEnumerable<BO.Bus> GetAllBuses()
+        {
+            return from bus in dl.GettAllBuses()
+                   orderby bus.FromDate
+                   select DOBusToBOBus(bus);
+        }
+        private BO.Bus DOBusToBOBus(DO.Bus bus)
+        {
+            return new BO.Bus()
+            {
+                 LicenseNum = bus.LicenseNum,
+                 FromDate = bus.FromDate,
+                 LastTreatmentDate = bus.LastTreatmentDate,
+                 TotalTrip = bus.TotalTrip,
+                 TripSinceTreatment = bus.TripSinceTreatment,
+                 FuelRemain = bus.FuelRemain,
+                 BusStatus = (BO.Status)(int)bus.BusStatus
+            };
+
+        }
+        public void Refuel(BO.Bus bus)
+        {
+            try
+            {
+                DO.Bus DObus = dl.GetBus(bus.LicenseNum);
+                DObus.FuelRemain = 400;
+                dl.UpdateBus(DObus);
+            }
+            catch(DO.BusExceptions ex)
+            {
+                throw new BO.BusNotFound("Bus could not be found for refueling!", ex.License, ex);
+            }
+        }
+        public void Treatment(BO.Bus bus)
+        {
+            try
+            {
+                DO.Bus DObus = dl.GetBus(bus.LicenseNum);
+                DObus.LastTreatmentDate = DateTime.Now;
+                DObus.TripSinceTreatment = 0;
+                dl.UpdateBus(DObus);
+            }
+            catch (DO.BusExceptions ex)
+            {
+                throw new BO.BusNotFound("Bus could not be found for treatment!", ex.License, ex);
+            }
+        }
+        public void DeleteBus(BO.Bus bus)
+        {
+            try
+            {
+                dl.DeleteBus(bus.LicenseNum);
+            }
+            catch(DO.BusExceptions ex)
+            {
+                throw new BO.BusNotFound("Bus was not found to selete!", ex.License, ex);
+            }
+        }
+        #endregion
+
         #region BO.User
         public BO.User GetUser(string userName)
         {

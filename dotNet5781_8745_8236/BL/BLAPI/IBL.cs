@@ -30,6 +30,14 @@ namespace BLAPI
         IEnumerable<BO.Station> GetAllStationsNotInLine(int DOLineId);
         #endregion
 
+        #region BO.Bus
+        IEnumerable<BO.Bus> GetAllBuses();
+        void Refuel(BO.Bus bus);
+        void Treatment(BO.Bus bus);
+        void AddBus(BO.Bus bus);
+        void DeleteBus(BO.Bus bus);
+        #endregion
+
         #region BO.User
         BO.User GetUser(string userName);
         void AddUser(BO.User user);

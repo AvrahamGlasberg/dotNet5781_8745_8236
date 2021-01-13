@@ -5,23 +5,27 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="ManagerPresentation" Height="450" Width="800">
     <Window.Resources>
         <DataTemplate x:Key="StationsDataTemplate">
             <StackPanel Orientation="Horizontal">
                 <Label x:Name="Station" Content="{Binding}" Width="500" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                <Button Content="Delete" Click="DeleteStation" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0"/>
+                <Button Content="Delete" Click="DeleteStation" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0" Style="{StaticResource DeleteButtons}"/>
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="BusesDataTemplate">
-            
+            <StackPanel Orientation="Horizontal">
+                <Label Content="{Binding}" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                <Button Content="Delete" Click="DeleteBus" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0" Style="{StaticResource DeleteButtons}"/>
+            </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="LinesDataTemplate">
             <StackPanel Orientation="Horizontal">
                 <Label x:Name="Line" Content="{Binding}" Width="500" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                <Button Content="Delete" Click="DeleteLine" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0"/>
+                <Button Content="Delete" Click="DeleteLine" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0" Style="{StaticResource DeleteButtons}"/>
             </StackPanel>
         </DataTemplate>
     </Window.Resources>
@@ -42,14 +46,16 @@
             <RadioButton x:Name="BusesRB" Content="Buses" Height="50" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Checked="Radio_Button_Changed"/>
         </StackPanel>
 
-        <ListBox x:Name="ManagerListBox" ItemsSource="{Binding}" SelectionChanged="ListBox_SelectionChanged" Grid.Row="0" Grid.Column="1" MouseDoubleClick="Open_Info"/>
+        <ListBox x:Name="ManagerListBox" ItemsSource="{Binding}" Grid.Row="0" Grid.Column="1" MouseDoubleClick="Open_Info"/>
 
-        <Button x:Name = "addBus" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Bus" Click="Add_Bus" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed"/>
-        <Button x:Name = "addLine" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Line" Click="Add_Line" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed"/>
-        <Button x:Name = "addStation" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Station" Click="Add_Station" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed"/>
+        <Button x:Name = "addBus" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Bus" Click="Add_Bus" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed" Style="{StaticResource AddButtons}"/>
+        <Button x:Name = "addLine" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Line" Click="Add_Line" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed" Style="{StaticResource AddButtons}"/>
+        <Button x:Name = "addStation" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Station" Click="Add_Station" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed" Style="{StaticResource AddButtons}"/>
 
 
 
-        <Button Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="200" Height="50" FontSize="20" Content="Back to main menu" Click="Back_Click"/>
+        <Button Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="200" Height="50" FontSize="20" Click="Back_Click" Style="{StaticResource ControlButtons}">
+            <Image Source="Icons/back.png" />
+        </Button>
     </Grid>
 </Window>

@@ -66,6 +66,14 @@ namespace DL
                 DataSource.Buses.Add(bus.Clone());
         }
 
+        public IEnumerable<Bus> GettAllBuses()
+        {
+            return from bus in DataSource.Buses
+                   where !bus.Deleted
+                   orderby bus.LicenseNum
+                   select bus.Clone();
+        }
+
         public Bus GetBus(int license)
         {
             Bus retValue = DataSource.Buses.FirstOrDefault(curBus => curBus.LicenseNum == license && !curBus.Deleted);

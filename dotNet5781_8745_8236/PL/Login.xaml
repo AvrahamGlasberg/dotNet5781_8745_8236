@@ -30,8 +30,8 @@
         <Label Content="Passowrd:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
         <TextBox x:Name="NameTB" Text="Avraham" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="150" KeyDown="Key_Down"/>
-        <TextBox x:Name="PassTB" Text="1" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="150"/>
+        <PasswordBox x:Name="PassTB" Password="1" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="150"/>
 
-        <Button Grid.Row="3" Grid.Column="0" Content="Log-in" FontSize="23" Height="35" Width="150" Grid.ColumnSpan="2" Click="Log_In" />
+        <Button Grid.Row="3" Grid.Column="0" Content="Log-in" FontSize="23" Height="35" Width="150" Grid.ColumnSpan="2" Click="Log_In" Style="{StaticResource ControlButtons}"/>
     </Grid>
 </Window>

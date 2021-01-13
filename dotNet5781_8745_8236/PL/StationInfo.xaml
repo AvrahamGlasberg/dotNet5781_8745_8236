@@ -6,6 +6,7 @@
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="StationInfo" Height="450" Width="800">
     <Window.Resources>
         <DataTemplate x:Key="LinesDataTemplate">
@@ -50,6 +51,6 @@
         <ListBox x:Name="ManagerListBox" ItemsSource="{Binding}" Grid.Row="0" Grid.RowSpan="5" Grid.Column="2" ItemTemplate ="{StaticResource LinesDataTemplate}">
             
         </ListBox>
-        <Button x:Name="UpdateBtn" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Content="Update" IsEnabled="False" Width="150" Height="50" FontSize="30" Click="Update"/>
+        <Button x:Name="UpdateBtn" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Content="Update" IsEnabled="False" Width="150" Height="50" FontSize="30" Click="Update" Style="{StaticResource AddButtons}"/>
     </Grid>
 </Window>

@@ -348,7 +348,9 @@ namespace DS
                 Bus NewBus = new Bus()
                 {
                     FromDate = DateTime.Now,
+                    LastTreatmentDate = DateTime.Now.AddYears(-1),
                     TotalTrip = 0,
+                    TripSinceTreatment = 0,
                     FuelRemain = 200,
                     BusStatus = Status.Ready
                 };

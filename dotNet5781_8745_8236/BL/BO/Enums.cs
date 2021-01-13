@@ -7,4 +7,5 @@ using System.Threading.Tasks;
 namespace BO
 {
     public enum Areas { General, North, South, Center, Jerusalem }
+    public enum Status { Ready, Driving, Refueling, Treatment }
 }

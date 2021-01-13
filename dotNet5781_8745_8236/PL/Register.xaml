@@ -28,7 +28,7 @@
 
             <CheckBox x:Name="IsAdmin" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="19" VerticalContentAlignment="Center">Administer</CheckBox>
 
-            <Button Grid.Row="3" Grid.Column="0" Content="Register" FontSize="23" Height="35" Width="150" Grid.ColumnSpan="2" Click="Register_Click"/>
+            <Button Grid.Row="3" Grid.Column="0" Content="Register" FontSize="23" Height="35" Width="150" Grid.ColumnSpan="2" Click="Register_Click" Style="{StaticResource ControlButtons}"/>
         </Grid>
     </Grid>
 </Window>

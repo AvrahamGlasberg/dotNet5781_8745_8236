@@ -47,7 +47,7 @@ namespace PL.Dialogs
             try
             {
                 user = bl.GetUser(NameTB.Text);
-                if (user.Password == PassTB.Text)
+                if (user.Password == PassTB.Password)
                     this.DialogResult = true;
                 else
                     MessageBox.Show("Incorrect Password!");

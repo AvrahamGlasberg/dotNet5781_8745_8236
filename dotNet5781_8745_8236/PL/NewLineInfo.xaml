@@ -4,18 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        ResizeMode="NoResize"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Title="NewLineInfo" Height="450" Width="1000">
     <Window.Resources>
-
-        <!--<ObjectDataProvider x:Key="areas"
-                            MethodName="GetValues" 
-                            ObjectType="{x:Type sys:Enum}">
-            <ObjectDataProvider.MethodParameters>
-                <x:Type TypeName="local:BO.Areas"/>
-            </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>-->
 
         <DataTemplate x:Key="StationDataTemplate">
             <Grid>
@@ -65,8 +58,8 @@
 
         <ListBox x:Name="StationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="1" ItemTemplate ="{StaticResource StationDataTemplate}" HorizontalContentAlignment="Stretch"/>
         <ListBox x:Name="NewStationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="0" ItemTemplate ="{StaticResource NewStationDataTemplate}" HorizontalContentAlignment="Stretch"/>
-        
-        <Button Grid.Row="4" Grid.ColumnSpan="2" Width="200" Height="35" Content="Add line" FontSize="27" Click="Add_Line"/>
+
+        <Button Grid.Row="4" Grid.ColumnSpan="2" Width="200" Height="35" Content="Add line" FontSize="27" Click="Add_Line" Style="{StaticResource AddButtons}"/>
 
     </Grid>
 </Window>

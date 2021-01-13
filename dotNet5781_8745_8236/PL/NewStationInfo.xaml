@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
+        ResizeMode="NoResize"
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         mc:Ignorable="d"
         Title="NewStationInfo" Height="450" Width="800">
@@ -29,6 +30,6 @@
         <m:Map CredentialsProvider="bwOhJg6YwpN98Xgc2JuL~DL5wkcHgZLByzO6IGWylrQ~AniHokr5tXQwCq0pybZ0fbJWzSekZ-ppx-hhb2kkcc4z8wDZ32sz-fC-TeJU5QzN" x:Name="MyMap" Center="31.764998, 35.1911131" ZoomLevel="14.000" MouseDoubleClick="Map_Double_click" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="30, 0, 30, 0">
             <m:Pushpin x:Name="Pin" Location="31.764998, 35.1911131" />
         </m:Map>
-        <Button Grid.Row="4" Width="200" Height="35" Content="Add" FontSize="27" Click="Add_Station"/>
+        <Button Grid.Row="4" Width="200" Height="35" Content="Add" FontSize="27" Click="Add_Station" Style="{StaticResource AddButtons}"/>
     </Grid>
 </Window>

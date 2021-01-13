@@ -51,7 +51,10 @@ namespace PL
                 lineStations = new ObservableCollection<BO.LineStation>(curBusLine.LineStations);
                 newStations = new ObservableCollection<BO.Station>(bl.GetAllStationsNotInLine(curBusLine.DOLineId));
                 mainGrid.DataContext = curBusLine;
-                StationsListBox.DataContext = lineStations;
+
+                LineDataGrid.ItemsSource = lineStations;
+
+                //StationsListBox.DataContext = lineStations;
                 NewStationsComboBox.DataContext = newStations;
                 ExistingStations.DataContext = lineStations;
             }
@@ -68,7 +71,7 @@ namespace PL
         {
             if(bl.IsTwoStationsInLine(curBusLine.DOLineId))
             {
-                var answer = MessageBox.Show(string.Format("Are you sure you want to delete? this line will be deleted!"), "Attention!", MessageBoxButton.YesNo);
+                var answer = MessageBox.Show(string.Format("Are you sure you want to delete? this line will be deleted!"), "Attention!", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                 if (answer == MessageBoxResult.Yes)
                 {
@@ -151,6 +154,11 @@ namespace PL
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
     }
 }

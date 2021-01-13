@@ -24,6 +24,7 @@ namespace PL
         IBL bl;
         private ObservableCollection<BO.BusStation> Stations;
         private ObservableCollection<BO.BusLine> Lines;
+        private ObservableCollection<BO.Bus> Buses;
         public ManagerPresentation()
         {
             InitializeComponent();
@@ -45,10 +46,9 @@ namespace PL
                 ShowLines();
             else if (BusesRB.IsChecked == true)
             {
-                ManagerListBox.DataContext = null;
+                //ManagerListBox.DataContext = null;
                 ShowBuses();
             }
-            
         }
         private void HideButtons()
         {
@@ -56,6 +56,25 @@ namespace PL
             addLine.Visibility = Visibility.Collapsed;
             addBus.Visibility = Visibility.Collapsed;
         }
+        #region stations 
+        private void Add_Station(object sender, RoutedEventArgs e)
+        {
+            NewStationInfo win = new NewStationInfo();
+            win.ShowDialog();
+            ShowStations();
+        }
+
+        private void ShowStationsInfo()
+        {
+            BO.BusStation busStation = ManagerListBox.SelectedItem as BO.BusStation;
+            if (busStation != null)//prevent delete+double click
+            {
+                StationInfo win = new StationInfo(busStation);
+                win.ShowDialog();
+                ShowStations();
+            }
+        }
+
         private void ShowStations()
         {
             try
@@ -66,57 +85,12 @@ namespace PL
                 ManagerListBox.DataContext = Stations;
                 addStation.Visibility = Visibility.Visible;
             }
-            catch(BO.MissingData ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-        private void ShowLines()
-        {
-            try
-            {
-                HideButtons();
-                Lines = new ObservableCollection<BO.BusLine>(bl.GetAllBusLines());
-                ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["LinesDataTemplate"];
-                ManagerListBox.DataContext = Lines;
-                addLine.Visibility = Visibility.Visible;
-            }
             catch (BO.MissingData ex)
             {
                 MessageBox.Show(ex.Message);
             }
-
-        }
-        private void ShowBuses()
-        {
-            HideButtons();
-            MessageBox.Show("Not implented yet!");
         }
 
-
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
-        }
-
-        //Line
-        private void DeleteLine(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Button bt = sender as Button;
-                BO.BusLine LineToDel = bt.DataContext as BO.BusLine;
-                bl.DeleteBusLine(LineToDel);
-                Lines.Remove(LineToDel);
-            }
-            catch(BO.BusLineNotFound ex)
-            {
-                MessageBox.Show(ex.Message + string.Format(" wrong {0} Line to delete", ex.LineNumber));
-            }
-        }
-
-        //Stations
         private void DeleteStation(object sender, RoutedEventArgs e)
         {
             try
@@ -136,7 +110,7 @@ namespace PL
                 }
                 if (!check)
                 {
-                    var answer = MessageBox.Show(string.Format("Are you sure you want to delete? line/s {0} will be deleted", lines), "Attention!", MessageBoxButton.YesNo);
+                    var answer = MessageBox.Show(string.Format("Are you sure you want to delete? line/s {0} will be deleted", lines), "Attention!", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
                     if (answer == MessageBoxResult.Yes)
                     {
@@ -149,7 +123,7 @@ namespace PL
                     Stations.Remove(station);
                 }
             }
-            catch(BO.BusLineNotFound ex)
+            catch (BO.BusLineNotFound ex)
             {
                 MessageBox.Show(ex.Message + string.Format(" wrong Line {0}.", ex.LineNumber));
             }
@@ -157,48 +131,76 @@ namespace PL
             {
                 MessageBox.Show(ex.Message + string.Format(" wrong station{0}", ex.Code));
             }
-
         }
+        #endregion
 
-        private void Back_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow window = new MainWindow();
-            window.Show();
-            this.Close();
-        }
-
-        private void Add_Station(object sender, RoutedEventArgs e)
-        {
-            NewStationInfo win = new NewStationInfo();
-            win.ShowDialog();
-            ShowStations();
-        }
-
+        #region buses
         private void Add_Line(object sender, RoutedEventArgs e)
         {
-                NewLineInfo win = new NewLineInfo();
-                win.ShowDialog();
-                ShowLines();
+            NewLineInfo win = new NewLineInfo();
+            win.ShowDialog();
+            ShowLines();
         }
 
-        private void Add_Bus(object sender, RoutedEventArgs e)
+        private void DeleteBus(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not implented yet!");
+            try
+            {
+                Button bt = sender as Button;
+                bl.DeleteBus(bt.DataContext as BO.Bus);
+                Buses.Remove(bt.DataContext as BO.Bus);
+            }
+            catch (BO.BusNotFound ex)
+            {
+                MessageBox.Show(ex.Message + string.Format(" wrong license: {0}", ex.License), "Data Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        private void Open_Info(object sender, MouseButtonEventArgs e)
-        {
-            if (BusesRB.IsChecked == true)
-                ShowBusesInfo();
-            else if (LinesRB.IsChecked == true)
-                ShowLinesInfo();
-            else if (StationsRB.IsChecked == true)
-                ShowStationsInfo();
-        }
         private void ShowBusesInfo()
         {
-            MessageBox.Show("Not implented yet!");
+            BO.Bus bus = ManagerListBox.SelectedItem as BO.Bus;
+            if (bus != null)
+            {
+                BusInfo win = new BusInfo(bus);
+                win.ShowDialog();
+                ShowBuses();
+            }
         }
+
+        private void ShowBuses()
+        {
+            try
+            {
+                HideButtons();
+                addBus.Visibility = Visibility.Visible;
+                Buses = new ObservableCollection<Bus>(bl.GetAllBuses());
+                ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["BusesDataTemplate"];
+                ManagerListBox.DataContext = Buses;
+            }
+            catch (BO.MissingData ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+        #endregion
+
+        #region lines
+        private void ShowLines()
+        {
+            try
+            {
+                HideButtons();
+                Lines = new ObservableCollection<BO.BusLine>(bl.GetAllBusLines());
+                ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["LinesDataTemplate"];
+                ManagerListBox.DataContext = Lines;
+                addLine.Visibility = Visibility.Visible;
+            }
+            catch (BO.MissingData ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void ShowLinesInfo()
         {
             BO.BusLine busLine = ManagerListBox.SelectedItem as BO.BusLine;
@@ -210,15 +212,44 @@ namespace PL
             }
             // MessageBox.Show("Not implented yet!");
         }
-        private void ShowStationsInfo()
+
+        private void Add_Bus(object sender, RoutedEventArgs e)
         {
-            BO.BusStation busStation = ManagerListBox.SelectedItem as BO.BusStation;
-            if(busStation != null)//prevent delete+double click
+            NewBusInfo win = new NewBusInfo();
+            win.ShowDialog();
+            ShowBuses();
+        }
+
+        private void DeleteLine(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                StationInfo win = new StationInfo(busStation);
-                win.ShowDialog();
-                ShowStations();
+                Button bt = sender as Button;
+                BO.BusLine LineToDel = bt.DataContext as BO.BusLine;
+                bl.DeleteBusLine(LineToDel);
+                Lines.Remove(LineToDel);
             }
+            catch (BO.BusLineNotFound ex)
+            {
+                MessageBox.Show(ex.Message + string.Format(" wrong {0} Line to delete", ex.LineNumber));
+            }
+        }
+        #endregion
+
+        private void Open_Info(object sender, MouseButtonEventArgs e)
+        {
+            if (BusesRB.IsChecked == true)
+                ShowBusesInfo();
+            else if (LinesRB.IsChecked == true)
+                ShowLinesInfo();
+            else if (StationsRB.IsChecked == true)
+                ShowStationsInfo();
+        }
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow window = new MainWindow();
+            window.Show();
+            this.Close();
         }
     }
 }

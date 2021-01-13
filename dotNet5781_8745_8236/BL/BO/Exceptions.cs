@@ -40,6 +40,23 @@ namespace BO
     }
     #endregion
 
+    #region BO.Bus
+    [Serializable]
+    public class BusNotFound : Exception
+    {
+        public int License;
+        public BusNotFound(string message, int license) : base(message) => License = license;
+        public BusNotFound(string message, int license, Exception innerEx) : base(message, innerEx) => License = license;
+    }
+
+    public class BusExists : Exception
+    {
+        public int License;
+        public BusExists(string message, int license) : base(message) => License = license;
+        public BusExists(string message, int license, Exception innerEx) : base(message, innerEx) => License = license;
+    }
+    #endregion
+
     #region BO.User
     [Serializable]
     public class UserNotFound : Exception
