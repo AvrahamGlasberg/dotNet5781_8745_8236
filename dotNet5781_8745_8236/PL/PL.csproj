@@ -63,6 +63,7 @@
       <DependentUpon>BusInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Convertors\GeoCoordinateToLocationConvertor.cs" />
+    <Compile Include="Convertors\IsCheckedToVisibilityConvertor.cs" />
     <Compile Include="LineInfo.xaml.cs">
       <DependentUpon>LineInfo.xaml</DependentUpon>
     </Compile>
