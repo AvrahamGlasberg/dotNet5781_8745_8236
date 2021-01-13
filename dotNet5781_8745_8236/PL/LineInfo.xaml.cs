@@ -53,8 +53,6 @@ namespace PL
                 mainGrid.DataContext = curBusLine;
 
                 LineDataGrid.ItemsSource = lineStations;
-
-                //StationsListBox.DataContext = lineStations;
                 NewStationsComboBox.DataContext = newStations;
                 ExistingStations.DataContext = lineStations;
             }
@@ -69,23 +67,43 @@ namespace PL
         }
         private void Delete_station(object sender, RoutedEventArgs e)
         {
-            if(bl.IsTwoStationsInLine(curBusLine.DOLineId))
+            try
             {
-                var answer = MessageBox.Show(string.Format("Are you sure you want to delete? this line will be deleted!"), "Attention!", MessageBoxButton.YesNo, MessageBoxImage.Warning);
 
-                if (answer == MessageBoxResult.Yes)
+                if (bl.IsTwoStationsInLine(curBusLine.DOLineId))
                 {
-                    bl.DeleteBusLine(curBusLine);
-                    this.Closing -= UpdateArea; // no needing event if line is being deleted
-                    this.Close();
+                    var answer = MessageBox.Show(string.Format("Are you sure you want to delete? this line will be deleted!"), "Attention!", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+                    if (answer == MessageBoxResult.Yes)
+                    {
+                        bl.DeleteBusLine(curBusLine);
+                        this.Closing -= UpdateArea; // no needing event if line is being deleted
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    Button bt = sender as Button;
+                    BO.LineStation stToDelete = bt.DataContext as BO.LineStation;
+                    bl.DeleteLineStation(stToDelete);
+                    UpdateData();
                 }
             }
-            else
+            catch(BO.BusLineExists ex)
             {
-                Button bt = sender as Button;
-                BO.LineStation stToDelete = bt.DataContext as BO.LineStation;
-                bl.DeleteLineStation(stToDelete);
-                UpdateData();
+                MessageBox.Show(ex.Message + string.Format(" wrong line:{0}", ex.LineNumber), "Data error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch(BO.BusLineNotFound ex)
+            {
+                MessageBox.Show(ex.Message + string.Format(" wrong line:{0}", ex.LineNumber), "Data error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch(BO.StationExists ex)
+            {
+                MessageBox.Show(ex.Message + string.Format(" wrong station:{0}", ex.Code), "Data error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch(BO.StationNotFound ex)
+            {
+                MessageBox.Show(ex.Message + string.Format(" wrong station:{0}", ex.Code), "Data error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

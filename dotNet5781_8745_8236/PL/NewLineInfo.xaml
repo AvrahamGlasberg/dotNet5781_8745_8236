@@ -17,7 +17,7 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <Label Content="{Binding}" VerticalContentAlignment="Center" Grid.Column="0"/>
-                <Button Content="Add" Height="40" FontSize="15" Click="Add_StationToBusLine" Grid.Column="1"/>
+                <Button Content="Add" Height="40" FontSize="15" Click="Add_StationToBusLine" Grid.Column="1" Style="{StaticResource AddButtons}"/>
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="NewStationDataTemplate">
@@ -27,7 +27,7 @@
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <Label Content="{Binding}" VerticalContentAlignment="Center" Grid.Column="0"/>
-                <Button Content="remove" Height="40" FontSize="15" Click="Remove_Station" Grid.Column="1"/>
+                <Button Height="40" FontSize="15" Click="Remove_Station" Grid.Column="1" Style="{StaticResource DeleteButtons}"/>
             </Grid>
         </DataTemplate>
     </Window.Resources>

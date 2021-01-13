@@ -47,7 +47,7 @@ namespace DO
     [Serializable]
     public class LineExceptions : Exception
     {
-        int Id;
+        public int Id;
         public bool IsExists;
         public LineExceptions(int id, bool exists) : base()
         {
