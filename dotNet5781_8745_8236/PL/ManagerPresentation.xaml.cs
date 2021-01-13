@@ -56,6 +56,13 @@ namespace PL
             addLine.Visibility = Visibility.Collapsed;
             addBus.Visibility = Visibility.Collapsed;
         }
+        private void HideDataGrid()
+        {
+            StationsDataGrid.Visibility = Visibility.Collapsed;
+            LinesDataGrid.Visibility = Visibility.Collapsed;
+            BusesDataGrid.Visibility = Visibility.Collapsed;
+            ManagerListBox.Visibility = Visibility.Collapsed;
+        }
         #region stations 
         private void Add_Station(object sender, RoutedEventArgs e)
         {
@@ -66,7 +73,7 @@ namespace PL
 
         private void ShowStationsInfo()
         {
-            BO.BusStation busStation = ManagerListBox.SelectedItem as BO.BusStation;
+            BO.BusStation busStation = StationsDataGrid.SelectedItem as BO.BusStation;
             if (busStation != null)//prevent delete+double click
             {
                 StationInfo win = new StationInfo(busStation);
@@ -79,6 +86,7 @@ namespace PL
         {
             try
             {
+                HideDataGrid();
                 HideButtons();
                 Stations = new ObservableCollection<BO.BusStation>(bl.GetAllBusStations());
                 //ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["StationsDataTemplate"];
@@ -86,8 +94,8 @@ namespace PL
                 //addStation.Visibility = Visibility.Visible;
                 ManagerListBox.DataContext = Stations;
                 addStation.Visibility = Visibility.Collapsed;
-                ManagerListBox.Visibility = Visibility.Collapsed;
-                ManagerDataGrid.ItemsSource = Stations;
+                StationsDataGrid.Visibility = Visibility.Visible;
+                StationsDataGrid.ItemsSource = Stations;
 
             }
             catch (BO.MissingData ex)
@@ -163,7 +171,7 @@ namespace PL
 
         private void ShowBusesInfo()
         {
-            BO.Bus bus = ManagerListBox.SelectedItem as BO.Bus;
+            BO.Bus bus = BusesDataGrid.SelectedItem as BO.Bus;
             if (bus != null)
             {
                 BusInfo win = new BusInfo(bus);
@@ -176,11 +184,13 @@ namespace PL
         {
             try
             {
+                HideDataGrid();
                 HideButtons();
                 addBus.Visibility = Visibility.Visible;
                 Buses = new ObservableCollection<Bus>(bl.GetAllBuses());
-                ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["BusesDataTemplate"];
-                ManagerListBox.DataContext = Buses;
+                BusesDataGrid.Visibility = Visibility.Visible;
+                BusesDataGrid.ItemsSource = Buses;
+
             }
             catch (BO.MissingData ex)
             {
@@ -194,10 +204,11 @@ namespace PL
         {
             try
             {
+                HideDataGrid();
                 HideButtons();
                 Lines = new ObservableCollection<BO.BusLine>(bl.GetAllBusLines());
-                ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["LinesDataTemplate"];
-                ManagerListBox.DataContext = Lines;
+                LinesDataGrid.Visibility = Visibility.Visible;
+                LinesDataGrid.ItemsSource = Lines;
                 addLine.Visibility = Visibility.Visible;
             }
             catch (BO.MissingData ex)
@@ -208,14 +219,13 @@ namespace PL
 
         private void ShowLinesInfo()
         {
-            BO.BusLine busLine = ManagerListBox.SelectedItem as BO.BusLine;
+            BO.BusLine busLine = LinesDataGrid.SelectedItem as BO.BusLine;
             if (busLine != null)//prevent delete+double click
             {
                 LineInfo win = new LineInfo(busLine);
                 win.ShowDialog();
                 ShowLines();
             }
-            // MessageBox.Show("Not implented yet!");
         }
 
         private void Add_Bus(object sender, RoutedEventArgs e)
@@ -262,10 +272,5 @@ namespace PL
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
 
-        private void Delete_station(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show("Not implamented yet!");
-
-        }
     }
 }
