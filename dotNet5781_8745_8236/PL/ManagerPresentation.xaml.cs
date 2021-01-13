@@ -81,9 +81,14 @@ namespace PL
             {
                 HideButtons();
                 Stations = new ObservableCollection<BO.BusStation>(bl.GetAllBusStations());
-                ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["StationsDataTemplate"];
+                //ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["StationsDataTemplate"];
+                //ManagerListBox.DataContext = Stations;
+                //addStation.Visibility = Visibility.Visible;
                 ManagerListBox.DataContext = Stations;
-                addStation.Visibility = Visibility.Visible;
+                addStation.Visibility = Visibility.Collapsed;
+                ManagerListBox.Visibility = Visibility.Collapsed;
+                ManagerDataGrid.ItemsSource = Stations;
+
             }
             catch (BO.MissingData ex)
             {
@@ -250,6 +255,17 @@ namespace PL
             MainWindow window = new MainWindow();
             window.Show();
             this.Close();
+        }
+
+        private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void Delete_station(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not implamented yet!");
+
         }
     }
 }

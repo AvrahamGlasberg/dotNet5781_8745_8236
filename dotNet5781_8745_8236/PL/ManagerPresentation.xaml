@@ -10,21 +10,21 @@
     <Window.Resources>
         <DataTemplate x:Key="StationsDataTemplate">
             <StackPanel Orientation="Horizontal">
-                <Label x:Name="Station" Content="{Binding}" Width="500" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                <Label x:Name="Station" Style="{StaticResource labelsTxt}" FontSize="20" Content="{Binding}" Width="500" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
                 <Button Content="Delete" Click="DeleteStation" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0" Style="{StaticResource DeleteButtons}"/>
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="BusesDataTemplate">
             <StackPanel Orientation="Horizontal">
-                <Label Content="{Binding}" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                <Label Content="{Binding}" Style="{StaticResource labelsTxt}" FontSize="20" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
                 <Button Content="Delete" Click="DeleteBus" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0" Style="{StaticResource DeleteButtons}"/>
             </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="LinesDataTemplate">
             <StackPanel Orientation="Horizontal">
-                <Label x:Name="Line" Content="{Binding}" Width="500" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
+                <Label x:Name="Line" Content="{Binding}" Style="{StaticResource labelsTxt}" FontSize="20" Width="500" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
                 <Button Content="Delete" Click="DeleteLine" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0" Style="{StaticResource DeleteButtons}"/>
             </StackPanel>
         </DataTemplate>
@@ -47,6 +47,50 @@
         </StackPanel>
 
         <ListBox x:Name="ManagerListBox" ItemsSource="{Binding}" Grid.Row="0" Grid.Column="1" MouseDoubleClick="Open_Info"/>
+
+        <DataGrid x:Name="ManagerDataGrid" Grid.Row="0" Grid.Column="1"  CanUserAddRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="False" EnableColumnVirtualization="False" LoadingRow="DataGrid_LoadingRow"   ItemsSource="{Binding}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="LightGreen"/>
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Code">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=Code}" Style="{StaticResource labelsTxt}" FontSize="20" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Name">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=Name}" Style="{StaticResource labelsTxt}" FontSize="20" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="70" HorizontalAlignment="Center" Click="Delete_station" Style="{StaticResource DeleteButtons}" >
+                                <Image Source="Icons\delete.png"/>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+            </DataGrid.Columns>
+
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="FontWeight"  Value="Bold" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+        </DataGrid>
 
         <Button x:Name = "addBus" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Bus" Click="Add_Bus" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed" Style="{StaticResource AddButtons}"/>
         <Button x:Name = "addLine" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Line" Click="Add_Line" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed" Style="{StaticResource AddButtons}"/>
