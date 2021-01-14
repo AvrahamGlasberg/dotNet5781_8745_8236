@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Open Window" Height="450" Width="800">
+        Title="Opening Window" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="Icons/background.jpg" />
+    </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -14,8 +17,8 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Button x:Name="ManagerBtn" Height="50" Width="300" FontSize="30" Content="Manager" Grid.Row="0" Grid.RowSpan="2" Click="OpenManagerOptions" Style="{StaticResource ControlButtons}"/>
-        <Button x:Name="UserBtn" Height="50" Width="300" FontSize="30" Content="User" Grid.Row="1" Grid.RowSpan="2" Click="OpenUserOptions" Style="{StaticResource ControlButtons}"/>
+        <Button x:Name="ManagerBtn" Height="50" Width="300" FontSize="30" Content="Manager" Grid.Row="0" Grid.RowSpan="2" Click="OpenManagerOptions" Style="{StaticResource ControlButtons}" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
+        <Button x:Name="UserBtn" Height="50" Width="300" FontSize="30" Content="User" Grid.Row="1" Grid.RowSpan="2" Click="OpenUserOptions" Style="{StaticResource ControlButtons}" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
         <Button x:Name="ExitBtn" Height="50" Width="300" FontSize="30" Grid.Row="2" Grid.RowSpan="2" Click="Exit" Style="{StaticResource ControlButtons}">
             <Image Source="Icons/exit.png" />
         </Button>

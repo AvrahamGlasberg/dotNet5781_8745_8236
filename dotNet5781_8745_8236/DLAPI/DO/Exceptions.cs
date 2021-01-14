@@ -71,12 +71,12 @@ namespace DO
     [Serializable]
     public class LineTripExceptions : Exception
     {
-        public int LineId;
-        TimeSpan StartTime;
+        public int LineNumber;
+        public TimeSpan StartTime;
         public bool IsExists;
-        public LineTripExceptions(int lineid, TimeSpan start, bool exists) : base()
+        public LineTripExceptions(int lineNumber, TimeSpan start, bool exists) : base()
         {
-            LineId = lineid;
+            LineNumber = lineNumber;
             StartTime = start;
             IsExists = exists;
         }

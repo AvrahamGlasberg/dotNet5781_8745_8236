@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="UpdateTimeAndDistance" Height="450" Width="500">
+    <Window.Background>
+        <ImageBrush ImageSource="Icons/background.jpg" />
+    </Window.Background>
     <Grid x:Name="MainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -26,8 +29,8 @@
         <Label Content="Distance in KM   : " Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20"/>
         <Label Content="Time in hh:mm:ss  :" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20"/>
 
-        <TextBox x:Name="DisTB" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" Text="{Binding StringFormat={}{0:N2}, Path=DistanceToNext, Mode=TwoWay}" PreviewKeyDown="Numbers_Enter_Only"/>
-        <TextBox x:Name="TimeTB" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" Text="{Binding Path=TimeToNext, Mode=TwoWay}" PreviewKeyDown="Numbers_Enter_Only"/>
+        <TextBox x:Name="DisTB" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" Text="{Binding StringFormat={}{0:N2}, Path=DistanceToNext, Mode=TwoWay}" PreviewKeyDown="Numbers_Enter_Only" MinWidth="100" MaxWidth="150" MaxLength="14"/>
+        <TextBox x:Name="TimeTB" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" Text="{Binding Path=TimeToNext, Mode=TwoWay}" PreviewKeyDown="Numbers_Enter_Only" MinWidth="100" MaxWidth="150"/>
         <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Content="Update" Width="100" Height="40" FontSize="20" Click="UpdateInfo" Style="{StaticResource AddButtons}"/>
     </Grid>
 </Window>

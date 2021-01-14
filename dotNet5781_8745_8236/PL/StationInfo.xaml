@@ -8,16 +8,10 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="StationInfo" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="Icons/background.jpg" />
+    </Window.Background>
     <Window.Resources>
-        <DataTemplate x:Key="LinesDataTemplate">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="Line:"/>
-                <Label Content="{Binding Path=LineNumber}" Width="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                <Label Content="Destination:"/>
-                <Label Content="{Binding Path=EndStation.Name}" Width="auto" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-            </StackPanel>
-        </DataTemplate>
-
         <local:GeoCoordinateToLocationConvertor x:Key="geoCoordinateToLocationConvertor" />
     </Window.Resources>
     
@@ -30,27 +24,49 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <Label Content="code:" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="30, 0, 0, 0"/>
+            <Label Content="code:" Width="100" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="30, 0, 0, 0"/>
             <TextBox Text = "{Binding Path=Code}" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-            <Label Content="name:" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="30, 0, 0, 0"/>
-            <TextBox Text = "{Binding Path=Name, Mode=TwoWay}" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" TextChanged="ChangeText"/>
+            <Label Content="name:" Width="100" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="30, 0, 0, 0"/>
+            <TextBox Text = "{Binding Path=Name, Mode=TwoWay}" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" TextChanged="ChangeText"/>
         </StackPanel>
 
 
         <m:Map CredentialsProvider="bwOhJg6YwpN98Xgc2JuL~DL5wkcHgZLByzO6IGWylrQ~AniHokr5tXQwCq0pybZ0fbJWzSekZ-ppx-hhb2kkcc4z8wDZ32sz-fC-TeJU5QzN" x:Name="MyMap" Center="{Binding Path=Position, Converter={StaticResource geoCoordinateToLocationConvertor}}" ZoomLevel="16.000" MouseDoubleClick="Map_Double_click" Grid.Row="2" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="15, 15, 15, 15">
             <m:Pushpin x:Name="Pin" Location="{Binding Path=Position, Converter={StaticResource geoCoordinateToLocationConvertor}, Mode=TwoWay}" />
         </m:Map>
-        <ListBox x:Name="ManagerListBox" ItemsSource="{Binding}" Grid.Row="0" Grid.RowSpan="5" Grid.Column="2" ItemTemplate ="{StaticResource LinesDataTemplate}">
-            
-        </ListBox>
+
+        <DataGrid ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Column="2" x:Name="LinesDataGrid" RowHeight="50" CanUserAddRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="False" EnableColumnVirtualization="False" LoadingRow="DataGrid_LoadingRow" Grid.RowSpan="5" ItemsSource="{Binding}" Margin="5,50,20,50" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="LightGreen"/>
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Line">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=LineNumber}" Background="LightGray"  Style="{StaticResource labelsTxt}" FontSize="15" Height="50" Width="50" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Destination">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=EndStation.Name}" Background="LightGray" Style="{StaticResource labelsTxt}" Width="250" Height="50" FontSize="15" HorizontalAlignment="Center" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
         <Button x:Name="UpdateBtn" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="4" Content="Update" IsEnabled="False" Width="150" Height="50" FontSize="30" Click="Update" Style="{StaticResource AddButtons}"/>
     </Grid>
 </Window>

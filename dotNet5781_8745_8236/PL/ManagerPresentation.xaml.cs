@@ -45,23 +45,8 @@ namespace PL
             else if (LinesRB.IsChecked == true)
                 ShowLines();
             else if (BusesRB.IsChecked == true)
-            {
-                //ManagerListBox.DataContext = null;
                 ShowBuses();
-            }
-        }
-        private void HideButtons()
-        {
-            addStation.Visibility = Visibility.Collapsed;
-            addLine.Visibility = Visibility.Collapsed;
-            addBus.Visibility = Visibility.Collapsed;
-        }
-        private void HideDataGrid()
-        {
-            StationsDataGrid.Visibility = Visibility.Collapsed;
-            LinesDataGrid.Visibility = Visibility.Collapsed;
-            BusesDataGrid.Visibility = Visibility.Collapsed;
-            ManagerListBox.Visibility = Visibility.Collapsed;
+            
         }
         #region stations 
         private void Add_Station(object sender, RoutedEventArgs e)
@@ -86,17 +71,8 @@ namespace PL
         {
             try
             {
-                HideDataGrid();
-                HideButtons();
                 Stations = new ObservableCollection<BO.BusStation>(bl.GetAllBusStations());
-                //ManagerListBox.ItemTemplate = (DataTemplate)this.Resources["StationsDataTemplate"];
-                //ManagerListBox.DataContext = Stations;
-                //addStation.Visibility = Visibility.Visible;
-                ManagerListBox.DataContext = Stations;
-                addStation.Visibility = Visibility.Collapsed;
-                StationsDataGrid.Visibility = Visibility.Visible;
                 StationsDataGrid.ItemsSource = Stations;
-
             }
             catch (BO.MissingData ex)
             {
@@ -133,7 +109,7 @@ namespace PL
                 if (check)
                 {
                     bl.DeleteBusStation(station);
-                    Stations.Remove(station);
+                    ShowStations();
                 }
             }
             catch (BO.BusLineNotFound ex)
@@ -161,7 +137,7 @@ namespace PL
             {
                 Button bt = sender as Button;
                 bl.DeleteBus(bt.DataContext as BO.Bus);
-                Buses.Remove(bt.DataContext as BO.Bus);
+                ShowBuses();
             }
             catch (BO.BusNotFound ex)
             {
@@ -184,13 +160,8 @@ namespace PL
         {
             try
             {
-                HideDataGrid();
-                HideButtons();
-                addBus.Visibility = Visibility.Visible;
                 Buses = new ObservableCollection<Bus>(bl.GetAllBuses());
-                BusesDataGrid.Visibility = Visibility.Visible;
                 BusesDataGrid.ItemsSource = Buses;
-
             }
             catch (BO.MissingData ex)
             {
@@ -204,12 +175,8 @@ namespace PL
         {
             try
             {
-                HideDataGrid();
-                HideButtons();
                 Lines = new ObservableCollection<BO.BusLine>(bl.GetAllBusLines());
-                LinesDataGrid.Visibility = Visibility.Visible;
                 LinesDataGrid.ItemsSource = Lines;
-                addLine.Visibility = Visibility.Visible;
             }
             catch (BO.MissingData ex)
             {
@@ -242,7 +209,7 @@ namespace PL
                 Button bt = sender as Button;
                 BO.BusLine LineToDel = bt.DataContext as BO.BusLine;
                 bl.DeleteBusLine(LineToDel);
-                Lines.Remove(LineToDel);
+                ShowLines();
             }
             catch (BO.BusLineNotFound ex)
             {

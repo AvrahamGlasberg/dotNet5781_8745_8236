@@ -23,6 +23,41 @@ namespace BO
     }
     #endregion
 
+    #region BO.LineTrip
+    [Serializable]
+    public class LineTripNotFound : Exception
+    {
+        public int LineNumber;
+        public TimeSpan Start;
+        public LineTripNotFound(string message, int lineNumber, TimeSpan start) : base(message)
+        {
+            LineNumber = lineNumber;
+            Start = start;
+        }
+        public LineTripNotFound(string message, int lineNumber, TimeSpan start, Exception innerEX) : base(message, innerEX)
+        {
+            LineNumber = lineNumber;
+            Start = start;
+        }
+    }
+    [Serializable]
+    public class LineTripExists : Exception
+    {
+        public int LineNumber;
+        public TimeSpan Start;
+        public LineTripExists(string message, int lineNumber, TimeSpan start) : base(message)
+        {
+            LineNumber = lineNumber;
+            Start = start;
+        }
+        public LineTripExists(string message, int lineNumber, TimeSpan start, Exception innerEX) : base(message, innerEX)
+        {
+            LineNumber = lineNumber;
+            Start = start;
+        }
+    }
+    #endregion
+
     #region BO.Station
     [Serializable]
     public class StationNotFound : Exception

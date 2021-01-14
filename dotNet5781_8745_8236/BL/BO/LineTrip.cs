@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DO
+namespace BO
 {
     public class LineTrip
     {
-        public int LineId { get; set; } // line id 
+        public BO.BusLine LineInTrip { get; set; }
         public TimeSpan StartAt { get; set; }
         public TimeSpan Frequency { get; set; }
         public TimeSpan FinishAt { get; set; }
-        public bool Deleted { get; set; }
     }
 }

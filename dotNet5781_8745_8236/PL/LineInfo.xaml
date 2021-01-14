@@ -8,6 +8,9 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="LinesInfo" Height="650" Width="1250" Closing="UpdateArea">
+    <Window.Background>
+        <ImageBrush ImageSource="Icons/background.jpg" />
+    </Window.Background>
     <Window.Resources>
         
     </Window.Resources>
@@ -18,10 +21,10 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="5*" />
+            <RowDefinition Height="3*" />
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
@@ -30,8 +33,50 @@
             <Label Content="Line area: " Margin="50, 0, 0, 0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <ComboBox x:Name="AreasCB" FontSize="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectedItem="{Binding Path=Area, Mode=TwoWay}" Height="50"/>
         </StackPanel>
-        
-        <DataGrid x:Name="LineDataGrid" RowHeight="50" CanUserAddRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="False" EnableColumnVirtualization="False" LoadingRow="DataGrid_LoadingRow" Grid.Column= "0" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False">
+
+        <DataGrid ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" x:Name="TripsDataGrid" RowHeight="30" CanUserAddRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="False" EnableColumnVirtualization="False" LoadingRow="DataGrid_LoadingRow" Grid.Column= "1" Grid.Row="0" ItemsSource="{Binding}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="LightGray"/>
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Start">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=StartAt}" FontSize="15" Style="{StaticResource labelsTxt}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Frequency">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=Frequency}" FontSize="15" Style="{StaticResource labelsTxt}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn Header="Finish">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Label Content="{Binding Path=FinishAt}" FontSize="15" Style="{StaticResource labelsTxt}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Width="40" HorizontalAlignment="Center" Click="DeleteTrip" Style="{StaticResource DeleteButtons}" >
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" x:Name="LineDataGrid" RowHeight="50" CanUserAddRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="False" EnableColumnVirtualization="False" LoadingRow="DataGrid_LoadingRow" Grid.Column= "0" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
                    Color="LightGreen"/>
@@ -41,7 +86,7 @@
                 <DataGridTemplateColumn Header="Code">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding Path=Code}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Label Content="{Binding Path=Code}" FontSize="20" Style="{StaticResource labelsTxt}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -49,15 +94,15 @@
                 <DataGridTemplateColumn Header="Name">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding Path=Name}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Label Content="{Binding Path=Name}" FontSize="20" Style="{StaticResource labelsTxt}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Distance in Km to next station">
+                <DataGridTemplateColumn Header="Km to next station">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding Path=DistanceToNext}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" ContentStringFormat="{}{0:N3}"/>
+                            <Label Content="{Binding Path=DistanceToNext}" Width="80" FontSize="20" Style="{StaticResource labelsTxt}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" ContentStringFormat="{}{0:N3}"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -65,7 +110,7 @@
                 <DataGridTemplateColumn Header="Time to next station">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Content="{Binding Path=TimeToNext}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                            <Label Content="{Binding Path=TimeToNext}" Width="80" FontSize="20" Style="{StaticResource labelsTxt}" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -74,7 +119,6 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Width="70" HorizontalAlignment="Center" Click="Delete_station" Style="{StaticResource DeleteButtons}" >
-                                <Image Source="Icons\delete.png"/>
                             </Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
@@ -90,14 +134,6 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
-
-            <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="FontWeight"  Value="Bold" />
-                    <Setter Property="HorizontalAlignment" Value="Center" />
-                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                </Style>
-            </DataGrid.ColumnHeaderStyle>
         </DataGrid>
         
         
@@ -124,7 +160,9 @@
             <Button Content="Add before" Click="Add_Station_Before" Width="150" Height="50" FontSize="25" Style="{StaticResource AddButtons}"/>
             <Button Content="Add after" Click="Add_Station_After" Width="150" Height="50" FontSize="25" Style="{StaticResource AddButtons}"/>
         </StackPanel>
-        <Button Grid.Column="0" Grid.Row="3" Grid.ColumnSpan="2" Click="GoBack" Width="200" Height="50" FontSize="25" Style="{StaticResource ControlButtons}">
+        <Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Content="Add new trip" Width="230" Height="50" FontSize="25" Style="{StaticResource AddButtons}" Click="AddTrip"/>
+
+        <Button Grid.Column="0" Grid.Row="3" HorizontalAlignment="Left" Click="GoBack" Width="200" Height="50" FontSize="25" Style="{StaticResource ControlButtons}">
             <Image Source="Icons\back.png" />
         </Button>
     </Grid>

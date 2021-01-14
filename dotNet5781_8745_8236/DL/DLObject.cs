@@ -250,6 +250,13 @@ namespace DL
             else throw new LineTripExceptions(lineId, start, false);
         }
 
+        public IEnumerable<DO.LineTrip> GetAllLineTripsBy(Predicate<DO.LineTrip> predicate)
+        {
+            return from lTrip in DataSource.LinesTrip
+                   where predicate(lTrip) && !lTrip.Deleted
+                   orderby lTrip.StartAt
+                   select lTrip;
+        }
         public void UpdateLineTrip(LineTrip NewLineTrip)
         {
             LineTrip cur = DataSource.LinesTrip.FirstOrDefault(curLineTrip => curLineTrip.LineId == NewLineTrip.LineId && curLineTrip.StartAt == NewLineTrip.StartAt && !curLineTrip.Deleted);

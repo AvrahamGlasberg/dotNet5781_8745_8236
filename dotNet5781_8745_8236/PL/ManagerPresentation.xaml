@@ -7,27 +7,13 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="ManagerPresentation" Height="450" Width="800">
+    <Window.Background>
+        <ImageBrush ImageSource="Icons/background.jpg" />
+    </Window.Background>
     <Window.Resources>
-        <DataTemplate x:Key="StationsDataTemplate">
-            <StackPanel Orientation="Horizontal">
-                <Label x:Name="Station" Style="{StaticResource labelsTxt}" FontSize="20" Content="{Binding}" Width="500" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                <Button Content="Delete" Click="DeleteStation" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0" Style="{StaticResource DeleteButtons}"/>
-            </StackPanel>
-        </DataTemplate>
 
-        <DataTemplate x:Key="BusesDataTemplate">
-            <StackPanel Orientation="Horizontal">
-                <Label Content="{Binding}" Style="{StaticResource labelsTxt}" FontSize="20" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                <Button Content="Delete" Click="DeleteBus" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0" Style="{StaticResource DeleteButtons}"/>
-            </StackPanel>
-        </DataTemplate>
+        <local:IsCheckedToVisibilityConvertor x:Key="isCheckedToVisibilityConvertor" />
 
-        <DataTemplate x:Key="LinesDataTemplate">
-            <StackPanel Orientation="Horizontal">
-                <Label x:Name="Line" Content="{Binding}" Style="{StaticResource labelsTxt}" FontSize="20" Width="500" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"/>
-                <Button Content="Delete" Click="DeleteLine" Height="50" Width="100" HorizontalAlignment="Right" Margin="0, 0, 50, 0" Style="{StaticResource DeleteButtons}"/>
-            </StackPanel>
-        </DataTemplate>
     </Window.Resources>
 
     <Grid>
@@ -46,9 +32,10 @@
             <RadioButton x:Name="BusesRB" Content="Buses" Height="50" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Checked="Radio_Button_Changed"/>
         </StackPanel>
 
-        <ListBox x:Name="ManagerListBox" ItemsSource="{Binding}" Grid.Row="0" MouseDoubleClick="Open_Info" Margin="42,0,71.6,0"/>
+        <!-- Stations Data Grid -->
+        <DataGrid ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" x:Name="StationsDataGrid" MouseDoubleClick="Open_Info" Grid.Row="0" Grid.Column="1"  CanUserAddRows="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="False" EnableColumnVirtualization="False" LoadingRow="DataGrid_LoadingRow" ItemsSource="{Binding}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False"
+                  Visibility="{Binding ElementName=StationsRB, Path=IsChecked, Converter={StaticResource isCheckedToVisibilityConvertor}}">
 
-        <DataGrid x:Name="StationsDataGrid" MouseDoubleClick="Open_Info" Grid.Row="0" Grid.Column="1"  CanUserAddRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="False" EnableColumnVirtualization="False" LoadingRow="DataGrid_LoadingRow"   ItemsSource="{Binding}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
                    Color="LightGreen"/>
@@ -82,17 +69,11 @@
                 </DataGridTemplateColumn>
 
             </DataGrid.Columns>
-
-            <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="FontWeight"  Value="Bold" />
-                    <Setter Property="HorizontalAlignment" Value="Center" />
-                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                </Style>
-            </DataGrid.ColumnHeaderStyle>
         </DataGrid>
 
-        <DataGrid x:Name="LinesDataGrid" Grid.Row="0" Grid.Column="1" MouseDoubleClick="Open_Info" CanUserAddRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="False" EnableColumnVirtualization="False" LoadingRow="DataGrid_LoadingRow"   ItemsSource="{Binding}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False">
+        <!-- Lines Data Grid -->
+        <DataGrid ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" x:Name="LinesDataGrid" Grid.Row="0" Grid.Column="1" MouseDoubleClick="Open_Info" CanUserAddRows="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="False" EnableColumnVirtualization="False" LoadingRow="DataGrid_LoadingRow"   ItemsSource="{Binding}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False"
+                   Visibility="{Binding ElementName=LinesRB, Path=IsChecked, Converter={StaticResource isCheckedToVisibilityConvertor}}">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
                    Color="LightGreen"/>
@@ -107,7 +88,7 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Destination">
+                <DataGridTemplateColumn Header="End station">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Label Content="{Binding Path=EndStation.Code}" Style="{StaticResource labelsTxt}" FontSize="20" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
@@ -115,14 +96,14 @@
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn >
+                <DataGridTemplateColumn Header="Destination">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Label Content="{Binding Path=EndStation.Name}" Style="{StaticResource labelsTxt}" FontSize="20" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                
+
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
@@ -134,17 +115,12 @@
                 </DataGridTemplateColumn>
 
             </DataGrid.Columns>
-
-            <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="FontWeight"  Value="Bold" />
-                    <Setter Property="HorizontalAlignment" Value="Center" />
-                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                </Style>
-            </DataGrid.ColumnHeaderStyle>
         </DataGrid>
 
-        <DataGrid x:Name="BusesDataGrid" Grid.Row="0" Grid.Column="1" MouseDoubleClick="Open_Info" CanUserAddRows="False" CanUserSortColumns="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="False" EnableColumnVirtualization="False" LoadingRow="DataGrid_LoadingRow"   ItemsSource="{Binding}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False">
+
+        <!-- Buses Data Grid -->
+        <DataGrid ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" x:Name="BusesDataGrid" Grid.Row="0" Grid.Column="1" MouseDoubleClick="Open_Info" CanUserAddRows="False" HorizontalAlignment="Left" VerticalAlignment="Top" EnableRowVirtualization="False" EnableColumnVirtualization="False" LoadingRow="DataGrid_LoadingRow"   ItemsSource="{Binding}" Margin="20,0,20,0" HorizontalContentAlignment="Stretch" AutoGenerateColumns="False"
+                   Visibility="{Binding ElementName=BusesRB, Path=IsChecked, Converter={StaticResource isCheckedToVisibilityConvertor}}">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
                    Color="LightGreen"/>
@@ -178,24 +154,19 @@
                 </DataGridTemplateColumn>
 
             </DataGrid.Columns>
-
-            <DataGrid.ColumnHeaderStyle>
-                <Style TargetType="{x:Type DataGridColumnHeader}">
-                    <Setter Property="FontWeight"  Value="Bold" />
-                    <Setter Property="HorizontalAlignment" Value="Center" />
-                    <Setter Property="HorizontalContentAlignment" Value="Center" />
-                </Style>
-            </DataGrid.ColumnHeaderStyle>
         </DataGrid>
 
 
-        <Button x:Name = "addBus" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Bus" Click="Add_Bus" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed" Style="{StaticResource AddButtons}"/>
-        <Button x:Name = "addLine" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Line" Click="Add_Line" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed" Style="{StaticResource AddButtons}"/>
-        <Button x:Name = "addStation" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Station" Click="Add_Station" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Visibility="Collapsed" Style="{StaticResource AddButtons}"/>
+        <Button x:Name = "addBus" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Bus" Click="Add_Bus" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Style="{StaticResource AddButtons}"
+                 Visibility="{Binding ElementName=BusesRB, Path=IsChecked, Converter={StaticResource isCheckedToVisibilityConvertor}}"/>
+        <Button x:Name = "addLine" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Line" Click="Add_Line" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Style="{StaticResource AddButtons}"
+                 Visibility="{Binding ElementName=LinesRB, Path=IsChecked, Converter={StaticResource isCheckedToVisibilityConvertor}}"/>
+        <Button x:Name = "addStation" Grid.Column="1" Grid.Row="1" Width="200" Height="50" FontSize="20" Content="Add new Station" Click="Add_Station" HorizontalAlignment="Right" Margin="0, 0, 20, 0" Style="{StaticResource AddButtons}"
+                 Visibility="{Binding ElementName=StationsRB, Path=IsChecked, Converter={StaticResource isCheckedToVisibilityConvertor}}"/>
 
 
 
-        <Button Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="200" Height="50" FontSize="20" Click="Back_Click" Style="{StaticResource ControlButtons}">
+        <Button HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Width="200" Height="50" FontSize="20" Click="Back_Click" Style="{StaticResource ControlButtons}">
             <Image Source="Icons/back.png" />
         </Button>
     </Grid>

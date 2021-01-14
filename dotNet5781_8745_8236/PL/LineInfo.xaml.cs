@@ -27,6 +27,7 @@ namespace PL
         IBL bl;
         ObservableCollection<BO.LineStation> lineStations;
         ObservableCollection<BO.Station> newStations;
+        ObservableCollection<BO.LineTrip> trips;
         BO.BusLine curBusLine;
         public LineInfo(BusLine busLine)
         {
@@ -50,9 +51,11 @@ namespace PL
                 curBusLine = bl.GetUpdatedBOBusLine(curBusLine.DOLineId);
                 lineStations = new ObservableCollection<BO.LineStation>(curBusLine.LineStations);
                 newStations = new ObservableCollection<BO.Station>(bl.GetAllStationsNotInLine(curBusLine.DOLineId));
+                trips = new ObservableCollection<LineTrip>(bl.GetAllLineTripsInLine(curBusLine));
                 mainGrid.DataContext = curBusLine;
 
                 LineDataGrid.ItemsSource = lineStations;
+                TripsDataGrid.ItemsSource = trips;
                 NewStationsComboBox.DataContext = newStations;
                 ExistingStations.DataContext = lineStations;
             }
@@ -177,6 +180,26 @@ namespace PL
         private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex() + 1).ToString();
+        }
+
+        private void AddTrip(object sender, RoutedEventArgs e)
+        {
+            NewTripInfo win = new NewTripInfo(curBusLine);
+            win.ShowDialog();
+            UpdateData();
+        }
+
+        private void DeleteTrip(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.DeleteLineTrip((sender as Button).DataContext as BO.LineTrip);
+                UpdateData();
+            }
+            catch(BO.LineTripNotFound ex)
+            {
+                MessageBox.Show(ex.Message + string.Format(" could not find line {0} at {1} to delete", ex.LineNumber, ex.Start), "Data error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

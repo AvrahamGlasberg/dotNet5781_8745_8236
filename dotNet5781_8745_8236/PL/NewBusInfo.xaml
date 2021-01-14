@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         ResizeMode="NoResize"
         Title="NewBusInfo" Height="400" Width="500">
+    <Window.Background>
+        <ImageBrush ImageSource="Icons/background.jpg" />
+    </Window.Background>
     <Window.Resources>
     </Window.Resources>
     <Grid x:Name="MainGrid">

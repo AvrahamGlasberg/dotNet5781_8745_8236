@@ -53,6 +53,7 @@ namespace DLAPI
         #region LineTrip
         void AddLineTrip(LineTrip lineTrip);
         LineTrip GetLineTrip(int lineId, TimeSpan start);
+        IEnumerable<DO.LineTrip> GetAllLineTripsBy(Predicate<DO.LineTrip> predicate);
         void UpdateLineTrip(LineTrip NewLineTrip);
         void DeleteLineTrip(int lineId, TimeSpan start);
         #endregion

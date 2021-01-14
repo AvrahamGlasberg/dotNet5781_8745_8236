@@ -41,9 +41,8 @@ namespace PL
             }
             busStation = station;
             lines = new ObservableCollection<BO.Line>(busStation.LinesInstation);
-            //MyMap.DataContext = busStation;
             MainGrid.DataContext = busStation;
-            ManagerListBox.DataContext = lines;
+            LinesDataGrid.ItemsSource = lines;
             //WRONG!!!
             MyMap.Center = new Location(busStation.Position.Latitude, busStation.Position.Longitude);
             UpdateBtn.IsEnabled = false;
@@ -66,7 +65,11 @@ namespace PL
             }
             catch(BO.StationNotFound ex)
             {
-                MessageBox.Show(ex.Message + string.Format(" wrong code: {0}", ex.Code));
+                MessageBox.Show(ex.Message + string.Format(" wrong code: {0}", ex.Code), "data error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch(BO.MissingData ex)
+            {
+                MessageBox.Show(ex.Message, "data error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -74,6 +77,11 @@ namespace PL
         {
             if((sender as TextBox).Text != busStation.Name)
                 UpdateBtn.IsEnabled = true;
+        }
+
+        private void DataGrid_LoadingRow(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex() + 1).ToString();
         }
     }
 }

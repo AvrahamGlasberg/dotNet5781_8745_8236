@@ -62,6 +62,7 @@
     <Compile Include="BusInfo.xaml.cs">
       <DependentUpon>BusInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Classes\TextAnimation.cs" />
     <Compile Include="Convertors\GeoCoordinateToLocationConvertor.cs" />
     <Compile Include="Convertors\IsCheckedToVisibilityConvertor.cs" />
     <Compile Include="LineInfo.xaml.cs">
@@ -81,6 +82,9 @@
     </Compile>
     <Compile Include="NewStationInfo.xaml.cs">
       <DependentUpon>NewStationInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewTripInfo.xaml.cs">
+      <DependentUpon>NewTripInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="Register.xaml.cs">
       <DependentUpon>Register.xaml</DependentUpon>
@@ -131,6 +135,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="NewStationInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewTripInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,6 +206,9 @@
   <ItemGroup>
     <Resource Include="Icons\refuel.png" />
     <Resource Include="Icons\treatment .png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\background.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

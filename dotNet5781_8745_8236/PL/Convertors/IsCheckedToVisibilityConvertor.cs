@@ -8,7 +8,7 @@ using System.Windows.Data;
 using System.Windows;
 namespace PL
 {
-    class IsCheckedToVisibilityConvertor : IValueConverter
+    public class IsCheckedToVisibilityConvertor : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

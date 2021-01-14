@@ -20,6 +20,12 @@ namespace BLAPI
         void UpdateTimeAndDis(BO.LineStation first, BO.LineStation second);
         #endregion
 
+        #region BO.LineTrip
+        void AddLineTrip(BO.LineTrip lineTrip);
+        void DeleteLineTrip(BO.LineTrip lineTrip);
+        IEnumerable<BO.LineTrip> GetAllLineTripsInLine(BO.BusLine busLine);
+        #endregion
+
         #region BO.BusStation
         IEnumerable<BO.BusStation> GetAllBusStations();
         BO.BusStation GetBusStation(int code);

@@ -358,6 +358,61 @@ namespace BL
         }
         #endregion
 
+        #region BO.LineTrip
+        public void AddLineTrip(BO.LineTrip lineTrip)
+        {
+            try
+            {
+                dl.AddLineTrip(new DO.LineTrip()
+                {
+                    LineId = lineTrip.LineInTrip.DOLineId,
+                    StartAt = lineTrip.StartAt,
+                    Frequency = lineTrip.Frequency,
+                    FinishAt = lineTrip.FinishAt
+                });
+            }
+            catch(DO.LineTripExceptions ex)
+            {
+                throw new BO.LineTripExists("This Line on this time already exists!", ex.LineNumber, ex.StartTime, ex);
+            }
+        }
+        public void DeleteLineTrip(BO.LineTrip lineTrip)
+        {
+            try
+            {
+                dl.DeleteLineTrip(lineTrip.LineInTrip.DOLineId, lineTrip.StartAt);
+            }
+            catch(DO.LineTripExceptions ex)
+            {
+                throw new BO.LineTripNotFound("Trip could not be found to delete!", ex.LineNumber, ex.StartTime, ex);
+            }
+        }
+        public IEnumerable<BO.LineTrip> GetAllLineTripsInLine(BO.BusLine busLine)
+        {
+            return from DOlineTrip in dl.GetAllLineTripsBy(ltrip => ltrip.LineId == busLine.DOLineId)
+                   orderby DOlineTrip.StartAt
+                   select DOLineTripToBOLineTrip(DOlineTrip);
+        }
+        private BO.LineTrip DOLineTripToBOLineTrip(DO.LineTrip DOLineTrip)
+        {
+            try
+            {
+                DO.Line line = dl.GetLine(DOLineTrip.LineId);
+                return new BO.LineTrip()
+                {
+                    LineInTrip = LineDOToBusLineBO(line),
+                    StartAt = DOLineTrip.StartAt,
+                    Frequency = DOLineTrip.Frequency,
+                    FinishAt = DOLineTrip.FinishAt
+                };
+            }
+            catch(DO.LineExceptions ex)
+            {
+                throw new BO.BusLineNotFound("Line could not be found!", ex.Id, ex);
+            }
+        }
+        #endregion
+
         #region BO.BusStaion
         public IEnumerable<BO.Station> GetAllStationsNotInLine(int DOLineId)
         {
@@ -473,35 +528,10 @@ namespace BL
                     Latitude = busStation.Position.Latitude,
                     Longitude = busStation.Position.Longitude
                 });
-                var allStations = dl.GetAdjacentStationsBy(st => st.Station1 == busStation.Code || st.Station2 == busStation.Code).ToList();
-                foreach (DO.AdjacentStation stations in allStations)
-                {
-                    double dis;
-                    TimeSpan t;
-                    int secStationCode;
-                    if (stations.Station1 == busStation.Code)
-                        secStationCode = stations.Station2;
-                    else
-                        secStationCode = stations.Station1;
-                    dis = CalcDis(busStation.Code, secStationCode);
-                    t = CalcTime(dis);
-                    dl.UpdateAdjacentStation(new DO.AdjacentStation()
-                    {
-                        Station1 = busStation.Code,
-                        Station2 = secStationCode,
-                        Distance = dis,
-                        Time = t
-                    }
-                    );
-                }
             }
             catch(DO.StationExceptions ex)
             {
                 throw new BO.StationNotFound("Station to update not found!", ex.Code, ex);
-            }
-            catch(DO.AdjacentStationExceptions ex)
-            {
-                throw new BO.MissingData(string.Format("Missing time & distance information about {0} and {1} stations", ex.Station1, ex.Station2), ex);
             }
         }
         public void AddBusStation(BO.BusStation busStation)

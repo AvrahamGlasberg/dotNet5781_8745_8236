@@ -54,5 +54,14 @@ namespace PL
         {
             Application.Current.Shutdown();
         }
+
+        private void Button_Mouse_Enter(object sender, MouseEventArgs e)
+        {
+            (sender as Button).Increase(7);
+        }
+        private void Button_Mouse_Leave(object sender, MouseEventArgs e)
+        {
+            (sender as Button).Decrease();
+        }
     }
 }
