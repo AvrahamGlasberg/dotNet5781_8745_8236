@@ -62,7 +62,7 @@
     <Compile Include="BusInfo.xaml.cs">
       <DependentUpon>BusInfo.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Classes\TextAnimation.cs" />
+    <Compile Include="Classes\Animation.cs" />
     <Compile Include="Convertors\GeoCoordinateToLocationConvertor.cs" />
     <Compile Include="Convertors\IsCheckedToVisibilityConvertor.cs" />
     <Compile Include="LineInfo.xaml.cs">
@@ -209,6 +209,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Icons\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\busLeft.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

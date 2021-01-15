@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="Opening Window" Height="450" Width="800">
+        Title="Opening Window" Height="450" Width="800" Activated="WindowActivated">
     <Window.Background>
         <ImageBrush ImageSource="Icons/background.jpg" />
     </Window.Background>
@@ -22,5 +22,11 @@
         <Button x:Name="ExitBtn" Height="50" Width="300" FontSize="30" Grid.Row="2" Grid.RowSpan="2" Click="Exit" Style="{StaticResource ControlButtons}">
             <Image Source="Icons/exit.png" />
         </Button>
+
+
+        <Canvas x:Name="AnimCanvas" Grid.Row="4" Width="800" VerticalAlignment="Bottom" Height="50">
+            <Image x:Name="AnimImage" Source="Icons/busLeft.png" Width="50" Height="50"/>
+        </Canvas>
+
     </Grid>
 </Window>

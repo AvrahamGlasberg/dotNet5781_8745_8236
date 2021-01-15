@@ -14,6 +14,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using PL.Dialogs;
 using BLAPI;
+using System.Windows.Media.Animation;
+
 namespace PL
 {
     /// <summary>
@@ -25,7 +27,10 @@ namespace PL
         {
             InitializeComponent();
         }
-
+        private void StartAnimation()
+        {
+            AnimImage.StartAnimationForever(AnimCanvas, 5);
+        }
         private void OpenManagerOptions(object sender, RoutedEventArgs e)
         {
             Login dialog = new Login();
@@ -62,6 +67,11 @@ namespace PL
         private void Button_Mouse_Leave(object sender, MouseEventArgs e)
         {
             (sender as Button).Decrease();
+        }
+
+        private void WindowActivated(object sender, EventArgs e)
+        {
+            StartAnimation();
         }
     }
 }
