@@ -13,7 +13,7 @@ namespace BLAPI
         {
             try
             {
-                return new BLImp();
+                return BLImp.Instance;
             }
             catch//creating dal/ds failed
             {

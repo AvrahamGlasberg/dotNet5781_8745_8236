@@ -92,7 +92,5 @@
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
         </Style>
-
-
     </Application.Resources>
 </Application>

@@ -39,13 +39,13 @@ namespace DL
                    where predicate(stations) && !stations.Deleted
                    select stations.Clone();
         }
-        public void UpdateAdjacentStation(AdjacentStation NewAdjacentStation)
+        public void UpdateAdjacentStation(AdjacentStation newAdjacentStation)
         {
-            AdjacentStation cur = DataSource.AdjacentStations.FirstOrDefault(stations => (stations.Station1 == NewAdjacentStation.Station1 && stations.Station2 == NewAdjacentStation.Station2) || (stations.Station1 == NewAdjacentStation.Station2 && stations.Station2 == NewAdjacentStation.Station1) && !stations.Deleted);
+            AdjacentStation cur = DataSource.AdjacentStations.FirstOrDefault(stations => (stations.Station1 == newAdjacentStation.Station1 && stations.Station2 == newAdjacentStation.Station2) || (stations.Station1 == newAdjacentStation.Station2 && stations.Station2 == newAdjacentStation.Station1) && !stations.Deleted);
             if (cur == null)
-                throw new AdjacentStationExceptions(NewAdjacentStation.Station1, NewAdjacentStation.Station2, false);
+                throw new AdjacentStationExceptions(newAdjacentStation.Station1, newAdjacentStation.Station2, false);
             DataSource.AdjacentStations.Remove(cur);
-            DataSource.AdjacentStations.Add(NewAdjacentStation.Clone());
+            DataSource.AdjacentStations.Add(newAdjacentStation.Clone());
         }
 
         public void DeleteAdjacentStation(int station1, int station2)
@@ -109,29 +109,29 @@ namespace DL
                 DataSource.BusesOnTrip.Add(busOnTrip.Clone());
         }
 
-        public BusOnTrip GetBusOnTrip(int License, int LineID, TimeSpan TakeOff)
+        public BusOnTrip GetBusOnTrip(int license, int lineID, TimeSpan takeOff)
         {
-            BusOnTrip retValue = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == License 
-            && curBus.LineId == LineID && curBus.PlannedTakeOff == TakeOff && !curBus.Deleted);
+            BusOnTrip retValue = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == license
+            && curBus.LineId == lineID && curBus.PlannedTakeOff == takeOff && !curBus.Deleted);
             if (retValue != null)
                 return retValue.Clone();
-            else throw new BusOnTripExceptions(License, LineID, TakeOff, false);
+            else throw new BusOnTripExceptions(license, lineID, takeOff, false);
         }
 
-        public void UpdateBusOnTrip(BusOnTrip NewBusOnTrip)
+        public void UpdateBusOnTrip(BusOnTrip busOnTrip)
         {
-            BusOnTrip cur = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == NewBusOnTrip.LicenseNum && curBus.LineId == NewBusOnTrip.LineId && curBus.PlannedTakeOff == NewBusOnTrip.PlannedTakeOff && !curBus.Deleted);
+            BusOnTrip cur = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == busOnTrip.LicenseNum && curBus.LineId == busOnTrip.LineId && curBus.PlannedTakeOff == busOnTrip.PlannedTakeOff && !curBus.Deleted);
             if (cur == null)
-                throw new BusOnTripExceptions(NewBusOnTrip.LicenseNum,NewBusOnTrip.LineId, NewBusOnTrip.PlannedTakeOff, false);
+                throw new BusOnTripExceptions(busOnTrip.LicenseNum, busOnTrip.LineId, busOnTrip.PlannedTakeOff, false);
             DataSource.BusesOnTrip.Remove(cur);
-            DataSource.BusesOnTrip.Add(NewBusOnTrip.Clone());
+            DataSource.BusesOnTrip.Add(busOnTrip.Clone());
         }
-        public void DeleteBusOnTrip(int License, int LineID, TimeSpan TakeOff)
+        public void DeleteBusOnTrip(int license, int lineID, TimeSpan takeOff)
         {
-            BusOnTrip cur = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == License
-            && curBus.LineId == LineID && curBus.PlannedTakeOff == TakeOff && !curBus.Deleted);
+            BusOnTrip cur = DataSource.BusesOnTrip.FirstOrDefault(curBus => curBus.LicenseNum == license
+            && curBus.LineId == lineID && curBus.PlannedTakeOff == takeOff && !curBus.Deleted);
             if (cur == null)
-                throw new BusOnTripExceptions(License, LineID, TakeOff, false);
+                throw new BusOnTripExceptions(license, lineID, takeOff, false);
             cur.Deleted = true;
         }
         #endregion
@@ -157,13 +157,13 @@ namespace DL
                    orderby CurLine.Code
                    select CurLine;
         }
-        public void UpdateLine(Line NewLine)
+        public void UpdateLine(Line newLine)
         {
-            Line cur = DataSource.Lines.FirstOrDefault(curLine => curLine.Id == NewLine.Id && !curLine.Deleted);
+            Line cur = DataSource.Lines.FirstOrDefault(curLine => curLine.Id == newLine.Id && !curLine.Deleted);
             if (cur == null)
-                throw new LineExceptions(NewLine.Id, false);
+                throw new LineExceptions(newLine.Id, false);
             DataSource.Lines.Remove(cur);
-            DataSource.Lines.Add(NewLine.Clone());
+            DataSource.Lines.Add(newLine.Clone());
         }
         public void DeleteLine(int id)
         {
@@ -193,21 +193,19 @@ namespace DL
         
         public IEnumerable<LineStation> GetAllLineStations(int lineId)
         {
-            if (DataSource.LineStations.Count == 0)
-                throw new LineStationExceptions(0, 0, false);
             return from item in DataSource.LineStations
                    where item.LineId == lineId && !item.Deleted
                    orderby item.LineStationIndex
                    select item.Clone();
         }
 
-        public void UpdateLineStation(LineStation NewLineStation)
+        public void UpdateLineStation(LineStation newLineStation)
         {
-            LineStation cur = DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.LineId == NewLineStation.LineId && curLineStation.Station == NewLineStation.Station && !curLineStation.Deleted);
+            LineStation cur = DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.LineId == newLineStation.LineId && curLineStation.Station == newLineStation.Station && !curLineStation.Deleted);
             if(cur == null)
-                throw new LineStationExceptions(NewLineStation.LineId, NewLineStation.Station, false);
+                throw new LineStationExceptions(newLineStation.LineId, newLineStation.Station, false);
             DataSource.LineStations.Remove(cur);
-            DataSource.LineStations.Add(NewLineStation);
+            DataSource.LineStations.Add(newLineStation);
         }
 
         public void DeleteLineStation(int lineId, int station)
@@ -257,13 +255,13 @@ namespace DL
                    orderby lTrip.StartAt
                    select lTrip;
         }
-        public void UpdateLineTrip(LineTrip NewLineTrip)
+        public void UpdateLineTrip(LineTrip newLineTrip)
         {
-            LineTrip cur = DataSource.LinesTrip.FirstOrDefault(curLineTrip => curLineTrip.LineId == NewLineTrip.LineId && curLineTrip.StartAt == NewLineTrip.StartAt && !curLineTrip.Deleted);
+            LineTrip cur = DataSource.LinesTrip.FirstOrDefault(curLineTrip => curLineTrip.LineId == newLineTrip.LineId && curLineTrip.StartAt == newLineTrip.StartAt && !curLineTrip.Deleted);
             if (cur == null)
-                throw new LineTripExceptions(NewLineTrip.LineId, NewLineTrip.StartAt, false);
+                throw new LineTripExceptions(newLineTrip.LineId, newLineTrip.StartAt, false);
             DataSource.LinesTrip.Remove(cur);
-            DataSource.LinesTrip.Add(NewLineTrip);
+            DataSource.LinesTrip.Add(newLineTrip);
         }
 
         public void DeleteLineTrip(int lineId, TimeSpan start)
@@ -300,13 +298,13 @@ namespace DL
                    select station;
         }
 
-        public void UpdateStation(Station NewStation)
+        public void UpdateStation(Station newStation)
         {
-            Station cur = DataSource.Stations.FirstOrDefault(curStation => curStation.Code == NewStation.Code && !curStation.Deleted);
+            Station cur = DataSource.Stations.FirstOrDefault(curStation => curStation.Code == newStation.Code && !curStation.Deleted);
             if (cur == null)
-                throw new StationExceptions(NewStation.Code, false);
+                throw new StationExceptions(newStation.Code, false);
             DataSource.Stations.Remove(cur);
-            DataSource.Stations.Add(NewStation);
+            DataSource.Stations.Add(newStation);
         }
 
         public void DeleteStation(int code)
@@ -335,13 +333,13 @@ namespace DL
             else throw new TripExceptions(id, false);
         }
 
-        public void UpdateTrip(Trip NewTrip)
+        public void UpdateTrip(Trip newTrip)
         {
-            Trip cur = DataSource.Trips.FirstOrDefault(curTrip => curTrip.Id == NewTrip.Id && !curTrip.Deleted);
+            Trip cur = DataSource.Trips.FirstOrDefault(curTrip => curTrip.Id == newTrip.Id && !curTrip.Deleted);
             if (cur == null)
-                throw new TripExceptions(NewTrip.Id, false);
+                throw new TripExceptions(newTrip.Id, false);
             DataSource.Trips.Remove(cur);
-            DataSource.Trips.Add(NewTrip);
+            DataSource.Trips.Add(newTrip);
         }
 
         public void DeleteTrip(int id)
@@ -370,13 +368,13 @@ namespace DL
             else throw new UserExceptions(name, false);
         }
 
-        public void UpdateUser(User NewUser)
+        public void UpdateUser(User newUser)
         {
-            User cur = DataSource.Users.FirstOrDefault(curUser => curUser.UserName == NewUser.UserName && !curUser.Deleted);
+            User cur = DataSource.Users.FirstOrDefault(curUser => curUser.UserName == newUser.UserName && !curUser.Deleted);
             if (cur == null)
-                throw new UserExceptions(NewUser.UserName, false);
+                throw new UserExceptions(newUser.UserName, false);
             DataSource.Users.Remove(cur);
-            DataSource.Users.Add(NewUser);
+            DataSource.Users.Add(newUser);
         }
 
         public void DeleteUser(string userName)

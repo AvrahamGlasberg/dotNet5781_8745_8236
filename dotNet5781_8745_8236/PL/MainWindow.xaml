@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        ResizeMode="NoResize"
         Title="Opening Window" Height="450" Width="800" Activated="WindowActivated">
     <Window.Background>
         <ImageBrush ImageSource="Icons/background.jpg" />
@@ -24,7 +23,7 @@
         </Button>
 
 
-        <Canvas x:Name="AnimCanvas" Grid.Row="4" Width="800" VerticalAlignment="Bottom" Height="50">
+        <Canvas Background="LightGoldenrodYellow" x:Name="AnimCanvas" Grid.Row="4" Width="800" VerticalAlignment="Bottom" Height="50">
             <Image x:Name="AnimImage" Source="Icons/bus.png" Width="50" Height="50"/>
         </Canvas>
 
