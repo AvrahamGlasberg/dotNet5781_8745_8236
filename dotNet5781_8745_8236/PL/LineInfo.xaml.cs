@@ -56,6 +56,7 @@ namespace PL
 
                 LineDataGrid.ItemsSource = lineStations;
                 TripsDataGrid.ItemsSource = trips;
+                //TripsDataGrid.ItemsSource = lineStations;
                 NewStationsComboBox.DataContext = newStations;
                 ExistingStations.DataContext = lineStations;
             }
