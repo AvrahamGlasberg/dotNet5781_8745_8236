@@ -50,6 +50,7 @@ namespace BLAPI
         #endregion
 
         void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> func);
+        void StopSimulator();
     }
 }
 
