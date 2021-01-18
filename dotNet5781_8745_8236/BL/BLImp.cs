@@ -8,32 +8,42 @@ using BLAPI;
 using DLAPI;
 using System.Threading;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace BL
 {
     class BLImp : IBL
     {
-        IDL dl = DLFactory.GetDL();
-        #region Simulator
-        public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> func)
-        {
-            // do some thread here to update time every sec...
-            TimeSpan newTime = startTime;
-            while (true)
-            {
-                newTime += new TimeSpan(0, 0, 1);
-                func(newTime);
-                Thread.Sleep(1000);
-            }
-        }
-        #endregion
-
         #region singelton
         static readonly BLImp instance = new BLImp();
         static BLImp() { }// static ctor to ensure instance init is done just before first usage
         BLImp() { } // default => private
         public static BLImp Instance { get => instance; }// The public Instance property to use
         #endregion
+        IDL dl = DLFactory.GetDL();
+        volatile bool stopSim = false;
+        #region Simulator
+        public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> func)
+        {
+            Clock.Instance.Rate = rate;
+            stopSim = false;
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Restart();
+            while (!stopSim)
+            {
+                TimeSpan t = startTime + new TimeSpan(rate * stopWatch.ElapsedTicks);
+                Clock.Instance.Time = new TimeSpan(t.Hours, t.Minutes, t.Seconds);
+                func(t);
+                Thread.Sleep(100);
+            }
+        }
+        public void StopSimulator()
+        {
+            stopSim = true;
+        }
+        #endregion
+
+        
 
         #region BO.BusLine
         public void UpdateTimeAndDis(BO.LineStation first, BO.LineStation second)

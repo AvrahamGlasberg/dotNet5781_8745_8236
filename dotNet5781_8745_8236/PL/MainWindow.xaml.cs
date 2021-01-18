@@ -39,7 +39,6 @@ namespace PL
             {
                 MessageBox.Show(ex.Message);
             }
-            worker = new BackgroundWorker();
         }
         private void StartAnimation()
         {
@@ -107,6 +106,7 @@ namespace PL
                 StartSim.IsEnabled = false;
                 StopSim.IsEnabled = true;
                 startTime = myTimePicker.SelectedTime.Value.TimeOfDay;
+                worker = new BackgroundWorker();
                 worker.DoWork += Worker_DoWork;
                 worker.RunWorkerAsync();
             }
@@ -119,15 +119,18 @@ namespace PL
 
         public void UpdateClock(TimeSpan newTime)
         {
-            Action action = () => myTimePicker.Text = newTime.ToString();
+            Action action = () => myTimePicker.Text = newTime.ToString().Substring(0, 8);
             Dispatcher.BeginInvoke(action);  // updating the clock
         }
 
 
         private void Stop_click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Not implamented yet!");
-
+            myTimePicker.IsEnabled = true;
+            rateTB.IsEnabled = true;
+            StartSim.IsEnabled = true;
+            StopSim.IsEnabled = false;
+            bl.StopSimulator();
         }
 
         private void Numbers_Enter_Only(object sender, KeyEventArgs e)

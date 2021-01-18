@@ -22,12 +22,12 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content ="Updating time and distance between the following stations:" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15"/>
-            <Label Content="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15"/>
-            <Label x:Name="SecondSt" Content="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15"/>
+            <Label Style="{StaticResource labelsTxt2}" Content ="Updating time and distance between the following stations:" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15"/>
+            <Label Style="{StaticResource labelsTxt}" Content="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15"/>
+            <Label Style="{StaticResource labelsTxt}" x:Name="SecondSt" Content="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="15"/>
         </StackPanel>
-        <Label Content="Distance in KM   : " Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20"/>
-        <Label Content="Time in hh:mm:ss  :" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20"/>
+        <Label Style="{StaticResource labelsTxt2}" Content="Distance in KM   : " Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20"/>
+        <Label Style="{StaticResource labelsTxt2}" Content="Time  :" Grid.Row="2" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20"/>
 
         <TextBox x:Name="DisTB" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" Text="{Binding StringFormat={}{0:N2}, Path=DistanceToNext, Mode=TwoWay}" PreviewKeyDown="Numbers_Enter_Only" MinWidth="100" MaxWidth="150" MaxLength="14"/>
         <TextBox x:Name="TimeTB" Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" FontSize="20" Text="{Binding Path=TimeToNext, Mode=TwoWay}" PreviewKeyDown="Numbers_Enter_Only" MinWidth="100" MaxWidth="150"/>
