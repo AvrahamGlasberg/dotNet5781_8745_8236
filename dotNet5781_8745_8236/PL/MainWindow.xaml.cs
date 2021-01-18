@@ -26,6 +26,7 @@ namespace PL
     {
         IBL bl;
         private BackgroundWorker worker;
+        private TimeSpan startTime;
         int rate;
         public MainWindow()
         {
@@ -53,7 +54,6 @@ namespace PL
                 {
                     ManagerPresentation window = new ManagerPresentation();
                     window.Show();
-                    this.Close();
                 }
                 else
                     MessageBox.Show("You don't have access to manager app.");
@@ -103,6 +103,10 @@ namespace PL
             {
                 //myTimePicker.Text = myTimePicker.SelectedTime.Value.TimeOfDay.ToString();
                 myTimePicker.IsEnabled = false;
+                rateTB.IsEnabled = false;
+                StartSim.IsEnabled = false;
+                StopSim.IsEnabled = true;
+                startTime = myTimePicker.SelectedTime.Value.TimeOfDay;
                 worker.DoWork += Worker_DoWork;
                 worker.RunWorkerAsync();
             }
@@ -110,14 +114,14 @@ namespace PL
 
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            bl.StartSimulator(myTimePicker.SelectedTime.Value.TimeOfDay, rate, updateClock);
+            bl.StartSimulator(startTime, rate, UpdateClock);
         }
 
-        public void updateClock(TimeSpan newTime)
+        public void UpdateClock(TimeSpan newTime)
         {
-            myTimePicker.Text = newTime.ToString(); // updating the clock
+            Action action = () => myTimePicker.Text = newTime.ToString();
+            Dispatcher.BeginInvoke(action);  // updating the clock
         }
-
 
 
         private void Stop_click(object sender, RoutedEventArgs e)

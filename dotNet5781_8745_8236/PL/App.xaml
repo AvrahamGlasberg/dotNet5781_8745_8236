@@ -49,6 +49,9 @@
                 <Trigger Property="IsMouseCaptured" Value="True">
                     <Setter Property="Background" Value="Blue"/>
                 </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Foreground" Value="White"/>
+                </Trigger>
             </Style.Triggers>
         </Style>
 

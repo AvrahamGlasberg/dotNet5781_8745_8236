@@ -44,8 +44,8 @@
             <Label Style="{StaticResource labelsTxt}" Foreground="Purple" Content="Enter rate here:" HorizontalContentAlignment="Left" FontSize="25" Grid.Row="1" VerticalContentAlignment="Center" Height="50" Grid.Column="2" HorizontalAlignment="Left" Width="170"/>
             <TextBox x:Name="rateTB" Width="70" FontSize="25" Grid.Row="1" PreviewKeyDown="Numbers_Enter_Only" MaxLength="4" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </StackPanel>
-        <Button Style="{StaticResource ControlButtons}" Content="start" FontSize="30" Grid.Row="2" VerticalContentAlignment="Center" Click="Start_click" Height="50" Grid.Column="2" HorizontalAlignment="Left" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
-        <Button Style="{StaticResource ControlButtons}" Content="stop" FontSize="30" Grid.Row="2" VerticalContentAlignment="Center" Click="Stop_click" Height="50" Grid.Column="2" HorizontalAlignment="Right" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave" Margin="0, 0, 10, 0"/>
+        <Button x:Name="StartSim" Style="{StaticResource ControlButtons}" Content="start" FontSize="30" Grid.Row="2" VerticalContentAlignment="Center" Click="Start_click" Height="50" Grid.Column="2" HorizontalAlignment="Left" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
+        <Button x:Name="StopSim" IsEnabled="False" Style="{StaticResource ControlButtons}" Content="stop" FontSize="30" Grid.Row="2" VerticalContentAlignment="Center" Click="Stop_click" Height="50" Grid.Column="2" HorizontalAlignment="Right" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave" Margin="0, 0, 10, 0"/>
 
 
         <Border BorderBrush="DarkBlue" BorderThickness="0, 3, 0, 0"  Grid.Row="4" Grid.ColumnSpan="3" Width="800" VerticalAlignment="Bottom" Height="55">

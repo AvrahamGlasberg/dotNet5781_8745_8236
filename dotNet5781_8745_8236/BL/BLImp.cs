@@ -18,9 +18,13 @@ namespace BL
         public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> func)
         {
             // do some thread here to update time every sec...
-            Thread.Sleep(1000);
-            TimeSpan newTime = new TimeSpan(10, 10, 10); // for check... 10:10:10
-            func(newTime);
+            TimeSpan newTime = startTime;
+            while (true)
+            {
+                newTime += new TimeSpan(0, 0, 1);
+                func(newTime);
+                Thread.Sleep(1000);
+            }
         }
         #endregion
 
