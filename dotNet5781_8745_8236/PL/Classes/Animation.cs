@@ -40,7 +40,7 @@ namespace PL
             anim.To = canvas.ActualWidth;
             anim.Duration = TimeSpan.FromSeconds(time);
 
-            anim.AutoReverse = true;
+            //anim.AutoReverse = true;
             anim.RepeatBehavior = RepeatBehavior.Forever;
 
             image.BeginAnimation(Canvas.RightProperty, anim);

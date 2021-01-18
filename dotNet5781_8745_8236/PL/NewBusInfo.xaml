@@ -25,9 +25,9 @@
         </Grid.ColumnDefinitions>
 
 
-        <Label Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Enter bus license: "/>
-        <Label FontSize="25" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Total Km trip:"/>
-        <Label FontSize="25" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Enter starting date:"/>
+        <Label Style="{StaticResource labelsTxt2}" Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Enter bus license: "/>
+        <Label Style="{StaticResource labelsTxt2}" FontSize="25" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Total Km trip:"/>
+        <Label Style="{StaticResource labelsTxt2}" FontSize="25" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Enter starting date:"/>
 
         <TextBox x:Name="licTB" Width="150" FontSize="25" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewKeyDown="TBPreview_key_Down" MaxLength="8"/>
         <TextBox x:Name="kmTB" Width="150" FontSize="25" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewKeyDown="TBPreview_key_Down"/>

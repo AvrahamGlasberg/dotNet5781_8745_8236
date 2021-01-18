@@ -35,6 +35,7 @@
 
         <Button x:Name="ManagerBtn" Grid.ColumnSpan="2" Height="50" Width="300" FontSize="30" Content="Manager" Grid.Row="0" Grid.RowSpan="2" Click="OpenManagerOptions" Style="{StaticResource ControlButtons}" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
         <Button x:Name="UserBtn" Height="50" Grid.ColumnSpan="2" Width="300" FontSize="30" Content="User" Grid.Row="1" Grid.RowSpan="2" Click="OpenUserOptions" Style="{StaticResource ControlButtons}" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
+        
         <Button x:Name="ExitBtn" Height="50" Grid.ColumnSpan="2" Width="300" FontSize="30" Grid.Row="2" Grid.RowSpan="2" Click="Exit" Style="{StaticResource ControlButtons}">
             <Image Source="Icons/exit.png" />
         </Button>
@@ -43,15 +44,14 @@
             <Label Style="{StaticResource labelsTxt}" Foreground="Purple" Content="Enter rate here:" HorizontalContentAlignment="Left" FontSize="25" Grid.Row="1" VerticalContentAlignment="Center" Height="50" Grid.Column="2" HorizontalAlignment="Left" Width="170"/>
             <TextBox x:Name="rateTB" Width="70" FontSize="25" Grid.Row="1" PreviewKeyDown="Numbers_Enter_Only" MaxLength="4" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </StackPanel>
-        <Button Style="{StaticResource ControlButtons}" Content="start" FontSize="30" Grid.Row="2" VerticalContentAlignment="Center" Click="start_click" Height="50" Grid.Column="2" HorizontalAlignment="Left" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave" RenderTransformOrigin="0.5,0.504"/>
-        <Button Style="{StaticResource ControlButtons}" Content="stop" FontSize="30" Grid.Row="2" VerticalContentAlignment="Center" Click="stop_click" Height="50" Grid.Column="2" HorizontalAlignment="Right" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
+        <Button Style="{StaticResource ControlButtons}" Content="start" FontSize="30" Grid.Row="2" VerticalContentAlignment="Center" Click="Start_click" Height="50" Grid.Column="2" HorizontalAlignment="Left" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
+        <Button Style="{StaticResource ControlButtons}" Content="stop" FontSize="30" Grid.Row="2" VerticalContentAlignment="Center" Click="Stop_click" Height="50" Grid.Column="2" HorizontalAlignment="Right" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave" Margin="0, 0, 10, 0"/>
 
 
-
-
-        <Canvas Background="LightGoldenrodYellow" x:Name="AnimCanvas" Grid.Row="4" Width="800" VerticalAlignment="Bottom" Height="50">
-            <Image x:Name="AnimImage" Source="Icons/bus.png" Width="50" Height="50"/>
+        <Border BorderBrush="DarkBlue" BorderThickness="0, 3, 0, 0"  Grid.Row="4" Grid.ColumnSpan="3" Width="800" VerticalAlignment="Bottom" Height="55">
+            <Canvas Background="LightGoldenrodYellow" x:Name="AnimCanvas" Grid.Row="4" Width="800" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Height="50" Margin="1, 1, 1, 1">
+                <Image x:Name="AnimImage" Source="Icons/bus.png" Width="50" Height="50"/>
         </Canvas>
-
+        </Border>
     </Grid>
 </Window>

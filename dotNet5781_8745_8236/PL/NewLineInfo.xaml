@@ -19,7 +19,7 @@
                     <ColumnDefinition Width="6*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <Label Content="{Binding}" VerticalContentAlignment="Center" Grid.Column="0"/>
+                <Label Style="{StaticResource labelsTxt}" Content="{Binding}" VerticalContentAlignment="Center" Grid.Column="0"/>
                 <Button Content="Add" Height="40" FontSize="15" Click="Add_StationToBusLine" Grid.Column="1" Style="{StaticResource AddButtons}"/>
             </Grid>
         </DataTemplate>
@@ -29,7 +29,7 @@
                     <ColumnDefinition Width="6*" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
-                <Label Content="{Binding}" VerticalContentAlignment="Center" Grid.Column="0"/>
+                <Label Style="{StaticResource labelsTxt}" Content="{Binding}" VerticalContentAlignment="Center" Grid.Column="0"/>
                 <Button Height="40" FontSize="15" Click="Remove_Station" Grid.Column="1" Style="{StaticResource DeleteButtons}"/>
             </Grid>
         </DataTemplate>
@@ -47,17 +47,17 @@
         </Grid.ColumnDefinitions>
         
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="Enter line code: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="Enter line code: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
             <TextBox x:Name="LineCodeTB" HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" FontSize="25" PreviewKeyDown="Numbers_Enter_Only" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxLength="3"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="Choose line area: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="Choose line area: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
             <ComboBox x:Name="AreasCB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
         </StackPanel>
-        
-        <Label Content="choose station for adding in the line: " Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Width="300"/>
-        <Label Content="station for adding to the line:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Width="300"/>
+
+        <Label Style="{StaticResource labelsTxt2}" Content="choose station for adding in the line: " Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Width="300"/>
+        <Label Style="{StaticResource labelsTxt2}" Content="station for adding to the line:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Width="300"/>
 
         <ListBox x:Name="StationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="1" ItemTemplate ="{StaticResource StationDataTemplate}" HorizontalContentAlignment="Stretch"/>
         <ListBox x:Name="NewStationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="0" ItemTemplate ="{StaticResource NewStationDataTemplate}" HorizontalContentAlignment="Stretch"/>

@@ -26,23 +26,23 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Bus: "/>
-            <Label FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding}"/>
+            <Label Style="{StaticResource labelsTxt2}" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Bus: "/>
+            <Label FontSize="25" Style="{StaticResource labelsTxt}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding}"/>
         </StackPanel>
         
-        <Label FontSize="25" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Starting date:"/>
-        <Label FontSize="25" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Last treatment date:"/>
-        <Label FontSize="25" Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Km since last treatment:"/>
-        <Label FontSize="25" Grid.Row="4" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Total Km trip:"/>
-        <Label FontSize="25" Grid.Row="5" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Fuel remain:"/>
-        <Label FontSize="25" Grid.Row="6" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Status:"/>
+        <Label Style="{StaticResource labelsTxt2}" FontSize="25" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Starting date:"/>
+        <Label Style="{StaticResource labelsTxt2}" FontSize="25" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Last treatment date:"/>
+        <Label Style="{StaticResource labelsTxt2}" FontSize="25" Grid.Row="3" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Km since last treatment:"/>
+        <Label Style="{StaticResource labelsTxt2}" FontSize="25" Grid.Row="4" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Total Km trip:"/>
+        <Label Style="{StaticResource labelsTxt2}" FontSize="25" Grid.Row="5" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Fuel remain:"/>
+        <Label Style="{StaticResource labelsTxt2}" FontSize="25" Grid.Row="6" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Status:"/>
 
-        <Label FontSize="25" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ContentStringFormat="{}{0:dd.MM.yyyy}" Content="{Binding Path=FromDate}"/>
-        <Label FontSize="25" Grid.Row="2" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ContentStringFormat="{}{0:dd.MM.yyyy}" Content="{Binding Path=LastTreatmentDate}"/>
-        <Label FontSize="25" Grid.Row="3" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ContentStringFormat="{}{0:N2}" Content="{Binding Path=TripSinceTreatment}" />
-        <Label FontSize="25" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ContentStringFormat="{}{0:N2}" Content="{Binding Path=TotalTrip}"/>
-        <Label FontSize="25" Grid.Row="5" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding Path=FuelRemain}"/>
-        <Label FontSize="25" Grid.Row="6" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding Path=BusStatus}"/>
+        <Label Style="{StaticResource labelsTxt}" FontSize="25" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ContentStringFormat="{}{0:dd.MM.yyyy}" Content="{Binding Path=FromDate}"/>
+        <Label Style="{StaticResource labelsTxt}" FontSize="25" Grid.Row="2" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ContentStringFormat="{}{0:dd.MM.yyyy}" Content="{Binding Path=LastTreatmentDate}"/>
+        <Label Style="{StaticResource labelsTxt}" FontSize="25" Grid.Row="3" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ContentStringFormat="{}{0:N2}" Content="{Binding Path=TripSinceTreatment}" />
+        <Label Style="{StaticResource labelsTxt}" FontSize="25" Grid.Row="4" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" ContentStringFormat="{}{0:N2}" Content="{Binding Path=TotalTrip}"/>
+        <Label Style="{StaticResource labelsTxt}" FontSize="25" Grid.Row="5" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding Path=FuelRemain}"/>
+        <Label Style="{StaticResource labelsTxt}" FontSize="25" Grid.Row="6" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="{Binding Path=BusStatus}"/>
 
         <Button Height="50" Grid.Row="7" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="30" Width="80" Click="Start_Refuel" Style="{StaticResource ControlButtons}">
             <Image Source="Icons/refuel.png" />

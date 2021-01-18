@@ -28,9 +28,9 @@
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Label Content="Line number:"  FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="Line number:"  FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <TextBlock x:Name="LineNumTB"  Text="{Binding Path=LineNumber}"  VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="25"/>
-            <Label Content="Line area: " Margin="50, 0, 0, 0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="Line area: " Margin="50, 0, 0, 0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             <ComboBox x:Name="AreasCB" FontSize="25" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" SelectedItem="{Binding Path=Area, Mode=TwoWay}" Height="50"/>
         </StackPanel>
 
@@ -184,12 +184,12 @@
 
 
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="Choose station to add:"  FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="Choose station to add:"  FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <ComboBox x:Name="NewStationsComboBox" ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         </StackPanel>
 
         <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-            <Label Content="Choose relative existing station:"  FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="Choose relative existing station:"  FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <ComboBox x:Name="ExistingStations"  ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>

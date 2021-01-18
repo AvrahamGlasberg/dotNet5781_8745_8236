@@ -23,14 +23,14 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal">
-            <Label Content="Don't have an accout yet? click here to" FontSize="15" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Label HorizontalAlignment="Center" VerticalAlignment="Center">  
+            <Label Style="{StaticResource labelsTxt2}" Content="Don't have an accout yet? click here to" FontSize="15" FontStyle="Italic" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Right"/>
+            <Label HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Left">  
                  <Hyperlink Click="buttonRegister_Click" FontSize="15" FontStyle="Normal">Register</Hyperlink>
             </Label>
         </StackPanel>
         
-        <Label Content="Name:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <Label Content="Passowrd:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Style="{StaticResource labelsTxt2}" Content="Name:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Label Style="{StaticResource labelsTxt2}" Content="Passowrd:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
         <TextBox x:Name="NameTB" Text="Avraham" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="150" KeyDown="Key_Down"/>
         <PasswordBox x:Name="PassTB" Password="1" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="150"/>

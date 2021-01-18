@@ -78,7 +78,7 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-
+        <!--FontStyle="Italic"-->
         <Style x:Key="labelsTxt" TargetType="Label">
             <Style.Setters>
                 <Setter Property="FontFamily" Value="Modern No. 20"/>
@@ -88,6 +88,14 @@
                         <DropShadowEffect BlurRadius="3" Direction="315" ShadowDepth="5" RenderingBias="Quality" Opacity="0.25" Color="#FFC7F1C2"/>
                     </Setter.Value>
                 </Setter>
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="labelsTxt2" TargetType="Label">
+            <Style.Setters>
+                <Setter Property="FontFamily" Value="Modern No. 20"/>
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="FontWeight" Value="Bold"/>
             </Style.Setters>
         </Style>
 

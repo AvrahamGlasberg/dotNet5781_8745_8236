@@ -74,7 +74,7 @@ namespace PL
             StartAnimation();
         }
 
-        private void start_click(object sender, RoutedEventArgs e)
+        private void Start_click(object sender, RoutedEventArgs e)
         {
             int rate;
             if (myTimePicker.SelectedTime == null || !int.TryParse(rateTB.Text, out rate))
@@ -97,7 +97,7 @@ namespace PL
 
         }
 
-        private void stop_click(object sender, RoutedEventArgs e)
+        private void Stop_click(object sender, RoutedEventArgs e)
         {
             MessageBox.Show("Not implamented yet!");
 

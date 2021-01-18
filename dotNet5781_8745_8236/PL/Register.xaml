@@ -23,13 +23,13 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
-            <Label Content="Enter your name:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="19" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-            <Label Content="Enter your passowrd:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="19" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="Enter your name:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="19" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="Enter your passowrd:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="19" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
 
             <TextBox x:Name="NameTB" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="19" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="150" KeyDown="Key_Down"/>
             <TextBox x:Name="PassTB" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="19" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="150"/>
 
-            <CheckBox x:Name="IsAdmin" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="19" VerticalContentAlignment="Center">Administer</CheckBox>
+            <CheckBox x:Name="IsAdmin" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Modern No. 20" FontSize="19" VerticalContentAlignment="Center">Administer</CheckBox>
 
             <Button Grid.Row="3" Grid.Column="0" Content="Register" FontSize="23" Height="35" Width="150" Grid.ColumnSpan="2" Click="Register_Click" Style="{StaticResource ControlButtons}"/>
         </Grid>

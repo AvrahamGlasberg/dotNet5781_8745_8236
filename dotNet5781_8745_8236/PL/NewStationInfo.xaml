@@ -20,16 +20,16 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="Enter station code: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25" Width="250"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="Enter station code: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25" Width="250"/>
             <TextBox x:Name="CodeTB" HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" FontSize="25" KeyDown="CodeTBKey_Down" PreviewKeyDown="Numbers_Enter_Only" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" MaxLength="7"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Content="Enter station name: " Width="250" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="Enter station name: " Width="250" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25"/>
             <TextBox x:Name="NameTB" HorizontalAlignment="Center" VerticalAlignment="Center" Width="250" FontSize="25"  VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         </StackPanel>
 
-        <Label Content="Choose location on the map: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
+        <Label Style="{StaticResource labelsTxt2}" Content="Choose location on the map: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="25" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2"/>
         <m:Map CredentialsProvider="bwOhJg6YwpN98Xgc2JuL~DL5wkcHgZLByzO6IGWylrQ~AniHokr5tXQwCq0pybZ0fbJWzSekZ-ppx-hhb2kkcc4z8wDZ32sz-fC-TeJU5QzN" x:Name="MyMap" Center="31.764998, 35.1911131" ZoomLevel="14.000" MouseDoubleClick="Map_Double_click" Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="30, 0, 30, 0">
             <m:Pushpin x:Name="Pin" Location="31.764998, 35.1911131" />
         </m:Map>

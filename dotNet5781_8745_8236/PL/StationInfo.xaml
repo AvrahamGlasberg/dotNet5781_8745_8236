@@ -29,12 +29,12 @@
             <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-            <Label Content="code:" Width="100" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="30, 0, 0, 0"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="code:" Width="100" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="30, 0, 0, 0"/>
             <TextBox Text = "{Binding Path=Code}" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
-            <Label Content="name:" Width="100" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="30, 0, 0, 0"/>
+            <Label Style="{StaticResource labelsTxt2}" Content="name:" Width="100" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="30, 0, 0, 0"/>
             <TextBox Text = "{Binding Path=Name, Mode=TwoWay}" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" TextChanged="ChangeText"/>
         </StackPanel>
 
