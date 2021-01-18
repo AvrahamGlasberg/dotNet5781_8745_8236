@@ -73,5 +73,40 @@ namespace PL
         {
             StartAnimation();
         }
+
+        private void start_click(object sender, RoutedEventArgs e)
+        {
+            int rate;
+            if (myTimePicker.SelectedTime == null || !int.TryParse(rateTB.Text, out rate))
+            {
+                string message = "";
+                if (myTimePicker.SelectedTime == null)
+                    message += "Please select a time!\n";
+                if (!int.TryParse(rateTB.Text, out rate) || rate == 0)
+                    message += "Please enter valid rate!";
+                
+                MessageBox.Show(message, "Invalid input", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else
+            {
+                myTimePicker.Text = myTimePicker.SelectedTime.Value.TimeOfDay.ToString();
+                myTimePicker.IsEnabled = false;
+                MessageBox.Show("Not implamented yet!");
+            }
+
+
+        }
+
+        private void stop_click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Not implamented yet!");
+
+        }
+
+        private void Numbers_Enter_Only(object sender, KeyEventArgs e)
+        {
+            if (((int)e.Key < (int)Key.D0 || (int)e.Key > (int)Key.D9) && ((int)e.Key < (int)Key.NumPad0 || (int)e.Key > (int)Key.NumPad9) && e.Key != Key.Enter && e.Key != Key.Escape && e.Key != Key.Back)
+                e.Handled = true;
+        }
     }
 }
