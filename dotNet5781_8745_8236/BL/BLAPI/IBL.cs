@@ -49,6 +49,7 @@ namespace BLAPI
         void AddUser(BO.User user);
         #endregion
 
+        void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> func);
     }
 }
 

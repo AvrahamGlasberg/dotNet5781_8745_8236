@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using PL.Dialogs;
 using BLAPI;
 using System.Windows.Media.Animation;
+using System.ComponentModel;
 
 namespace PL
 {
@@ -23,9 +24,21 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        IBL bl;
+        private BackgroundWorker worker;
+        int rate;
         public MainWindow()
         {
             InitializeComponent();
+            try
+            {
+                bl = BLFactory.GetBL();
+            }
+            catch (BO.MissingData ex) //creating bo failed
+            {
+                MessageBox.Show(ex.Message);
+            }
+            worker = new BackgroundWorker();
         }
         private void StartAnimation()
         {
@@ -76,7 +89,6 @@ namespace PL
 
         private void Start_click(object sender, RoutedEventArgs e)
         {
-            int rate;
             if (myTimePicker.SelectedTime == null || !int.TryParse(rateTB.Text, out rate))
             {
                 string message = "";
@@ -89,13 +101,24 @@ namespace PL
             }
             else
             {
-                myTimePicker.Text = myTimePicker.SelectedTime.Value.TimeOfDay.ToString();
+                //myTimePicker.Text = myTimePicker.SelectedTime.Value.TimeOfDay.ToString();
                 myTimePicker.IsEnabled = false;
-                MessageBox.Show("Not implamented yet!");
+                worker.DoWork += Worker_DoWork;
+                worker.RunWorkerAsync();
             }
-
-
         }
+
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            bl.StartSimulator(myTimePicker.SelectedTime.Value.TimeOfDay, rate, updateClock);
+        }
+
+        public void updateClock(TimeSpan newTime)
+        {
+            myTimePicker.Text = newTime.ToString(); // updating the clock
+        }
+
+
 
         private void Stop_click(object sender, RoutedEventArgs e)
         {

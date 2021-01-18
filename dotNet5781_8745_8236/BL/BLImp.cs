@@ -6,11 +6,23 @@ using System.Threading.Tasks;
 using System.Device.Location;
 using BLAPI;
 using DLAPI;
+using System.Threading;
+using System.ComponentModel;
+
 namespace BL
 {
     class BLImp : IBL
     {
         IDL dl = DLFactory.GetDL();
+        #region Simulator
+        public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> func)
+        {
+            // do some thread here to update time every sec...
+            Thread.Sleep(1000);
+            TimeSpan newTime = new TimeSpan(10, 10, 10); // for check... 10:10:10
+            func(newTime);
+        }
+        #endregion
 
         #region singelton
         static readonly BLImp instance = new BLImp();
