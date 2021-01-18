@@ -8,6 +8,7 @@ using BLAPI;
 using DLAPI;
 using System.Threading;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace BL
 {
@@ -21,6 +22,8 @@ namespace BL
             TimeSpan newTime = startTime;
             while (true)
             {
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Restart();
                 newTime += new TimeSpan(0, 0, 1);
                 func(newTime);
                 Thread.Sleep(1000);
