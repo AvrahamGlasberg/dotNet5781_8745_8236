@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         ResizeMode="NoResize"
@@ -27,6 +28,14 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Vertical" Grid.Row="0" Grid.Column="0">
+            <StackPanel.Resources>
+                <ResourceDictionary>
+                    <ResourceDictionary.MergedDictionaries>
+                        <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                        <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                    </ResourceDictionary.MergedDictionaries>
+                </ResourceDictionary>
+            </StackPanel.Resources>
             <RadioButton x:Name="StationsRB" Content="Stations" Height="50" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0, 0, 0, 50" Checked="Radio_Button_Changed"/>
             <RadioButton x:Name="LinesRB" Content="Lines" Height="50" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0, 0, 0, 50" Checked="Radio_Button_Changed"/>
             <RadioButton x:Name="BusesRB" Content="Buses" Height="50" FontSize="25" HorizontalAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Checked="Radio_Button_Changed"/>
