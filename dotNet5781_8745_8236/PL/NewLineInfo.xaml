@@ -8,7 +8,7 @@
         ResizeMode="NoResize"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="NewLineInfo" Height="450" Width="1000">
+        Title="New line" Height="450" Width="1000">
     <Window.Background>
         <ImageBrush ImageSource="Icons/background.jpg" />
     </Window.Background>

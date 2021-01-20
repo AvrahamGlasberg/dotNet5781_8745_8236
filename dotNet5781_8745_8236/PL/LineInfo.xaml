@@ -9,7 +9,7 @@
         xmlns:system="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="LinesInfo" Height="650" Width="1250" Closing="UpdateArea">
+        Title="Line information" Height="650" Width="1250" Closing="UpdateArea">
     <Window.Background>
         <ImageBrush ImageSource="Icons/background.jpg" />
     </Window.Background>

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="ManagerPresentation" Height="450" Width="800">
+        Title="Manager data presentation" Height="450" Width="800">
     <Window.Background>
         <ImageBrush ImageSource="Icons/background.jpg" />
     </Window.Background>

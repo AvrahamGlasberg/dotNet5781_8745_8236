@@ -8,7 +8,7 @@
         ResizeMode="NoResize"
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
         mc:Ignorable="d"
-        Title="NewStationInfo" Height="450" Width="800">
+        Title="New station" Height="450" Width="800">
     <Window.Background>
         <ImageBrush ImageSource="Icons/background.jpg" />
     </Window.Background>

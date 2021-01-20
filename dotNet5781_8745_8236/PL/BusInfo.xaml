@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         ResizeMode="NoResize"
-        Title="BusInfo" Height="600" Width="500">
+        Title="Bus information" Height="600" Width="500">
     <Window.Background>
         <ImageBrush ImageSource="Icons/background.jpg" />
     </Window.Background>
