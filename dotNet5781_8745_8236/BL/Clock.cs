@@ -21,16 +21,11 @@ namespace BL
         public event Action<TimeSpan> ClockObserver {
             add
             {
-                ClockObserver -= value;
-                clockObserver += value;
+                clockObserver = value;
             }
             remove
             {
-                if (clockObserver != null)
-                    foreach(var deleg in clockObserver.GetInvocationList())
-                    {
-                        clockObserver -= (Action<TimeSpan>)deleg;
-                    }
+                clockObserver -= value;
             } }
         private TimeSpan time;
         public TimeSpan Time 

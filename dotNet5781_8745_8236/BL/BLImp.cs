@@ -21,21 +21,36 @@ namespace BL
         public static BLImp Instance { get => instance; }// The public Instance property to use
         #endregion
         IDL dl = DLFactory.GetDL();
-        volatile bool stopSim = false;
+        internal volatile bool stopSim = false;
         #region Simulator
         public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> func)
         {
             Clock.Instance.Rate = rate;
+            Clock.Instance.ClockObserver += func;
             stopSim = false;
             Stopwatch stopWatch = new Stopwatch();
             stopWatch.Restart();
+
+            Thread tripsLauncher = new Thread(TravelLauncher.Instance.StartLaunch);
+            tripsLauncher.Start();
+
+
             while (!stopSim)
             {
                 TimeSpan t = startTime + new TimeSpan(rate * stopWatch.ElapsedTicks);
                 Clock.Instance.Time = new TimeSpan(t.Hours, t.Minutes, t.Seconds);
-                func(t);
                 Thread.Sleep(100);
             }
+        }
+        internal List<BO.LineTrip> GetAllLineTrips()
+        {
+            return (from item in dl.GetAllLineTripsBy(s => true)
+                   select DOLineTripToBOLineTrip(item)).ToList();
+        }
+        public void SetStationPanel(int station, Action<BO.LineTiming> updateBus)
+        {
+            TravelLauncher.Instance.stationInWatch = station;
+            TravelLauncher.Instance.StationObserver += updateBus;
         }
         public void StopSimulator()
         {

@@ -114,11 +114,11 @@ namespace PL
             }
             catch (BO.BusLineNotFound ex)
             {
-                MessageBox.Show(ex.Message + string.Format(" wrong Line {0}.", ex.LineNumber));
+                MessageBox.Show(ex.Message + string.Format(" wrong Line {0}.", ex.LineNumber), "Object not found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (BO.StationNotFound ex)
             {
-                MessageBox.Show(ex.Message + string.Format(" wrong station{0}", ex.Code));
+                MessageBox.Show(ex.Message + string.Format(" wrong station{0}", ex.Code), "Object not found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         #endregion
@@ -213,7 +213,7 @@ namespace PL
             }
             catch (BO.BusLineNotFound ex)
             {
-                MessageBox.Show(ex.Message + string.Format(" wrong {0} Line to delete", ex.LineNumber));
+                MessageBox.Show(ex.Message + string.Format(" wrong {0} Line to delete", ex.LineNumber), "Object not found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         #endregion
@@ -229,6 +229,8 @@ namespace PL
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
+            MainWindow window = new MainWindow();
+            window.Show();
             this.Close();
         }
 

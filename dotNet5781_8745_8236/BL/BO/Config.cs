@@ -8,5 +8,7 @@ namespace BO
 {
     public static class Config
     {
+        private static int lineOnTripId = 0;
+        public static int LineOnTripId { get { return ++lineOnTripId; } }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DO
 {
+    [Obsolete]
     public class BusOnTrip
     {
         public int Id { get; set; } // run

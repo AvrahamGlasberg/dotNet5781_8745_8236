@@ -56,7 +56,7 @@ namespace PL
                     message += "Please choose 2 station at least!\n";
                 if(AreasCB.SelectedItem == null)
                     message += "Please choose area!\n";
-                MessageBox.Show(message);
+                MessageBox.Show(message, "Invalid input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
@@ -72,7 +72,7 @@ namespace PL
                 }
                 catch(BO.BusLineExists ex)
                 {
-                    MessageBox.Show(ex.Message + string.Format(" Choose different line number than {0} or change it's route!", ex.LineNumber));
+                    MessageBox.Show(ex.Message + string.Format(" Choose different line number than {0} or change it's route!", ex.LineNumber), "Object already exists", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 

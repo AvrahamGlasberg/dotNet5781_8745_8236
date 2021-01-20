@@ -50,6 +50,7 @@ namespace BLAPI
         #endregion
 
         void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> func);
+        void SetStationPanel(int station, Action<BO.LineTiming> updateBus);
         void StopSimulator();
     }
 }

@@ -67,7 +67,7 @@ namespace PL
                     message = "Please enter station's code!\n";
                 if (NameTB.Text == "")
                     message += "Please enter station's name!";
-                MessageBox.Show(message);
+                MessageBox.Show(message, "Invalid input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
@@ -86,7 +86,7 @@ namespace PL
                 }
                 catch (BO.StationExists ex)
                 {
-                    MessageBox.Show(ex.Message + string.Format(" Please choose different code than {0}", ex.Code));
+                    MessageBox.Show(ex.Message + string.Format(" Please choose different code than {0}", ex.Code), "Object already exists", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             

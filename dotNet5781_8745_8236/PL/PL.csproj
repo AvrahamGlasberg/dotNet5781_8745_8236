@@ -100,14 +100,14 @@
     <Compile Include="Register.xaml.cs">
       <DependentUpon>Register.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Simulator.xaml.cs">
+      <DependentUpon>Simulator.xaml</DependentUpon>
+    </Compile>
     <Compile Include="StationInfo.xaml.cs">
       <DependentUpon>StationInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="UpdateTimeAndDistance.xaml.cs">
       <DependentUpon>UpdateTimeAndDistance.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
     <Page Include="BusInfo.xaml">
       <SubType>Designer</SubType>
@@ -157,15 +157,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Simulator.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="StationInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UpdateTimeAndDistance.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Window1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

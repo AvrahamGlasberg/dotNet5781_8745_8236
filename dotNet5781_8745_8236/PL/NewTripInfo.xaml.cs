@@ -38,23 +38,32 @@ namespace PL
 
         private void AddTrip(object sender, RoutedEventArgs e)
         {
-            TimeSpan start, freq, finish;
-            if (!TimeSpan.TryParse(startTB.Text, out start) || !TimeSpan.TryParse(freqTB.Text, out freq) || !TimeSpan.TryParse(finishTB.Text, out finish))
+            int freq;
+            if (startTP.SelectedTime == null || !int.TryParse(freqTB.Text, out freq) || finishTP.SelectedTime == null)
             {
                 string message = "";
-                if (!TimeSpan.TryParse(startTB.Text, out start))
+                if (startTP.SelectedTime == null)
                     message += "Input valid starting time!\n";
-                if(!TimeSpan.TryParse(freqTB.Text, out freq))
+                if(!int.TryParse(freqTB.Text, out freq))
                     message += "Input valid frequency!\n";
-                if(!TimeSpan.TryParse(finishTB.Text, out finish))
+                if(finishTP.SelectedTime == null)
                     message += "Input valid finishing time!";
                 MessageBox.Show(message, "Input error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            else if(finishTP.SelectedTime.Value.TimeOfDay < startTP.SelectedTime.Value.TimeOfDay)
+            {
+                MessageBox.Show("Please select logical start & finish time!", "Inlogical input", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             else
             {
                 try
                 {
-                    bl.AddLineTrip(new LineTrip() { LineInTrip = busLine, StartAt = start, Frequency = freq, FinishAt = finish });
+                    TimeSpan frequency;
+                    if (freq == 0)
+                        frequency = TimeSpan.Zero;
+                    else
+                        frequency = new TimeSpan(0, freq, 0);
+                    bl.AddLineTrip(new LineTrip() { LineInTrip = busLine, StartAt = startTP.SelectedTime.Value.TimeOfDay, Frequency = frequency, FinishAt = finishTP.SelectedTime.Value.TimeOfDay });
                     this.Close();
                 }
                 catch (BO.LineTripExists ex)
@@ -62,6 +71,12 @@ namespace PL
                     MessageBox.Show(ex.Message + string.Format(" choose different start than{0} or different line than {0}", ex.Start, ex.LineNumber), "Input error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+        private void Numbers_Enter_Only(object sender, KeyEventArgs e)
+        {
+            if (((int)e.Key < (int)Key.D0 || (int)e.Key > (int)Key.D9) && ((int)e.Key < (int)Key.NumPad0 || (int)e.Key > (int)Key.NumPad9) && e.Key != Key.Enter && e.Key != Key.Escape && e.Key != Key.Back)
+                e.Handled = true;
         }
     }
 }

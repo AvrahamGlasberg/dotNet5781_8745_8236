@@ -3,9 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="NewTripInfo" Height="400" Width="500">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Window.Background>
         <ImageBrush ImageSource="Icons/background.jpg" />
     </Window.Background>
@@ -23,12 +32,17 @@
 
 
         <Label Style="{StaticResource labelsTxt2}" Grid.Row="0" Grid.Column="0" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Enter starting time: "/>
-        <Label Style="{StaticResource labelsTxt2}" FontSize="25" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Enter frequency:"/>
+        <Label Style="{StaticResource labelsTxt2}" FontSize="25" Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Enter frequency (minutes):"/>
         <Label Style="{StaticResource labelsTxt2}" FontSize="25" Grid.Row="2" Grid.Column="0"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Enter finishing time:"/>
 
-            <TextBox x:Name="startTB" Width="150" FontSize="25" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <TextBox x:Name="freqTB" Width="150" FontSize="25" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-            <TextBox x:Name="finishTB" Width="150" FontSize="25" Grid.Row="2" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            
+        <!--<TextBox x:Name="startTB" Width="150" Visibility="Collapsed" FontSize="25" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+        <TextBox x:Name="finishTB" Visibility="Collapsed" Width="150" FontSize="25" Grid.Row="2" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>-->
+
+        <materialDesign:TimePicker x:Name="startTP" Foreground="Purple" HorizontalAlignment="Center" Grid.Row="0" Grid.Column="1"  FontSize="25" Width="150" />
+        <TextBox x:Name="freqTB" Text="0" Width="150" FontSize="25" Grid.Row="1" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" PreviewKeyDown="Numbers_Enter_Only"/>
+        <materialDesign:TimePicker x:Name="finishTP" Foreground="Purple" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1"  FontSize="25" Width="150" />
+
 
             <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2"  HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Add" FontSize="30" Width="150" Click="AddTrip" Style="{StaticResource AddButtons}"/>
         </Grid>

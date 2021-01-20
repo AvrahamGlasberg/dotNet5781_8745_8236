@@ -62,7 +62,7 @@ namespace PL
             }
             catch(BO.BusLineNotFound ex)
             {
-                MessageBox.Show(ex.Message + string.Format(" Line: {0}", ex.LineNumber));
+                MessageBox.Show(ex.Message + string.Format(" Line: {0}", ex.LineNumber), "Object Not Found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch(BO.MissingData ex)
             {
@@ -123,7 +123,7 @@ namespace PL
             var lst = lineStations.ToList<BO.LineStation>();
             int ind = lst.FindIndex(st=>st.Code==firstSt.Code);
             if (ind == lst.Count - 1)
-                MessageBox.Show("Cannot update time & distance to last station!");
+                MessageBox.Show("Cannot update time & distance to last station!", "Wrong action", MessageBoxButton.OK, MessageBoxImage.Error);
             else
             {
                 BO.LineStation secSt = lst[ind + 1];
@@ -140,7 +140,7 @@ namespace PL
             }
             catch (BO.BusLineNotFound ex)
             {
-                MessageBox.Show(ex.Message + string.Format(" {0}", ex.LineNumber));
+                MessageBox.Show(ex.Message + string.Format(" {0}", ex.LineNumber), "Object not found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -163,7 +163,7 @@ namespace PL
                         message = "Please choose station to add!\n";
                     if (ExistingStations.SelectedItem == null)
                         message += "Please choose exisiting station for index!";
-                    MessageBox.Show(message);
+                    MessageBox.Show(message, "Invalid input", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {

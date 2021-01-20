@@ -42,7 +42,7 @@ namespace PL.Dialogs
             }
             catch(BO.UserExists ex)
             {
-                MessageBox.Show(ex.Message + string.Format(" Name {0} already exists as a member. please choose another or log-in.", ex.Name));
+                MessageBox.Show(ex.Message + string.Format(" Name {0} already exists as a member. please choose another or log-in.", ex.Name), "Object already exists", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
         private void Key_Down(object sender, KeyEventArgs e)

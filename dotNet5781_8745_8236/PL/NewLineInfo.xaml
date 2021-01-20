@@ -59,8 +59,8 @@
         <Label Style="{StaticResource labelsTxt2}" Content="choose station for adding in the line: " Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Width="300"/>
         <Label Style="{StaticResource labelsTxt2}" Content="station for adding to the line:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Width="300"/>
 
-        <ListBox x:Name="StationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="1" ItemTemplate ="{StaticResource StationDataTemplate}" HorizontalContentAlignment="Stretch"/>
-        <ListBox x:Name="NewStationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="0" ItemTemplate ="{StaticResource NewStationDataTemplate}" HorizontalContentAlignment="Stretch"/>
+        <ListBox x:Name="StationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="1" ItemTemplate ="{StaticResource StationDataTemplate}" HorizontalContentAlignment="Stretch" Background="#FFF6F3D1"/>
+        <ListBox x:Name="NewStationsListBox" ItemsSource="{Binding}" Grid.Row="2" Grid.Column="0" ItemTemplate ="{StaticResource NewStationDataTemplate}" HorizontalContentAlignment="Stretch" Background="#FFF6F3D1"/>
 
         <Button Grid.Row="4" Grid.ColumnSpan="2" Width="200" Height="35" Content="Add line" FontSize="27" Click="Add_Line" Style="{StaticResource AddButtons}"/>
 

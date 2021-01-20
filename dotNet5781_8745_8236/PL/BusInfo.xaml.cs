@@ -46,7 +46,7 @@ namespace PL
             }
             catch(BO.BusNotFound ex)
             {
-                MessageBox.Show(ex.Message + string.Format(" Bus {0} could not be found.", ex.License));
+                MessageBox.Show(ex.Message + string.Format(" Bus {0} could not be found.", ex.License), "Object Not Found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -59,7 +59,7 @@ namespace PL
             }
             catch (BO.BusNotFound ex)
             {
-                MessageBox.Show(ex.Message + string.Format(" Bus {0} could not be found.", ex.License));
+                MessageBox.Show(ex.Message + string.Format(" Bus {0} could not be found.", ex.License), "Object Not Found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

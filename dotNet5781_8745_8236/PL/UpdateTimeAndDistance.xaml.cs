@@ -57,7 +57,7 @@ namespace PL
                         message += "Please enter correct distance!\n";
                     if (!TimeSpan.TryParse(TimeTB.Text, out _))
                         message += "Please enter correct time!";
-                    MessageBox.Show(message);
+                    MessageBox.Show(message, "Invalid input", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
