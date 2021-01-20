@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PL"
         ResizeMode="NoResize"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
@@ -12,6 +13,12 @@
         <ImageBrush ImageSource="Icons/background.jpg" />
     </Window.Background>
     <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        
 
         <DataTemplate x:Key="StationDataTemplate">
             <Grid>
@@ -33,6 +40,7 @@
                 <Button Height="40" FontSize="15" Click="Remove_Station" Grid.Column="1" Style="{StaticResource DeleteButtons}"/>
             </Grid>
         </DataTemplate>
+        </ResourceDictionary>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions >
@@ -53,7 +61,8 @@
 
         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
             <Label Style="{StaticResource labelsTxt2}" Content="Choose line area: " HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18"/>
-            <ComboBox x:Name="AreasCB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+            <ComboBox x:Name="AreasCB" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            </ComboBox>
         </StackPanel>
 
         <Label Style="{StaticResource labelsTxt2}" Content="choose station for adding in the line: " Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" Width="300"/>

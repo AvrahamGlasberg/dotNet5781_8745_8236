@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         ResizeMode="NoResize"
@@ -30,12 +31,30 @@
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <Label Style="{StaticResource labelsTxt2}" Content="code:" Width="100" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="30, 0, 0, 0"/>
-            <TextBox Text = "{Binding Path=Code}" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True"/>
+            <TextBox Text = "{Binding Path=Code}" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="True">
+                <TextBox.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </TextBox.Resources>
+            </TextBox>
         </StackPanel>
 
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2">
             <Label Style="{StaticResource labelsTxt2}" Content="name:" Width="100" FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="30, 0, 0, 0"/>
-            <TextBox Text = "{Binding Path=Name, Mode=TwoWay}" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" TextChanged="ChangeText"/>
+            <TextBox Text = "{Binding Path=Name, Mode=TwoWay}" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center" TextChanged="ChangeText">
+                <TextBox.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="DeepPurple" SecondaryColor="Lime" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </TextBox.Resources>
+            </TextBox>
         </StackPanel>
 
 
