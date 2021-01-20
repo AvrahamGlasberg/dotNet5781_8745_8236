@@ -26,7 +26,8 @@ namespace PL
         int rate;
         TimeSpan startTime;
         BackgroundWorker worker;
-        List<BO.LineTiming> lineTimings = new List<LineTiming>();
+        List<BO.LineTiming> lineTimingsList = new List<LineTiming>();
+        IEnumerable<BO.LineTiming> lineTimings;
         public Simulator()
         {
             InitializeComponent();
@@ -34,8 +35,6 @@ namespace PL
             {
                 bl = BLFactory.GetBL();
                 StationsDataGrid.ItemsSource = bl.GetAllBusStations();
-                //StationsDataGrid.ItemsSource = bl.GetAllBusStations();
-                ElectronicDataGrid.ItemsSource = lineTimings;
             }
             catch (BO.MissingData ex) //creating bo failed
             {
@@ -120,8 +119,10 @@ namespace PL
         private void Station_Selected(object sender, SelectionChangedEventArgs e)
         {
             LinesDataGrid.ItemsSource = (StationsDataGrid.SelectedItem as BO.BusStation).LinesInstation;
-            lineTimings.Clear();
+            lineTimingsList = new List<LineTiming>();
+            lineTimings = (IEnumerable<BO.LineTiming>)(lineTimingsList);
             ElectronicDataGrid.ItemsSource = lineTimings;
+
             bl.SetStationPanel((StationsDataGrid.SelectedItem as BO.BusStation).Code, UpdateElectricPanel);
         }
         public void UpdateElectricPanel(BO.LineTiming lineTiming)
@@ -130,8 +131,10 @@ namespace PL
             {
                 Action action = () =>
                 {
-                    lineTimings.Remove(lineTimings.FirstOrDefault<BO.LineTiming>(l => l.Id == lineTiming.Id));
-                    lineTimings = new List<LineTiming>(lineTimings.OrderBy(l => l.Time));
+                    lineTimingsList = lineTimings.ToList();
+                    lineTimingsList.Remove(lineTimingsList.FirstOrDefault<BO.LineTiming>(l => l.Id == lineTiming.Id));
+                    lineTimingsList = new List<LineTiming>(lineTimingsList.OrderBy(l => l.Time));
+                    lineTimings = (IEnumerable<BO.LineTiming>)(lineTimingsList);
                     LastBus.Content = lineTiming.LineNumber;
                     ElectronicDataGrid.ItemsSource = lineTimings;
                 };
@@ -141,9 +144,11 @@ namespace PL
             {
                 Action action = () =>
                 {
-                    lineTimings.Remove(lineTimings.First<BO.LineTiming>(l => l.Id == lineTiming.Id));
-                    lineTimings.Add(lineTiming);
-                    lineTimings = new List<LineTiming>(lineTimings.OrderBy(l => l.Time));
+                    lineTimingsList = lineTimings.ToList();
+                    lineTimingsList.Remove(lineTimingsList.First<BO.LineTiming>(l => l.Id == lineTiming.Id));
+                    lineTimingsList.Add(lineTiming);
+                    lineTimingsList = new List<LineTiming>(lineTimingsList.OrderBy(l => l.Time));
+                    lineTimings = (IEnumerable<BO.LineTiming>)(lineTimingsList);
                     ElectronicDataGrid.ItemsSource = lineTimings;
                 };
                 Dispatcher.BeginInvoke(action);
@@ -152,8 +157,10 @@ namespace PL
             {
                 Action action = () =>
                 {
-                    lineTimings.Add(lineTiming);
-                    lineTimings = new List<LineTiming>(lineTimings.OrderBy(l => l.Time));
+                    lineTimingsList = lineTimings.ToList();
+                    lineTimingsList.Add(lineTiming);
+                    lineTimingsList = new List<LineTiming>(lineTimingsList.OrderBy(l => l.Time));
+                    lineTimings = (IEnumerable<BO.LineTiming>)(lineTimingsList);
                     ElectronicDataGrid.ItemsSource = lineTimings;
                 };
                 Dispatcher.BeginInvoke(action);
@@ -161,7 +168,6 @@ namespace PL
         }
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-
             bl.StopSimulator();
             MainWindow window = new MainWindow();
             window.Show();

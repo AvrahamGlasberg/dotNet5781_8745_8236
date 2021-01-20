@@ -127,7 +127,7 @@
         <Button HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Width="150" Height="50" FontSize="20" Click="Back_Click" Style="{StaticResource ControlButtons}">
             <Image Source="Icons/back.png" />
         </Button>
-        <Label x:Name="LastBus" Grid.Row="2" Grid.Column="1" Width="150" FontSize="15" Background="Green"/>
+        <Label x:Name="LastBus" Grid.Row="2" Grid.Column="1" Width="150" FontSize="25" Background="LightBlue" HorizontalContentAlignment="Center"/>
         <Border BorderBrush="DarkBlue" BorderThickness="0, 3, 0, 0"  Grid.Row="3" Grid.ColumnSpan="3" Width="800" VerticalAlignment="Bottom" Height="50">
             <Canvas Background="LightGoldenrodYellow" x:Name="AnimCanvas" Grid.Row="4" Width="800" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Height="45" Margin="1, 1, 1, 1">
                 <Image x:Name="AnimImage" Source="Icons/bus.png" Width="50" Height="45"/>
