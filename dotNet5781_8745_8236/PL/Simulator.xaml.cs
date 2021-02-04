@@ -23,6 +23,7 @@ namespace PL
     public partial class Simulator : Window
     {
         IBL bl;
+        MediaPlayer sound = new MediaPlayer();
         int rate;
         TimeSpan startTime;
         BackgroundWorker worker;
@@ -87,6 +88,10 @@ namespace PL
             }
             else
             {
+                sound.Open(new Uri("../../PL/Sounds/drive.mp3", UriKind.Relative));
+                sound.Volume = 1;
+                sound.Play();
+
                 //myTimePicker.Text = myTimePicker.SelectedTime.Value.TimeOfDay.ToString();
                 myTimePicker.IsEnabled = false;
                 rateTB.IsEnabled = false;

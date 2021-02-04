@@ -232,6 +232,8 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Sounds\drive.mp3" />
+    <Content Include="Sounds\refuel.mp3" />
     <Content Include="Sounds\treatment.mp3" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

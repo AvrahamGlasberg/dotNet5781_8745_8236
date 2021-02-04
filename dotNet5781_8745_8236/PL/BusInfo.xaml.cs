@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Media;
+using System.Windows.Media.Animation;
 using BO;
 using BLAPI;
 namespace PL
@@ -43,10 +45,10 @@ namespace PL
             try
             {
                 bl.Refuel(Curbus);
-                sound.Open(new Uri("../../Sounds/refuel.mp3", UriKind.Relative));
+                sound.Open(new Uri("../../PL/Sounds/refuel.mp3", UriKind.Relative));
                 sound.Volume = 1;
                 sound.Play();
-                //this.Close();
+                this.Close();
             }
             catch(BO.BusNotFound ex)
             {
@@ -59,7 +61,7 @@ namespace PL
             try
             {
                 bl.Treatment(Curbus);
-                sound.Open(new Uri("../../Sounds/treatment.mp3", UriKind.Relative));
+                sound.Open(new Uri("../../PL/Sounds/treatment.mp3", UriKind.Relative));
                 sound.Volume = 1;
                 sound.Play();
                 this.Close();
