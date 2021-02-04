@@ -50,7 +50,7 @@ namespace DL
 
         public void DeleteAdjacentStation(int station1, int station2)
         {
-            AdjacentStation cur = DataSource.AdjacentStations.FirstOrDefault(stations => stations.Station1 == station1 && stations.Station2 == station2 && !stations.Deleted);
+            AdjacentStation cur = DataSource.AdjacentStations.FirstOrDefault(stations => ((stations.Station1 == station1 && stations.Station2 == station2) || (stations.Station1 == station2 && stations.Station2 == station1)) && !stations.Deleted);
             if (cur == null)
                 throw new AdjacentStationExceptions(station1, station2, false);
             cur.Deleted = true;

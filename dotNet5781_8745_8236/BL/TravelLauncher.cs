@@ -20,17 +20,24 @@ namespace BL
         internal event Action<BO.LineTiming> StationObserver { add { stationObserver = value; } remove { stationObserver -= value; } }
         internal void StartLaunch()
         {
+            //current time
             TimeSpan curTime = Clock.Instance.Time;
+
+            //list of all travels
             List<BO.LineTrip> allTravels = new List<BO.LineTrip>();
             foreach(var trip in BLImp.Instance.GetAllLineTrips())
                 for (TimeSpan t = trip.StartAt; t <= trip.FinishAt && trip.Frequency != TimeSpan.Zero; t += trip.Frequency)
                     allTravels.Add(new BO.LineTrip() { StartAt = t, LineInTrip = trip.LineInTrip});
             allTravels = allTravels.OrderBy(trip => trip.StartAt).ToList();
 
+
             TimeSpan time = allTravels[0].StartAt - curTime;
             int timeToSleep = 0;
+            //if travel is tommorow
             if (time < TimeSpan.Zero)
                 time += new TimeSpan(24, 0, 0);
+
+            //sleeping time
             timeToSleep = time.Hours * 360 * 1000;
             timeToSleep += time.Minutes * 60 * 1000;
             timeToSleep += time.Seconds * 1000;
@@ -38,9 +45,8 @@ namespace BL
             System.Threading.Thread.Sleep(timeToSleep);
             for (int i = 0; !BLImp.Instance.stopSim; i = (i + 1) % allTravels.Count)
             {
-                //xml problems
-                allTravels[i].LineInTrip.LineStations = (IEnumerable<BO.LineStation>)(allTravels[i].LineInTrip.LineStations.ToList());
-                Thread trip = new Thread(()=>Trip(allTravels[i].LineInTrip, BO.Config.LineOnTripId));
+                var allLineStations = allTravels[i].LineInTrip.LineStations.ToList();
+                Thread trip = new Thread(()=>Trip(allTravels[i].LineInTrip.LineNumber, allLineStations, BO.Config.LineOnTripId));
                 trip.Start();
 
                 int nextInd = (i + 1) % allTravels.Count;
@@ -59,11 +65,10 @@ namespace BL
         {
             stationObserver.Invoke(lineTiming);
         }
-        private void Trip(BO.BusLine busLine, int id)
+        private void Trip(int lineNumber, List<BO.LineStation> allStations, int id)
         {
-            Random rand = new Random(DateTime.Now.Millisecond);
-            BO.LineStation curStation = busLine.LineStations.First<BO.LineStation>();
-            List<BO.LineStation> allStations = busLine.LineStations.ToList();
+            //Random rand = new Random(DateTime.Now.Millisecond);
+            BO.LineStation curStation = allStations.First<BO.LineStation>();
             for (int j = 0; j < allStations.Count && !BLImp.Instance.stopSim;j++)
             {
                 var station = allStations[j];
@@ -73,20 +78,20 @@ namespace BL
                     if(allStations[i].Code == stationInWatch)
                     {
                         UpdateStation(new BO.LineTiming() {Id = id,
-                            LineNumber = busLine.LineNumber,
-                            Destination =  busLine.EndStation.Name, 
+                            LineNumber = lineNumber,
+                            Destination =  allStations.Last().Name, 
                             Time = time});
                     }
-                    if(allStations[i].Code != busLine.EndStation.Code)
+                    if(allStations[i].Code != allStations.Last().Code)
                          time += (TimeSpan)allStations[i].TimeToNext;
                 }
-                if (station.Code != busLine.EndStation.Code)
+                if (station.Code != allStations.Last().Code)
                 {
                     int timeToSleep = ((TimeSpan)station.TimeToNext).Hours * 360 * 1000;
                     timeToSleep += ((TimeSpan)station.TimeToNext).Minutes * 60 * 1000;
                     timeToSleep += ((TimeSpan)station.TimeToNext).Seconds * 1000;
                     timeToSleep /= Clock.Instance.Rate;
-                    timeToSleep *= (int)((double)rand.Next(90, 200) / 100);//real time slowing down or speeding up, 90%-200%.
+                    //timeToSleep *= (int)((double)rand.Next(90, 200) / 100);//real time slowing down or speeding up, 90%-200%.
                     System.Threading.Thread.Sleep(timeToSleep);
                 }
             }

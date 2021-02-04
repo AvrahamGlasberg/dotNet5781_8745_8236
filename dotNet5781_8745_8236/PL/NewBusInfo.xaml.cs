@@ -87,5 +87,11 @@ namespace PL
             if (((int)e.Key < (int)Key.D0 || (int)e.Key > (int)Key.D9) && ((int)e.Key < (int)Key.NumPad0 || (int)e.Key > (int)Key.NumPad9) && e.Key != Key.Enter && e.Key != Key.Escape && e.Key != Key.Back && e.Key != Key.OemPeriod && e.Key != Key.Oem1)
                 e.Handled = true;
         }
+
+        private void TBFirstKeyDown(object sender, KeyEventArgs e)
+        {
+            if(e.Key == Key.Enter)
+                kmTB.Focus();
+        }
     }
 }

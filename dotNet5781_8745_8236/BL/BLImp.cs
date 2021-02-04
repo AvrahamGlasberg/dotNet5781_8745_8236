@@ -20,9 +20,11 @@ namespace BL
         BLImp() { } // default => private
         public static BLImp Instance { get => instance; }// The public Instance property to use
         #endregion
+
         IDL dl = DLFactory.GetDL();
-        internal volatile bool stopSim = false;
+
         #region Simulator
+        internal volatile bool stopSim = false;
         public void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> func)
         {
             Clock.Instance.Rate = rate;
@@ -58,8 +60,6 @@ namespace BL
         }
         #endregion
 
-        
-
         #region BO.BusLine
         public void UpdateTimeAndDis(BO.LineStation first, BO.LineStation second)
         {
@@ -83,6 +83,7 @@ namespace BL
             try
             {
                 var stations = busLine.LineStations.ToList();
+                var DOLine = dl.GetLine(busLine.DOLineId);
                 DO.LineStation newLineStation = new DO.LineStation()
                 {
                     LineId = busLine.DOLineId,
@@ -132,6 +133,10 @@ namespace BL
                     });
                 }
                 dl.AddLineStation(newLineStation);
+
+                DOLine.FirstStation = index == 0 ? station.Code : DOLine.FirstStation;
+                DOLine.LastStation = index == stations.Count ? station.Code : DOLine.LastStation;
+                dl.UpdateLine(DOLine);
             }
             catch(DO.LineStationExceptions ex)
             {

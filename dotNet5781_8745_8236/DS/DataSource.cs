@@ -272,7 +272,7 @@ namespace DS
             {
                 Line NewLine = new Line()
                 {
-                    Id = DO.Config.LineId,
+                    Id = i + 1,
                     Code = LineNumbers[i],
                     Area = Areas.Center,
                     FirstStation = Stations[3 * i].Code,

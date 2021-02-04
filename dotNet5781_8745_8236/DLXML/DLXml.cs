@@ -26,6 +26,7 @@ namespace DL
         string lineTripPath = @"LineTripXml.xml"; //
         string stationPath = @"StationXml.xml"; //XElement
         string userPath = @"UserXml.xml"; //XMLSerializer
+
         //CRUD
         #region AdjacentStation
         public void AddAdjacentStation(AdjacentStation adjacentStation)
@@ -33,11 +34,12 @@ namespace DL
             XElement adjacentStationRootElem = XMLTools.LoadListFromXMLElement(adjacentStationPath);
 
             XElement adj1 = (from adj in adjacentStationRootElem.Elements()
-                             where int.Parse(adj.Element("Station1").Value) == adjacentStation.Station1 &&
-                             int.Parse(adj.Element("Station2").Value) == adjacentStation.Station2 &&
+                             let st1 = int.Parse(adj.Element("Station1").Value)
+                             let st2 = int.Parse(adj.Element("Station2").Value)
+                             where ((st1 == adjacentStation.Station1 && st2 == adjacentStation.Station2) || (st1 == adjacentStation.Station2 && st2 == adjacentStation.Station1)) &&
                              bool.Parse(adj.Element("Deleted").Value) == false
                              select adj).FirstOrDefault();
-            if (adj1 != null)
+            if (adj1 == null)
             {
 
                 XElement adjacentStationElem = new XElement("AdjacentStation",
@@ -58,8 +60,9 @@ namespace DL
             XElement adjacentStationRootElem = XMLTools.LoadListFromXMLElement(adjacentStationPath);
 
             AdjacentStation adjStations = (from adj in adjacentStationRootElem.Elements()
-                             where int.Parse(adj.Element("Station1").Value) == station1 &&
-                             int.Parse(adj.Element("Station2").Value) == station2 &&
+                                           let st1 = int.Parse(adj.Element("Station1").Value)
+                                           let st2 = int.Parse(adj.Element("Station2").Value)
+                                           where ((st1 == station1 && st2 == station2) || (st1 == station2 && st2 == station1)) &&
                              bool.Parse(adj.Element("Deleted").Value) == false
                              select new AdjacentStation()
                              {
@@ -95,8 +98,9 @@ namespace DL
             XElement adjacentStationRootElem = XMLTools.LoadListFromXMLElement(adjacentStationPath);
 
             XElement adj1 = (from adj in adjacentStationRootElem.Elements()
-                             where int.Parse(adj.Element("Station1").Value) == newAdjacentStation.Station1 &&
-                             int.Parse(adj.Element("Station2").Value) == newAdjacentStation.Station2 &&
+                             let st1 = int.Parse(adj.Element("Station1").Value)
+                             let st2 = int.Parse(adj.Element("Station2").Value)
+                             where ((st1 == newAdjacentStation.Station1 && st2 == newAdjacentStation.Station2) || (st1 == newAdjacentStation.Station2 && st2 == newAdjacentStation.Station1)) &&
                              bool.Parse(adj.Element("Deleted").Value) == false
                              select adj).FirstOrDefault();
             if (adj1 == null)
@@ -116,8 +120,9 @@ namespace DL
             XElement adjacentStationRootElem = XMLTools.LoadListFromXMLElement(adjacentStationPath);
 
             XElement adj1 = (from adj in adjacentStationRootElem.Elements()
-                             where int.Parse(adj.Element("Station1").Value) == station1 &&
-                             int.Parse(adj.Element("Station2").Value) == station2 &&
+                             let st1 = int.Parse(adj.Element("Station1").Value)
+                             let st2 = int.Parse(adj.Element("Station2").Value)
+                             where ((st1 == station1 && st2 == station2) || (st1 == station2 && st2 == station1)) &&
                              bool.Parse(adj.Element("Deleted").Value) == false
                              select adj).FirstOrDefault();
             if (adj1 == null)

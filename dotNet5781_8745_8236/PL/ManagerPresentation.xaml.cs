@@ -187,6 +187,7 @@ namespace PL
         private void ShowLinesInfo()
         {
             BO.BusLine busLine = LinesDataGrid.SelectedItem as BO.BusLine;
+            
             if (busLine != null)//prevent delete+double click
             {
                 LineInfo win = new LineInfo(busLine);
