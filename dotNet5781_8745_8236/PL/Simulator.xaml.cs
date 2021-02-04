@@ -64,11 +64,14 @@ namespace PL
         }
         private void StopSimulation()
         {
+            bl.StopSimulator();
             myTimePicker.IsEnabled = true;
             rateTB.IsEnabled = true;
             StartSimBtn.IsEnabled = true;
             StopSimBtn.IsEnabled = false;
-            bl.StopSimulator();
+            lineTimingsList = new List<LineTiming>();
+            lineTimings = (IEnumerable<LineTiming>)lineTimingsList;
+            ElectronicDataGrid.ItemsSource = lineTimings;
         }
         private void Start_sim(object sender, RoutedEventArgs e)
         {
