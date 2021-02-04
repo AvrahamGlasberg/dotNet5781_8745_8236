@@ -22,6 +22,7 @@ namespace PL
     {
         IBL bl;
         BO.Bus Curbus;
+        MediaPlayer sound = new MediaPlayer();
         public BusInfo(BO.Bus bus)
         {
             InitializeComponent();
@@ -42,7 +43,10 @@ namespace PL
             try
             {
                 bl.Refuel(Curbus);
-                this.Close();
+                sound.Open(new Uri("../../Sounds/refuel.mp3", UriKind.Relative));
+                sound.Volume = 1;
+                sound.Play();
+                //this.Close();
             }
             catch(BO.BusNotFound ex)
             {
@@ -55,6 +59,9 @@ namespace PL
             try
             {
                 bl.Treatment(Curbus);
+                sound.Open(new Uri("../../Sounds/treatment.mp3", UriKind.Relative));
+                sound.Volume = 1;
+                sound.Play();
                 this.Close();
             }
             catch (BO.BusNotFound ex)
