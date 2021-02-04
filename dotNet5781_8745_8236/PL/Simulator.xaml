@@ -38,7 +38,7 @@
         </StackPanel>
 
         <!-- Stations data grid -->
-        <DataGrid  x:Name="StationsDataGrid" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" SelectionChanged="Station_Selected">
+        <DataGrid  x:Name="StationsDataGrid" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" SelectionChanged="Station_Selected" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" CanUserResizeColumns="False">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Code">
                     <DataGridTemplateColumn.CellTemplate>
@@ -66,7 +66,8 @@
         </DataGrid>
         
         <!-- Yellow sign datagrid-->
-        <DataGrid  x:Name="LinesDataGrid" Background="Yellow" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" Grid.Column="1" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False">
+
+        <DataGrid x:Name="LinesDataGrid" ItemsSource="{Binding}" Background="Yellow" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" Grid.Column="1" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" CanUserResizeColumns="False">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Line">
                     <DataGridTemplateColumn.CellTemplate>
@@ -94,7 +95,7 @@
         </DataGrid>
 
         <!-- electronic bored -->
-        <DataGrid  x:Name="ElectronicDataGrid" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" Grid.Column="2" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" SelectionChanged="Station_Selected">
+        <DataGrid  x:Name="ElectronicDataGrid" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" Grid.Column="2" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" EnableRowVirtualization="False" CanUserSortColumns="False" CanUserResizeColumns="False" SelectionChanged="Station_Selected">
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Line number">
                     <DataGridTemplateColumn.CellTemplate>

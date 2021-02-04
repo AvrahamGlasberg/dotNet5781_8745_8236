@@ -118,7 +118,7 @@ namespace PL
 
         private void Station_Selected(object sender, SelectionChangedEventArgs e)
         {
-            LinesDataGrid.ItemsSource = (StationsDataGrid.SelectedItem as BO.BusStation).LinesInstation;
+            LinesDataGrid.ItemsSource = new ObservableCollection<BO.Line>((StationsDataGrid.SelectedItem as BO.BusStation).LinesInstation);
             lineTimingsList = new List<LineTiming>();
             lineTimings = (IEnumerable<BO.LineTiming>)(lineTimingsList);
             ElectronicDataGrid.ItemsSource = lineTimings;

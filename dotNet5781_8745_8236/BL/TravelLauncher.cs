@@ -46,7 +46,9 @@ namespace BL
             for (int i = 0; !BLImp.Instance.stopSim; i = (i + 1) % allTravels.Count)
             {
                 var allLineStations = allTravels[i].LineInTrip.LineStations.ToList();
-                Thread trip = new Thread(()=>Trip(allTravels[i].LineInTrip.LineNumber, allLineStations, BO.Config.LineOnTripId));
+                var number = allTravels[i].LineInTrip.LineNumber;
+                var id = BO.Config.LineOnTripId;
+                Thread trip = new Thread(()=>Trip(number, allLineStations, id));
                 trip.Start();
 
                 int nextInd = (i + 1) % allTravels.Count;
