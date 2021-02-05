@@ -22,7 +22,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
             <RowDefinition Height="5*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" >
+                <RowDefinition.BindingGroup>
+                    <BindingGroup/>
+                </RowDefinition.BindingGroup>
+            </RowDefinition>
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -64,30 +68,39 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        
-        <!-- Yellow sign datagrid-->
 
-        <DataGrid x:Name="LinesDataGrid" ItemsSource="{Binding}" Background="Yellow" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" Grid.Column="1" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" CanUserResizeColumns="False">
+        <!-- Yellow sign datagrid-->
+        <Label  Grid.Row="1" Content="{Binding Path=Code}" FontSize="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" Grid.Column="1" Margin="1,5,1,205" x:Name="stationDesign" BorderThickness="5,0" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="50" ShadowDepth="0" Opacity="0.995" Direction="0"/>
+            </Label.Effect>
+            <Label.Background>
+                <ImageBrush ImageSource="stationDesign.png"/>
+            </Label.Background>
+        </Label>
+        <DataGrid HeadersVisibility="None" x:Name="LinesDataGrid" ItemsSource="{Binding}" Background="Yellow" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" Grid.Column="1" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" CanUserResizeColumns="False" Margin="5,50,5,5" BorderThickness="4,3,3,5">
+            <DataGrid.Effect>
+                <DropShadowEffect BlurRadius="50" Direction="270" Opacity="0.996"/>
+            </DataGrid.Effect>
+            <DataGrid.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0.212"/>
+                    <GradientStop Color="Black" Offset="1"/>
+                </LinearGradientBrush>
+            </DataGrid.BorderBrush>
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Line">
+                <DataGridTemplateColumn >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=LineNumber}" Width="60" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=LineNumber}" Width="30" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Background="{x:Null}" Foreground="Black" FontFamily="Franklin Gothic Demi" HorizontalAlignment="Left" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Destination">
-                    <DataGridTemplateColumn.HeaderStyle>
-                        <Style TargetType="{x:Type DataGridColumnHeader}">
-                            <Setter Property="FontWeight"  Value="Bold" />
-                            <Setter Property="HorizontalAlignment" Value="Left" />
-                            <Setter Property="HorizontalContentAlignment" Value="Center" />
-                        </Style>
-                    </DataGridTemplateColumn.HeaderStyle>
+                <DataGridTemplateColumn >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=EndStation.Name}" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" />
+                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=EndStation.Name}" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="Black" FontFamily="Tw Cen MT Condensed Extra Bold" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -95,40 +108,65 @@
         </DataGrid>
 
         <!-- electronic bored -->
-        <DataGrid  x:Name="ElectronicDataGrid" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" Grid.Column="2" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" EnableRowVirtualization="False" CanUserSortColumns="False" CanUserResizeColumns="False" SelectionChanged="Station_Selected">
+        <DataGrid HeadersVisibility="None" x:Name="ElectronicDataGrid" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" Grid.Column="2" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" EnableRowVirtualization="False" CanUserSortColumns="False" CanUserResizeColumns="False" SelectionChanged="Station_Selected" Margin="5,35,5,20" BorderThickness="0" Foreground="#DD000000" RenderTransformOrigin="0.508,0.563" Padding="20,32,22,35">
+            <DataGrid.BorderBrush>
+                <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowFrameColorKey}}"/>
+            </DataGrid.BorderBrush>
+            <DataGrid.Background>
+                <ImageBrush ImageSource="electricPanel.png">
+                    <ImageBrush.RelativeTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </ImageBrush.RelativeTransform>
+                </ImageBrush>
+            </DataGrid.Background>
             <DataGrid.Columns>
-                <DataGridTemplateColumn Header="Line number">
+                <DataGridTemplateColumn >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=LineNumber}" Width="60" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=LineNumber}" Width="30" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="#FF01433D" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Destination">
+                <DataGridTemplateColumn >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=Destination}" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=Destination}" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="#FF01433D" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
 
-                <DataGridTemplateColumn Header="Time">
+                <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=Time}" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" />
+                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=Time}" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="#FF01433D" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <Button x:Name="StartSimBtn" Grid.Row="2" Style="{StaticResource ControlButtons}" Content="start" FontSize="30" VerticalContentAlignment="Center" Click="Start_sim" Height="50" Grid.Column="2" HorizontalAlignment="Center" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
-        <Button x:Name="StopSimBtn" Grid.Row="2" IsEnabled="False" Style="{StaticResource ControlButtons}" Content="stop" FontSize="30" VerticalContentAlignment="Center" Click="Stop_sim" Height="50" Grid.Column="2" HorizontalAlignment="Right" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave" Margin="0, 0, 10, 0"/>
+        <Button x:Name="StartSimBtn" Grid.Row="2" Style="{StaticResource ControlButtons}" Content="start" FontSize="30" VerticalContentAlignment="Center" Click="Start_sim" Height="45" HorizontalAlignment="Center" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave" Margin="170,1.8,106.8,0" Grid.ColumnSpan="2"/>
+        <Button x:Name="StopSimBtn" Grid.Row="1" IsEnabled="False" Style="{StaticResource ControlButtons}" Content="stop" FontSize="30" VerticalContentAlignment="Center" Click="Stop_sim" Height="45" Grid.Column="1" HorizontalAlignment="Right" Width="120" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave" Margin="0,260.2,363.6,0" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
         <Button HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Width="150" Height="50" FontSize="20" Click="Back_Click" Style="{StaticResource ControlButtons}">
             <Image Source="Icons/back.png" />
         </Button>
-        <Label x:Name="LastBus" Grid.Row="2" Grid.Column="1" Width="150" FontSize="25" Background="LightBlue" HorizontalContentAlignment="Center"/>
+        <Label x:Name="LastBus" Grid.Row="1" Grid.Column="2" FontSize="35"  HorizontalContentAlignment="Center" VerticalContentAlignment="Top" FontWeight="ExtraBold" Content="947" Margin="120.2,262,98.6,3.2" Grid.RowSpan="2">
+            <Label.Foreground>
+                <RadialGradientBrush RadiusX="0.6" RadiusY="0.6">
+                    <GradientStop Color="Black" Offset="0.094"/>
+                    <GradientStop Color="#DD0CC700" Offset="1"/>
+                </RadialGradientBrush>
+            </Label.Foreground>
+            <Label.Background>
+                <ImageBrush ImageSource="missingBus2.jpg" Opacity="0.8"/>
+            </Label.Background>
+        </Label>
         <Border BorderBrush="DarkBlue" BorderThickness="0, 3, 0, 0"  Grid.Row="3" Grid.ColumnSpan="3" Width="800" VerticalAlignment="Bottom" Height="50">
             <Canvas Background="LightGoldenrodYellow" x:Name="AnimCanvas" Grid.Row="4" Width="800" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Height="45" Margin="1, 1, 1, 1">
                 <Image x:Name="AnimImage" Source="Icons/bus.png" Width="50" Height="45"/>
