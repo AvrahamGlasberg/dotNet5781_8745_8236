@@ -156,7 +156,7 @@
         <Button HorizontalAlignment="Left" Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Width="150" Height="50" FontSize="20" Click="Back_Click" Style="{StaticResource ControlButtons}">
             <Image Source="Icons/back.png" />
         </Button>
-        <Label x:Name="LastBus" Grid.Row="1" Grid.Column="2" FontSize="35"  HorizontalContentAlignment="Center" VerticalContentAlignment="Top" FontWeight="ExtraBold" Content="947" Margin="120.2,262,98.6,3.2" Grid.RowSpan="2">
+        <Label x:Name="LastBus" Grid.Row="1" Grid.Column="2" FontSize="35"  HorizontalContentAlignment="Center" VerticalContentAlignment="Top" FontWeight="ExtraBold" Content="" Margin="120.2,262,98.6,3.2" Grid.RowSpan="2">
             <Label.Foreground>
                 <RadialGradientBrush RadiusX="0.6" RadiusY="0.6">
                     <GradientStop Color="Black" Offset="0.094"/>
