@@ -43,6 +43,9 @@
 
         <!-- Stations data grid -->
         <DataGrid  x:Name="StationsDataGrid" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" SelectionChanged="Station_Selected" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" CanUserResizeColumns="False">
+            <DataGrid.Background>
+                <ImageBrush ImageSource="Icons/LCD.jpg"/>
+            </DataGrid.Background>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Code">
                     <DataGridTemplateColumn.CellTemplate>
@@ -108,7 +111,7 @@
         </DataGrid>
 
         <!-- electronic bored -->
-        <DataGrid HeadersVisibility="None" x:Name="ElectronicDataGrid" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" Grid.Column="2" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" EnableRowVirtualization="False" CanUserSortColumns="False" CanUserResizeColumns="False" SelectionChanged="Station_Selected" Margin="5,35,5,20" BorderThickness="0" Foreground="#DD000000" RenderTransformOrigin="0.508,0.563" Padding="20,32,22,35">
+        <DataGrid HeadersVisibility="None" x:Name="ElectronicDataGrid" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" Grid.Column="2" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" EnableRowVirtualization="False" CanUserSortColumns="False" CanUserResizeColumns="False" SelectionChanged="Station_Selected" Margin="5,35,5,20" BorderThickness="0" Foreground="#DD000000" RenderTransformOrigin="0.508,0.563" Padding="15,32,22,35">
             <DataGrid.BorderBrush>
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowFrameColorKey}}"/>
             </DataGrid.BorderBrush>
@@ -128,7 +131,7 @@
                 <DataGridTemplateColumn >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=LineNumber}" Width="30" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="#FF01433D" />
+                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=LineNumber}" Width="30" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="#FF01433D" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -136,7 +139,7 @@
                 <DataGridTemplateColumn >
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=Destination}" FontSize="15" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="#FF01433D" />
+                            <Label Style="{StaticResource labelsTxt}" Content="{Binding Path=Destination}" Width="150" FontSize="13" VerticalContentAlignment="Center" HorizontalContentAlignment="Left" Foreground="#FF01433D" />
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
