@@ -130,7 +130,7 @@ namespace PL
             lineTimingsList = new List<LineTiming>();
             lineTimings = (IEnumerable<BO.LineTiming>)(lineTimingsList);
             ElectronicDataGrid.ItemsSource = lineTimings;
-
+            stationDesign.DataContext = StationsDataGrid.SelectedItem as BO.BusStation;
             LastBus.Content = "";
 
             bl.SetStationPanel((StationsDataGrid.SelectedItem as BO.BusStation).Code, UpdateElectricPanel);
