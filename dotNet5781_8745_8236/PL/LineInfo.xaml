@@ -146,11 +146,7 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-
-
-
-
+        
         <StackPanel Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center">
             <Label Style="{StaticResource labelsTxt2}" Content="Choose station to add:"  FontSize="25"  HorizontalAlignment="Center" VerticalAlignment="Center"/>
             <ComboBox x:Name="NewStationsComboBox" ItemsSource="{Binding}" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="200" VerticalContentAlignment="Center" HorizontalContentAlignment="Center">

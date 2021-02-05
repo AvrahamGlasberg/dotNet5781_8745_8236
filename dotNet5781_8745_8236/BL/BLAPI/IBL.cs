@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Device.Location;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,11 +48,18 @@ namespace BLAPI
         #region BO.User
         BO.User GetUser(string userName);
         void AddUser(BO.User user);
+        int ClosestStationIndex(List<BO.BusStation> stations, GeoCoordinate coordinate);
+        IEnumerable<BO.UserLineTrip> GetUserLineTrips(BO.BusStation firstStation, BO.BusStation lastStation);
+        void UserTravel(BO.User user, double price);
+        void AddCash(BO.User user, double cash);
         #endregion
+
+        #region Simulator
 
         void StartSimulator(TimeSpan startTime, int rate, Action<TimeSpan> func);
         void SetStationPanel(int station, Action<BO.LineTiming> updateBus);
         void StopSimulator();
+        #endregion
     }
 }
 

@@ -699,7 +699,8 @@ namespace BL
                 {
                     UserName = user.UserName,
                     Password = user.Password,
-                    Admin = user.Admin
+                    Admin = user.Admin, 
+                    Cash = user.Cash
                 };
             }
             catch(DO.UserExceptions ex)
@@ -715,12 +716,67 @@ namespace BL
                 {
                     UserName = user.UserName,
                     Password = user.Password,
-                    Admin = user.Admin
+                    Admin = user.Admin, 
+                    Cash = user.Cash
                 });
             }
             catch(DO.UserExceptions ex)
             {
                 throw new BO.UserExists("User Already Exists.", ex.Name, ex);
+            }
+        }
+        public int ClosestStationIndex(List<BO.BusStation> stations, GeoCoordinate coordinate)
+        {
+            if (stations.Count == 0)
+                throw new BO.MissingData("Not enough stations!");
+            var sorted = stations.OrderBy(st => st.Position.GetDistanceTo(coordinate));
+            return stations.FindIndex(st => st.Code == sorted.First().Code);
+        }
+
+        public IEnumerable<BO.UserLineTrip> GetUserLineTrips(BO.BusStation firstStation, BO.BusStation lastStation)
+        {
+            List<BO.UserLineTrip> lines = new List<BO.UserLineTrip>();
+            foreach(var line in dl.GetAllLines())
+            {
+                var stations = GetAllBOLineStationsInDOLine(line.Id).ToList();
+                int ind1 = stations.FindIndex(st => st.Code == firstStation.Code);
+                int ind2 = stations.FindIndex(st => st.Code == lastStation.Code);
+                if (ind1 != -1 && ind2 > ind1)
+                {
+                    double p = 0;
+                    for (int i = ind1; i < ind2; i++)
+                        p += (double)stations[i].DistanceToNext * 2;//2$ to km
+                    lines.Add(new BO.UserLineTrip() { Code = line.Code, Price = p });  
+                }
+            }
+            return lines;
+        }
+        public void UserTravel(BO.User user, double price)
+        {
+            if (user.Cash < price)
+                throw new BO.NotEnoughMoney("You don't have enough money for this travel!", price - user.Cash);
+            try
+            {
+                var temp = dl.GetUser(user.UserName);
+                temp.Cash -= price;
+                dl.UpdateUser(temp);
+            }
+            catch(DO.UserExceptions ex)
+            {
+                throw new BO.MissingData("User not Found!", ex);
+            }
+        }
+        public void AddCash(BO.User user, double cash)
+        {
+            try
+            {
+                var temp = dl.GetUser(user.UserName);
+                temp.Cash += cash;
+                dl.UpdateUser(temp);
+            }
+            catch (DO.UserExceptions ex)
+            {
+                throw new BO.MissingData("User not Found!", ex);
             }
         }
         #endregion

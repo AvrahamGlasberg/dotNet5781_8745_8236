@@ -36,7 +36,8 @@ namespace PL.Dialogs
                 {
                     UserName = NameTB.Text,
                     Password = PassTB.Text,
-                    Admin = IsAdmin.IsChecked == true
+                    Admin = IsAdmin.IsChecked == true, 
+                    Cash = 0
                 });
                 this.DialogResult = true;
             }

@@ -32,17 +32,11 @@
 
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="ManagerBtn" Grid.ColumnSpan="2" Height="50" Width="300" FontSize="30" Content="Manager" Grid.Row="0" Grid.RowSpan="2" Click="OpenManagerOptions" Style="{StaticResource ControlButtons}" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
-        <Button x:Name="SimBtn" Height="50" Grid.ColumnSpan="2" Width="300" FontSize="30" Content="Simulator" Grid.Row="1" Grid.RowSpan="2" Click="OpenSimulator" Style="{StaticResource ControlButtons}" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
-
-        <Button x:Name="ExitBtn" Height="50" Grid.ColumnSpan="2" Width="300" FontSize="30" Grid.Row="2" Grid.RowSpan="2" Click="Exit" Style="{StaticResource ControlButtons}">
+        <Button x:Name="ManagerBtn" Grid.ColumnSpan="2" Height="50" Width="300" FontSize="30" Content="Manager" Grid.Row="0" Click="OpenManagerOptions" Style="{StaticResource ControlButtons}" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
+        <Button x:Name="SimBtn" Height="50" Grid.ColumnSpan="2" Width="300" FontSize="30" Content="Simulator" Grid.Row="1" Click="OpenSimulator" Style="{StaticResource ControlButtons}" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
+        <Button x:Name="UserBtn" Height="50" Grid.ColumnSpan="2" Width="300" FontSize="30" Content="User" Grid.Row="2" Click="OpenUserInfo" Style="{StaticResource ControlButtons}" MouseEnter="Button_Mouse_Enter" MouseLeave="Button_Mouse_Leave"/>
+        <Button x:Name="ExitBtn" Height="50" Grid.ColumnSpan="2" Width="300" FontSize="30" Grid.Row="3" Click="Exit" Style="{StaticResource ControlButtons}">
             <Image Source="Icons/exit.png" />
         </Button>
-
-        <Border BorderBrush="DarkBlue" BorderThickness="0, 3, 0, 0"  Grid.Row="4" Grid.ColumnSpan="3" Width="800" VerticalAlignment="Bottom" Height="55">
-            <Canvas Background="LightGoldenrodYellow" x:Name="AnimCanvas" Grid.Row="4" Width="800" Grid.ColumnSpan="3" VerticalAlignment="Bottom" Height="50" Margin="1, 1, 1, 1">
-                <Image x:Name="AnimImage" Source="Icons/bus.png" Width="50" Height="50"/>
-        </Canvas>
-        </Border>
     </Grid>
 </Window>

@@ -107,6 +107,12 @@ namespace BO
         public UserExists(string message, string name) : base(message) => Name = name;
         public UserExists(string message, string name, Exception innerEX) : base(message, innerEX) => Name = name;
     }
+    [Serializable]
+    public class NotEnoughMoney : Exception
+    {
+        public double shortOf;
+        public NotEnoughMoney(string message, double shortof) : base(message) => shortOf = shortof;
+    }
     #endregion
 
     [Serializable]

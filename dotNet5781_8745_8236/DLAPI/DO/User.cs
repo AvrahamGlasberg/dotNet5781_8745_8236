@@ -12,5 +12,6 @@ namespace DO
         public string Password { get; set; }
         public bool Admin { get; set; }
         public bool Deleted { get; set; }
+        public double Cash { get; set; }
     }
 }

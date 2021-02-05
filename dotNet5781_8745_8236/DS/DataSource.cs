@@ -375,7 +375,8 @@ namespace DS
                 {
                     UserName = "Avraham", 
                     Password = "1", 
-                    Admin = true
+                    Admin = true,
+                    Cash = 0
                 }
             };
             #endregion

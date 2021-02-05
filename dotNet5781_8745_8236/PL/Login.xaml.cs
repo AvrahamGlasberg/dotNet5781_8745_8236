@@ -66,9 +66,9 @@ namespace PL.Dialogs
                 PassTB.SelectAll();
             }
         }
-        public bool IsAdmin
+        public BO.User User
         {
-            get { return user.Admin; }
+            get { return user; }
         }
 
     }

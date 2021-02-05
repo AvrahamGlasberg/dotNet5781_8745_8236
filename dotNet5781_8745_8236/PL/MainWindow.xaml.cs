@@ -37,16 +37,12 @@ namespace PL
                 MessageBox.Show(ex.Message);
             }
         }
-        private void StartAnimation()
-        {
-            AnimImage.StartAnimationForever(AnimCanvas, 5);
-        }
         private void OpenManagerOptions(object sender, RoutedEventArgs e)
         {
             Login dialog = new Login();
             if(dialog.ShowDialog() == true)
             {
-                if (dialog.IsAdmin)
+                if (dialog.User.Admin)
                 {
                     ManagerPresentation window = new ManagerPresentation();
                     window.Show();
@@ -83,7 +79,17 @@ namespace PL
 
         private void WindowActivated(object sender, EventArgs e)
         {
-            StartAnimation();
+        }
+
+        private void OpenUserInfo(object sender, RoutedEventArgs e)
+        {
+            Login win = new Login();
+            if (win.ShowDialog() == true)
+            {
+                UserInfo newWin = new UserInfo(win.User);
+                newWin.Show();
+                this.Close();
+            }
         }
     }
 }
