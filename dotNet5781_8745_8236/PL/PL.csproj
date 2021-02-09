@@ -250,6 +250,8 @@
     <Resource Include="missingBus1.png" />
     <Resource Include="Icons\missingBus2.jpg" />
     <Resource Include="missingBus2.jpg" />
+    <Resource Include="Icons\LCD.jpg" />
+    <Resource Include="Icons\Simulation.jpg" />
     <Content Include="Sounds\drive.mp3" />
     <Content Include="Sounds\refuel.mp3" />
     <Content Include="Sounds\treatment.mp3" />
