@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using BLAPI;
 using BO;
 namespace PL
@@ -21,10 +11,22 @@ namespace PL
     /// </summary>
     public partial class ManagerPresentation : Window
     {
+        /// <summary>
+        /// object that implement IBL
+        /// </summary>
         IBL bl;
-        private ObservableCollection<BO.BusStation> Stations; // Collection of BusStation for Presentation
-        private ObservableCollection<BO.BusLine> Lines; // Collection of BusLine for Presentation
-        private ObservableCollection<BO.Bus> Buses; // Collection of Bus for Presentation
+        /// <summary>
+        /// Collection of BusStation for Presentation
+        /// </summary>
+        private ObservableCollection<BO.BusStation> Stations;
+        /// <summary>
+        /// Collection of BusLine for Presentation
+        /// </summary>
+        private ObservableCollection<BO.BusLine> Lines;
+        /// <summary>
+        /// Collection of Bus for Presentation
+        /// </summary>
+        private ObservableCollection<BO.Bus> Buses;
         /// <summary>
         /// ctor of the window 
         /// </summary>

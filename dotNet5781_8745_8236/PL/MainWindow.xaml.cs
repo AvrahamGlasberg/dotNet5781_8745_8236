@@ -1,21 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using PL.Dialogs;
 using BLAPI;
-using System.Windows.Media.Animation;
-using System.ComponentModel;
 
 namespace PL
 {
@@ -24,6 +11,9 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// object that implement IBL
+        /// </summary>
         IBL bl;
         /// <summary>
         /// ctor of the window

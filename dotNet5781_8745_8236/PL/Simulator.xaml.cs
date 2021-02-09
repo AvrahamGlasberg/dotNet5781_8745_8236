@@ -3,16 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using BLAPI;
 using BO;
 namespace PL
@@ -22,12 +16,33 @@ namespace PL
     /// </summary>
     public partial class Simulator : Window
     {
+        /// <summary>
+        /// object that implement IBL
+        /// </summary>
         IBL bl;
+        /// <summary>
+        /// Media Player object for Animation
+        /// </summary>
         MediaPlayer sound = new MediaPlayer();
+        /// <summary>
+        /// rate of the simulator
+        /// </summary>
         int rate;
+        /// <summary>
+        /// start time of the simulator
+        /// </summary>
         TimeSpan startTime;
+        /// <summary>
+        /// BackgroundWorker object
+        /// </summary>
         BackgroundWorker worker;
-        List<BO.LineTiming> lineTimingsList = new List<LineTiming>(); // list of LineTiming for present on the window
+        /// <summary>
+        ///  list of LineTiming for adding 
+        /// </summary>
+        List<BO.LineTiming> lineTimingsList = new List<LineTiming>();
+        /// <summary>
+        /// IEnumerable of LineTiming for present on the window 
+        /// </summary>
         IEnumerable<BO.LineTiming> lineTimings;
         /// <summary>
         /// win ctor

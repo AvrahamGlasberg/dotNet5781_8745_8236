@@ -1,18 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using BLAPI;
-using BO;
 namespace PL.Dialogs
 {
     /// <summary>
@@ -20,7 +8,13 @@ namespace PL.Dialogs
     /// </summary>
     public partial class Login : Window
     {
+        /// <summary>
+        /// object that implement IBL
+        /// </summary>
         IBL bl;
+        /// <summary>
+        /// User object of BO 
+        /// </summary>
         BO.User user;
         /// <summary>
         /// ctor of the window 

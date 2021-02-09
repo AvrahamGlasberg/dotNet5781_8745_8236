@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using BLAPI;
 using BO;
 
@@ -22,10 +13,25 @@ namespace PL
     /// </summary>
     public partial class LineInfo : Window
     {
+        /// <summary>
+        /// object that implement IBL
+        /// </summary>
         IBL bl;
-        ObservableCollection<BO.LineStation> lineStations; // Collection of stations of the line
-        ObservableCollection<BO.Station> newStations; // Collection of stations for adding to the line
-        ObservableCollection<BO.LineTrip> trips; // Collection of lineTrip of the line
+        /// <summary>
+        /// Collection of stations of the line
+        /// </summary>
+        ObservableCollection<BO.LineStation> lineStations;
+        /// <summary>
+        /// Collection of stations for adding to the line
+        /// </summary>
+        ObservableCollection<BO.Station> newStations;
+        /// <summary>
+        /// Collection of lineTrip of the line
+        /// </summary>
+        ObservableCollection<BO.LineTrip> trips;
+        /// <summary>
+        /// the BusLine object that send to the window
+        /// </summary>
         BO.BusLine curBusLine;
         /// <summary>
         /// ctor of the window that get BO.bus

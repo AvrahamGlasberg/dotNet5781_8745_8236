@@ -1,19 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using BLAPI;
-using BO;
 
 namespace PL
 {
@@ -22,9 +13,18 @@ namespace PL
     /// </summary>
     public partial class NewLineInfo : Window
     {
+        /// <summary>
+        /// object that implement IBL
+        /// </summary>
         IBL bl;
-        ObservableCollection<BO.Station> newbusStationsList; // Collection of the station to add to the new line
-        ObservableCollection<BO.Station> busStationsList;  // Collection of the remain station to add to the list station of the new line
+        /// <summary>
+        /// Collection of the station to add to the new line
+        /// </summary>
+        ObservableCollection<BO.Station> newbusStationsList; 
+        /// <summary>
+        /// Collection of the remain station to add to the list station of the new line
+        /// </summary>
+        ObservableCollection<BO.Station> busStationsList;  
         /// <summary>
         /// window ctor
         /// </summary>
