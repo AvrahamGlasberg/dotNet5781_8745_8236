@@ -17,19 +17,42 @@ namespace DL
         public static DLXml Instance { get => instance; }// The public Instance property to use
         #endregion
 
-
+        /// <summary>
+        /// adjacent Station Path
+        /// </summary>
         string adjacentStationPath = @"AdjacentStationXml.xml"; //XElement
+        /// <summary>
+        /// bus Path
+        /// </summary>
         string busPath = @"BusXml.xml"; //XMLSerializer
+        /// <summary>
+        /// bus On Trip Path
+        /// </summary>
         string busOnTripPath = @"BusOnTripXml.xml"; //XElement
+        /// <summary>
+        /// line Path
+        /// </summary>
         string linePath = @"LineXml.xml"; //XMLSerializer
+        /// <summary>
+        /// line Station Path
+        /// </summary>
         string lineStationPath = @"LineStationXml.xml"; //XMLSerializer
+        /// <summary>
+        /// line Trip Path
+        /// </summary>
         string lineTripPath = @"LineTripXml.xml"; //
+        /// <summary>
+        /// station Path
+        /// </summary>
         string stationPath = @"StationXml.xml"; //XElement
+        /// <summary>
+        /// user Path
+        /// </summary>
         string userPath = @"UserXml.xml"; //XMLSerializer
 
         //CRUD
         #region AdjacentStation
-        public void AddAdjacentStation(AdjacentStation adjacentStation)
+        public void AddAdjacentStation(AdjacentStation adjacentStation)//IDL function
         {
             XElement adjacentStationRootElem = XMLTools.LoadListFromXMLElement(adjacentStationPath);
 
@@ -54,8 +77,7 @@ namespace DL
                 XMLTools.SaveListToXMLElement(adjacentStationRootElem, adjacentStationPath);
             }
         }
-
-        public AdjacentStation GetAdjacentStation(int station1, int station2)
+        public AdjacentStation GetAdjacentStation(int station1, int station2)//IDL function
         {
             XElement adjacentStationRootElem = XMLTools.LoadListFromXMLElement(adjacentStationPath);
 
@@ -76,8 +98,7 @@ namespace DL
                 throw new AdjacentStationExceptions(station1, station2, false);
             return adjStations;
         }
-
-        public IEnumerable<DO.AdjacentStation> GetAdjacentStationsBy(Predicate<DO.AdjacentStation> predicate)
+        public IEnumerable<DO.AdjacentStation> GetAdjacentStationsBy(Predicate<DO.AdjacentStation> predicate)//IDL function
         {
             XElement adjacentStationRootElem = XMLTools.LoadListFromXMLElement(adjacentStationPath);
 
@@ -93,7 +114,7 @@ namespace DL
                    where predicate(adjCur) && !adjCur.Deleted
                    select adjCur;
         }
-        public void UpdateAdjacentStation(AdjacentStation newAdjacentStation)
+        public void UpdateAdjacentStation(AdjacentStation newAdjacentStation)//IDL function
         {
             XElement adjacentStationRootElem = XMLTools.LoadListFromXMLElement(adjacentStationPath);
 
@@ -114,8 +135,7 @@ namespace DL
 
             XMLTools.SaveListToXMLElement(adjacentStationRootElem, adjacentStationPath);
         }
-
-        public void DeleteAdjacentStation(int station1, int station2)
+        public void DeleteAdjacentStation(int station1, int station2)//IDL function
         {
             XElement adjacentStationRootElem = XMLTools.LoadListFromXMLElement(adjacentStationPath);
 
@@ -135,7 +155,7 @@ namespace DL
         #endregion
 
         #region Bus
-        public void AddBus(Bus bus)
+        public void AddBus(Bus bus)//IDL function
         {
             List<DO.Bus> buses = XMLTools.LoadListFromXMLSerializer<DO.Bus>(busPath);
 
@@ -145,8 +165,7 @@ namespace DL
             buses.Add(bus);
             XMLTools.SaveListToXMLSerializer<DO.Bus>(buses, busPath);
         }
-
-        public IEnumerable<Bus> GettAllBuses()
+        public IEnumerable<Bus> GettAllBuses()//IDL function
         {
             List<DO.Bus> buses = XMLTools.LoadListFromXMLSerializer<DO.Bus>(busPath);
             return from bus in buses
@@ -154,8 +173,7 @@ namespace DL
                    orderby bus.LicenseNum
                    select bus;
         }
-
-        public Bus GetBus(int license)
+        public Bus GetBus(int license)//IDL function
         {
             List<DO.Bus> buses = XMLTools.LoadListFromXMLSerializer<DO.Bus>(busPath);
             Bus retValue = buses.FirstOrDefault(curBus => curBus.LicenseNum == license && !curBus.Deleted);
@@ -163,8 +181,7 @@ namespace DL
                 return retValue;
             else throw new BusExceptions(license, false);
         }
-
-        public void UpdateBus(Bus NewBus)
+        public void UpdateBus(Bus NewBus)//IDL function
         {
             List<DO.Bus> buses = XMLTools.LoadListFromXMLSerializer<DO.Bus>(busPath);
             Bus cur =  buses.FirstOrDefault(curBus => curBus.LicenseNum == NewBus.LicenseNum && !curBus.Deleted);
@@ -174,7 +191,7 @@ namespace DL
             buses.Add(NewBus);
             XMLTools.SaveListToXMLSerializer<DO.Bus>(buses, busPath);
         }
-        public void DeleteBus(int license)
+        public void DeleteBus(int license)//IDL function
         {
             List<DO.Bus> buses = XMLTools.LoadListFromXMLSerializer<DO.Bus>(busPath);
             Bus cur = buses.FirstOrDefault(curBus => curBus.LicenseNum == license && !curBus.Deleted);
@@ -185,6 +202,7 @@ namespace DL
         }
         #endregion
 
+        //obselete
         #region BusOnTrip
         public void AddBusOnTrip(BusOnTrip busOnTrip)
         {
@@ -287,14 +305,13 @@ namespace DL
         #endregion
 
         #region Line
-        public void AddLine(Line line)
+        public void AddLine(Line line)//IDL function
         {
             List<Line> lines = XMLTools.LoadListFromXMLSerializer<Line>(linePath);
             lines.Add(line);
             XMLTools.SaveListToXMLSerializer<Line>(lines, linePath);
         }
-
-        public Line GetLine(int id)
+        public Line GetLine(int id)//IDL function
         {
             List<Line> lines = XMLTools.LoadListFromXMLSerializer<Line>(linePath);
             Line retValue = lines.FirstOrDefault(curLine => curLine.Id == id && !curLine.Deleted);
@@ -302,8 +319,7 @@ namespace DL
                 return retValue;
             else throw new LineExceptions(id, false);
         }
-
-        public IEnumerable<Line> GetAllLines()
+        public IEnumerable<Line> GetAllLines()//IDL function
         {
             List<Line> lines = XMLTools.LoadListFromXMLSerializer<Line>(linePath);
             return from CurLine in lines
@@ -311,7 +327,7 @@ namespace DL
                    orderby CurLine.Code
                    select CurLine;
         }
-        public void UpdateLine(Line newLine)
+        public void UpdateLine(Line newLine)//IDL function
         {
             List<Line> lines = XMLTools.LoadListFromXMLSerializer<Line>(linePath);
             Line cur = lines.FirstOrDefault(curLine => curLine.Id == newLine.Id && !curLine.Deleted);
@@ -321,7 +337,7 @@ namespace DL
             lines.Add(newLine);
             XMLTools.SaveListToXMLSerializer<Line>(lines, linePath);
         }
-        public void DeleteLine(int id)
+        public void DeleteLine(int id)//IDL function
         {
             List<Line> lines = XMLTools.LoadListFromXMLSerializer<Line>(linePath);
             Line cur = lines.FirstOrDefault(curLine => curLine.Id == id && !curLine.Deleted);
@@ -333,7 +349,7 @@ namespace DL
         #endregion
 
         #region LineStation
-        public void AddLineStation(LineStation lineStation)
+        public void AddLineStation(LineStation lineStation)//IDL function
         {
             List<LineStation> lineStations = XMLTools.LoadListFromXMLSerializer<LineStation>(lineStationPath);
             if (lineStations.FirstOrDefault(curLineStation => curLineStation.LineId == lineStation.LineId && curLineStation.Station == lineStation.Station && !curLineStation.Deleted) != null)
@@ -342,8 +358,7 @@ namespace DL
             lineStations.Add(lineStation);
             XMLTools.SaveListToXMLSerializer<LineStation>(lineStations, lineStationPath);
         }
-
-        public LineStation GetLineStation(int lineId, int station)
+        public LineStation GetLineStation(int lineId, int station)//IDL function
         {
             List<LineStation> lineStations = XMLTools.LoadListFromXMLSerializer<LineStation>(lineStationPath);
             LineStation retValue = lineStations.FirstOrDefault(curLineStation => curLineStation.LineId == lineId && curLineStation.Station == station && !curLineStation.Deleted);
@@ -351,8 +366,7 @@ namespace DL
                 return retValue;
             else throw new LineStationExceptions(lineId, station, false);
         }
-
-        public IEnumerable<LineStation> GetAllLineStations(int lineId)
+        public IEnumerable<LineStation> GetAllLineStations(int lineId)//IDL function
         {
             List<LineStation> lineStations = XMLTools.LoadListFromXMLSerializer<LineStation>(lineStationPath);
             return from item in lineStations
@@ -360,8 +374,7 @@ namespace DL
                    orderby item.LineStationIndex
                    select item;
         }
-
-        public void UpdateLineStation(LineStation newLineStation)
+        public void UpdateLineStation(LineStation newLineStation)//IDL function
         {
             List<LineStation> lineStations = XMLTools.LoadListFromXMLSerializer<LineStation>(lineStationPath);
             LineStation cur = lineStations.FirstOrDefault(curLineStation => curLineStation.LineId == newLineStation.LineId && curLineStation.Station == newLineStation.Station && !curLineStation.Deleted);
@@ -371,8 +384,7 @@ namespace DL
             lineStations.Add(newLineStation);
             XMLTools.SaveListToXMLSerializer<LineStation>(lineStations, lineStationPath);
         }
-
-        public void DeleteLineStation(int lineId, int station)
+        public void DeleteLineStation(int lineId, int station)//IDL function
         {
             List<LineStation> lineStations = XMLTools.LoadListFromXMLSerializer<LineStation>(lineStationPath);
             LineStation cur = lineStations.FirstOrDefault(curLineStation => curLineStation.LineId == lineId && curLineStation.Station == station && !curLineStation.Deleted);
@@ -381,8 +393,7 @@ namespace DL
             cur.Deleted = true;
             XMLTools.SaveListToXMLSerializer<LineStation>(lineStations, lineStationPath);
         }
-
-        public void DeleteAlLineStationslBy(Predicate<DO.LineStation> predicate)
+        public void DeleteAlLineStationslBy(Predicate<DO.LineStation> predicate)//IDL function
         {
             List<LineStation> lineStations = XMLTools.LoadListFromXMLSerializer<LineStation>(lineStationPath);
             foreach (var station in lineStations)
@@ -390,8 +401,7 @@ namespace DL
                     station.Deleted = true;
             XMLTools.SaveListToXMLSerializer<LineStation>(lineStations, lineStationPath);
         }
-
-        public IEnumerable<LineStation> GetAllLineStationsBy(Predicate<DO.LineStation> predicate)
+        public IEnumerable<LineStation> GetAllLineStationsBy(Predicate<DO.LineStation> predicate)//IDL function
         {
             List<LineStation> lineStations = XMLTools.LoadListFromXMLSerializer<LineStation>(lineStationPath);
             return from lineStation in lineStations
@@ -401,7 +411,7 @@ namespace DL
         #endregion
 
         #region LineTrip
-        public void AddLineTrip(LineTrip lineTrip)
+        public void AddLineTrip(LineTrip lineTrip)//IDL function
         {
             XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
 
@@ -423,8 +433,7 @@ namespace DL
             lineTripRootElem.Add(lineTripElem);
             XMLTools.SaveListToXMLElement(lineTripRootElem, lineTripPath);
         }
-
-        public LineTrip GetLineTrip(int lineId, TimeSpan start)
+        public LineTrip GetLineTrip(int lineId, TimeSpan start)//IDL function
         {
             XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
             LineTrip retValue = (from l in lineTripRootElem.Elements()
@@ -443,8 +452,7 @@ namespace DL
                 throw new LineTripExceptions(lineId, start, false);
             return retValue;
         }
-
-        public IEnumerable<DO.LineTrip> GetAllLineTripsBy(Predicate<DO.LineTrip> predicate)
+        public IEnumerable<DO.LineTrip> GetAllLineTripsBy(Predicate<DO.LineTrip> predicate)//IDL function
         {
             XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
             return from l in lineTripRootElem.Elements()
@@ -460,7 +468,7 @@ namespace DL
                    orderby curLineTrip.StartAt
                    select curLineTrip;
         }
-        public void UpdateLineTrip(LineTrip newLineTrip)
+        public void UpdateLineTrip(LineTrip newLineTrip)//IDL function
         {
             XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
 
@@ -480,8 +488,7 @@ namespace DL
 
             XMLTools.SaveListToXMLElement(lineTripRootElem, lineTripPath);
         }
-
-        public void DeleteLineTrip(int lineId, TimeSpan start)
+        public void DeleteLineTrip(int lineId, TimeSpan start)//IDL function
         {
             XElement lineTripRootElem = XMLTools.LoadListFromXMLElement(lineTripPath);
 
@@ -501,7 +508,7 @@ namespace DL
         #endregion
 
         #region Station
-        public void AddStation(Station station)
+        public void AddStation(Station station)//IDL function
         {
             List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationPath);
             if (stations.FirstOrDefault(curStation => curStation.Code == station.Code &&
@@ -510,8 +517,7 @@ namespace DL
             stations.Add(station);
             XMLTools.SaveListToXMLSerializer<Station>(stations, stationPath);
         }
-
-        public Station GetStation(int code)
+        public Station GetStation(int code)//IDL function
         {
             List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationPath);
             Station retValue = stations.FirstOrDefault(curStation => curStation.Code == code &&
@@ -520,15 +526,14 @@ namespace DL
                 return retValue;
             else throw new StationExceptions(code, false);
         }
-        public IEnumerable<DO.Station> GetAllStations()
+        public IEnumerable<DO.Station> GetAllStations()//IDL function
         {
             List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationPath);
             return from station in stations
                    where !station.Deleted
                    select station;
         }
-
-        public void UpdateStation(Station newStation)
+        public void UpdateStation(Station newStation)//IDL function
         {
             List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationPath);
             Station cur = stations.FirstOrDefault(curStation => curStation.Code == newStation.Code && !curStation.Deleted);
@@ -538,8 +543,7 @@ namespace DL
             stations.Add(newStation);
             XMLTools.SaveListToXMLSerializer<Station>(stations, stationPath);
         }
-
-        public void DeleteStation(int code)
+        public void DeleteStation(int code)//IDL function
         {
             List<Station> stations = XMLTools.LoadListFromXMLSerializer<Station>(stationPath);
             Station cur = stations.FirstOrDefault(curStation => curStation.Code == code && !curStation.Deleted);
@@ -550,6 +554,7 @@ namespace DL
         }
         #endregion
 
+        //obselete
         #region Trip
         //public void AddTrip(Trip trip)
         //{
@@ -586,7 +591,7 @@ namespace DL
         #endregion
 
         #region User
-        public void AddUser(User user)
+        public void AddUser(User user)//IDL function
         {
             List<User> users = XMLTools.LoadListFromXMLSerializer<User>(userPath);
             if (users.FirstOrDefault(curUser => curUser.UserName == user.UserName && !curUser.Deleted) != null)
@@ -594,8 +599,7 @@ namespace DL
             users.Add(user);
             XMLTools.SaveListToXMLSerializer<User>(users, userPath);
         }
-
-        public User GetUser(string name)
+        public User GetUser(string name)//IDL function
         {
             List<User> users = XMLTools.LoadListFromXMLSerializer<User>(userPath);
             User retValue = users.FirstOrDefault(curUser => curUser.UserName == name && !curUser.Deleted);
@@ -603,8 +607,7 @@ namespace DL
                 return retValue;
             else throw new UserExceptions(name, false);
         }
-
-        public void UpdateUser(User newUser)
+        public void UpdateUser(User newUser)//IDL function
         {
             List<User> users = XMLTools.LoadListFromXMLSerializer<User>(userPath);
             User cur = users.FirstOrDefault(curUser => curUser.UserName == newUser.UserName && !curUser.Deleted);
@@ -614,8 +617,7 @@ namespace DL
             users.Add(newUser);
             XMLTools.SaveListToXMLSerializer<User>(users, userPath);
         }
-
-        public void DeleteUser(string userName)
+        public void DeleteUser(string userName)//IDL function
         {
             List<User> users = XMLTools.LoadListFromXMLSerializer<User>(userPath);
             User cur = users.FirstOrDefault(curUser => curUser.UserName == userName && !curUser.Deleted);
