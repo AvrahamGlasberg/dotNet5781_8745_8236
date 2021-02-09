@@ -1,5 +1,4 @@
-﻿using System;
-namespace DO
+﻿namespace DO
 {
     /// <summary>
     /// Bus's possible status

@@ -7,7 +7,6 @@ using System.Device.Location;
 using BLAPI;
 using DLAPI;
 using System.Threading;
-using System.ComponentModel;
 using System.Diagnostics;
 
 namespace BL
