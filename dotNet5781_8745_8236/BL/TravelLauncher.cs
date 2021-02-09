@@ -17,59 +17,73 @@ namespace BL
         #endregion
         internal int stationInWatch = -1;
         private event Action<BO.LineTiming> stationObserver;
+        Random rand = new Random(DateTime.Now.Millisecond);
         internal event Action<BO.LineTiming> StationObserver { add { stationObserver = value; } remove { stationObserver -= value; } }
         internal void StartLaunch()
         {
-            //current time
-            TimeSpan curTime = Clock.Instance.Time;
+            List<Thread> linesThreads = new List<Thread>();
 
-            //list of all travels
-            List<BO.LineTrip> allTravels = new List<BO.LineTrip>();
-            foreach(var trip in BLImp.Instance.GetAllLineTrips())
-                for (TimeSpan t = trip.StartAt; t <= trip.FinishAt && trip.Frequency != TimeSpan.Zero; t += trip.Frequency)
-                    allTravels.Add(new BO.LineTrip() { StartAt = t, LineInTrip = trip.LineInTrip});
-            allTravels = allTravels.OrderBy(trip => trip.StartAt).ToList();
-
-            if (allTravels.Count > 0)
+            try
             {
-                TimeSpan time = allTravels[0].StartAt - curTime;
-                int timeToSleep = 0;
-                //if travel is tommorow
-                if (time < TimeSpan.Zero)
-                    time += new TimeSpan(24, 0, 0);
+                //current time
+                TimeSpan curTime = Clock.Instance.Time;
 
-                //sleeping time
-                timeToSleep = time.Hours * 360 * 1000;
-                timeToSleep += time.Minutes * 60 * 1000;
-                timeToSleep += time.Seconds * 1000;
-                timeToSleep /= Clock.Instance.Rate;
-                System.Threading.Thread.Sleep(timeToSleep);
-                for (int i = 0; !BLImp.Instance.stopSim; i = (i + 1) % allTravels.Count)
+                //list of all travels
+                List<BO.LineTrip> allTravels = new List<BO.LineTrip>();
+                foreach (var trip in BLImp.Instance.GetAllLineTrips())
+                    for (TimeSpan t = trip.StartAt; t <= trip.FinishAt && trip.Frequency != TimeSpan.Zero; t += trip.Frequency)
+                        allTravels.Add(new BO.LineTrip() { StartAt = t, LineInTrip = trip.LineInTrip });
+                allTravels = allTravels.OrderBy(trip => trip.StartAt).ToList();
+
+                if (allTravels.Count > 0)
                 {
-                    //new line - was'nt before
-                    curTime = Clock.Instance.Time;
-                    var allLineStations = allTravels[i].LineInTrip.LineStations.ToList();
-                    var number = allTravels[i].LineInTrip.LineNumber;
-                    var id = BO.Config.LineOnTripId;
-                    //here need to add the thread to list for interrupts
-                    Thread trip = new Thread(() => Trip(number, allLineStations, id));
-                    trip.Start();
-
-                    int nextInd = (i + 1) % allTravels.Count;
-                    time = allTravels[nextInd].StartAt - curTime;
-                    timeToSleep = 0;
-
-                    if (nextInd == 0)
+                    TimeSpan time = allTravels[0].StartAt - curTime;
+                    int timeToSleep = 0;
+                    //if travel is tommorow
+                    if (time < TimeSpan.Zero)
                         time += new TimeSpan(24, 0, 0);
-                    else if (time < TimeSpan.Zero)//means that time of computer runtime cause to miss a line launch 
-                        time = TimeSpan.Zero;
-                    //
-                        timeToSleep = time.Hours * 360 * 1000;
+
+                    //sleeping time
+                    timeToSleep = time.Hours * 360 * 1000;
                     timeToSleep += time.Minutes * 60 * 1000;
                     timeToSleep += time.Seconds * 1000;
                     timeToSleep /= Clock.Instance.Rate;
                     System.Threading.Thread.Sleep(timeToSleep);
+                    for (int i = 0; !BLImp.Instance.stopSim; i = (i + 1) % allTravels.Count)
+                    {
+                        //new line - was'nt before
+                        curTime = Clock.Instance.Time;
+                        var allLineStations = allTravels[i].LineInTrip.LineStations.ToList();
+                        var number = allTravels[i].LineInTrip.LineNumber;
+                        var id = BO.Config.LineOnTripId;
+                        
+                        Thread trip = new Thread(() => Trip(number, allLineStations, id));
+                        linesThreads.Add(trip);
+                        trip.Start();
+
+                        int nextInd = (i + 1) % allTravels.Count;
+                        time = allTravels[nextInd].StartAt - curTime;
+                        timeToSleep = 0;
+
+                        if (nextInd == 0)
+                            time += new TimeSpan(24, 0, 0);
+                        else if (time < TimeSpan.Zero)//means that time of computer runtime cause to miss a line launch 
+                            time = TimeSpan.Zero;
+                        //
+                        timeToSleep = time.Hours * 360 * 1000;
+                        timeToSleep += time.Minutes * 60 * 1000;
+                        timeToSleep += time.Seconds * 1000;
+                        timeToSleep /= Clock.Instance.Rate;
+                        System.Threading.Thread.Sleep(timeToSleep);
+                    }
                 }
+
+            }
+            catch (ThreadInterruptedException)
+            {
+                foreach (var l in linesThreads)
+                    if (l.IsAlive)
+                        l.Interrupt();
             }
         }
         internal void UpdateStation(BO.LineTiming lineTiming)
@@ -78,33 +92,43 @@ namespace BL
         }
         private void Trip(int lineNumber, List<BO.LineStation> allStations, int id)
         {
-            //Random rand = new Random(DateTime.Now.Millisecond);
-            BO.LineStation curStation = allStations.First<BO.LineStation>();
-            for (int j = 0; j < allStations.Count && !BLImp.Instance.stopSim;j++)
+            try
             {
-                var station = allStations[j];
-                TimeSpan time = TimeSpan.Zero;
-                for (int i = allStations.FindIndex(st=> st.Code == station.Code); i < allStations.Count; i++)
+                
+                BO.LineStation curStation = allStations.First<BO.LineStation>();
+                for (int j = 0; j < allStations.Count && !BLImp.Instance.stopSim; j++)
                 {
-                    if(allStations[i].Code == stationInWatch)
+                    var station = allStations[j];
+                    TimeSpan time = TimeSpan.Zero;
+                    for (int i = allStations.FindIndex(st => st.Code == station.Code); i < allStations.Count; i++)
                     {
-                        UpdateStation(new BO.LineTiming() {Id = id,
-                            LineNumber = lineNumber,
-                            Destination =  allStations.Last().Name, 
-                            Time = time});
+                        if (allStations[i].Code == stationInWatch)
+                        {
+                            UpdateStation(new BO.LineTiming()
+                            {
+                                Id = id,
+                                LineNumber = lineNumber,
+                                Destination = allStations.Last().Name,
+                                Time = time
+                            });
+                        }
+                        if (allStations[i].Code != allStations.Last().Code)
+                            time += (TimeSpan)allStations[i].TimeToNext;
                     }
-                    if(allStations[i].Code != allStations.Last().Code)
-                         time += (TimeSpan)allStations[i].TimeToNext;
+                    if (station.Code != allStations.Last().Code)
+                    {
+                        int timeToSleep = ((TimeSpan)station.TimeToNext).Hours * 360 * 1000;
+                        timeToSleep += ((TimeSpan)station.TimeToNext).Minutes * 60 * 1000;
+                        timeToSleep += ((TimeSpan)station.TimeToNext).Seconds * 1000;
+                        timeToSleep /= Clock.Instance.Rate;
+                        timeToSleep *= (int)((double)rand.Next(90, 200) / 100);//real time slowing down or speeding up, 90%-200%.
+                        System.Threading.Thread.Sleep(timeToSleep);
+                    }
                 }
-                if (station.Code != allStations.Last().Code)
-                {
-                    int timeToSleep = ((TimeSpan)station.TimeToNext).Hours * 360 * 1000;
-                    timeToSleep += ((TimeSpan)station.TimeToNext).Minutes * 60 * 1000;
-                    timeToSleep += ((TimeSpan)station.TimeToNext).Seconds * 1000;
-                    timeToSleep /= Clock.Instance.Rate;
-                    //timeToSleep *= (int)((double)rand.Next(90, 200) / 100);//real time slowing down or speeding up, 90%-200%.
-                    System.Threading.Thread.Sleep(timeToSleep);
-                }
+            }
+            catch(ThreadInterruptedException)
+            {
+                //stops the thread - no need to do something.
             }
         }
     }

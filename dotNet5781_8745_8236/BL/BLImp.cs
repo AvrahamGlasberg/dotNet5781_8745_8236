@@ -43,6 +43,8 @@ namespace BL
                 Clock.Instance.Time = new TimeSpan(t.Hours, t.Minutes, t.Seconds);
                 Thread.Sleep(100);
             }
+            if (tripsLauncher.IsAlive)
+                tripsLauncher.Interrupt();
         }
         internal List<BO.LineTrip> GetAllLineTrips()
         {
