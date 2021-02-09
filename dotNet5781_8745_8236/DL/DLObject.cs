@@ -18,28 +18,26 @@ namespace DL
 
         //CRUD
         #region AdjacentStation
-        public void AddAdjacentStation(AdjacentStation adjacentStation)
+        public void AddAdjacentStation(AdjacentStation adjacentStation)//IDL function
         {
             if (DataSource.AdjacentStations.FirstOrDefault(stations => stations.Station1 == adjacentStation.Station1 && stations.Station2 == adjacentStation.Station2 && !stations.Deleted) == null)
                 DataSource.AdjacentStations.Add(adjacentStation.Clone());
 
         }
-
-        public AdjacentStation GetAdjacentStation(int station1, int station2)
+        public AdjacentStation GetAdjacentStation(int station1, int station2)//IDL function
         {
             AdjacentStation retValue = DataSource.AdjacentStations.FirstOrDefault(stations => (stations.Station1 == station1 && stations.Station2 == station2) || (stations.Station1 == station2 && stations.Station2 == station1) && !stations.Deleted);
             if (retValue != null)
                 return retValue.Clone();
             else throw new AdjacentStationExceptions(station1, station2, false);
         }
-
-        public IEnumerable<DO.AdjacentStation> GetAdjacentStationsBy(Predicate<DO.AdjacentStation> predicate)
+        public IEnumerable<DO.AdjacentStation> GetAdjacentStationsBy(Predicate<DO.AdjacentStation> predicate)//IDL function
         {
             return from stations in DataSource.AdjacentStations
                    where predicate(stations) && !stations.Deleted
                    select stations.Clone();
         }
-        public void UpdateAdjacentStation(AdjacentStation newAdjacentStation)
+        public void UpdateAdjacentStation(AdjacentStation newAdjacentStation)//IDL function
         {
             AdjacentStation cur = DataSource.AdjacentStations.FirstOrDefault(stations => (stations.Station1 == newAdjacentStation.Station1 && stations.Station2 == newAdjacentStation.Station2) || (stations.Station1 == newAdjacentStation.Station2 && stations.Station2 == newAdjacentStation.Station1) && !stations.Deleted);
             if (cur == null)
@@ -47,8 +45,7 @@ namespace DL
             DataSource.AdjacentStations.Remove(cur);
             DataSource.AdjacentStations.Add(newAdjacentStation.Clone());
         }
-
-        public void DeleteAdjacentStation(int station1, int station2)
+        public void DeleteAdjacentStation(int station1, int station2)//IDL function
         {
             AdjacentStation cur = DataSource.AdjacentStations.FirstOrDefault(stations => ((stations.Station1 == station1 && stations.Station2 == station2) || (stations.Station1 == station2 && stations.Station2 == station1)) && !stations.Deleted);
             if (cur == null)
@@ -58,31 +55,28 @@ namespace DL
         #endregion
 
         #region Bus
-        public void AddBus(Bus bus)
+        public void AddBus(Bus bus)//IDL function
         {
             if (DataSource.Buses.FirstOrDefault(curBus => curBus.LicenseNum == bus.LicenseNum && !curBus.Deleted) != null)
                 throw new BusExceptions(bus.LicenseNum, true);
             else
                 DataSource.Buses.Add(bus.Clone());
         }
-
-        public IEnumerable<Bus> GettAllBuses()
+        public IEnumerable<Bus> GettAllBuses()//IDL function
         {
             return from bus in DataSource.Buses
                    where !bus.Deleted
                    orderby bus.LicenseNum
                    select bus.Clone();
         }
-
-        public Bus GetBus(int license)
+        public Bus GetBus(int license)//IDL function
         {
             Bus retValue = DataSource.Buses.FirstOrDefault(curBus => curBus.LicenseNum == license && !curBus.Deleted);
             if (retValue != null)
                 return retValue.Clone();
             else throw new BusExceptions(license, false);
         }
-
-        public void UpdateBus(Bus NewBus)
+        public void UpdateBus(Bus NewBus)//IDL function
         {
             Bus cur = DataSource.Buses.FirstOrDefault(curBus => curBus.LicenseNum == NewBus.LicenseNum && !curBus.Deleted);
             if (cur == null)
@@ -90,7 +84,7 @@ namespace DL
             DataSource.Buses.Remove(cur);
             DataSource.Buses.Add(NewBus.Clone());
         }
-        public void DeleteBus(int license)
+        public void DeleteBus(int license)//IDL function
         {
             Bus cur = DataSource.Buses.FirstOrDefault(curBus => curBus.LicenseNum == license && !curBus.Deleted);
             if (cur == null)
@@ -99,6 +93,7 @@ namespace DL
         }
         #endregion
 
+        //obselete
         #region BusOnTrip
         public void AddBusOnTrip(BusOnTrip busOnTrip)
         {
@@ -137,12 +132,12 @@ namespace DL
         #endregion
 
         #region Line
-        public void AddLine(Line line)
+        public void AddLine(Line line)//IDL function
         {
              DataSource.Lines.Add(line.Clone());
         }
 
-        public Line GetLine(int id)
+        public Line GetLine(int id)//IDL function
         {
             Line retValue = DataSource.Lines.FirstOrDefault(curLine => curLine.Id == id && !curLine.Deleted);
             if (retValue != null)
@@ -150,14 +145,14 @@ namespace DL
             else throw new LineExceptions(id, false);
         }
 
-        public IEnumerable<Line> GetAllLines()
+        public IEnumerable<Line> GetAllLines()//IDL function
         {
             return from CurLine in DataSource.Lines
                    where !CurLine.Deleted
                    orderby CurLine.Code
                    select CurLine;
         }
-        public void UpdateLine(Line newLine)
+        public void UpdateLine(Line newLine)//IDL function
         {
             Line cur = DataSource.Lines.FirstOrDefault(curLine => curLine.Id == newLine.Id && !curLine.Deleted);
             if (cur == null)
@@ -165,7 +160,7 @@ namespace DL
             DataSource.Lines.Remove(cur);
             DataSource.Lines.Add(newLine.Clone());
         }
-        public void DeleteLine(int id)
+        public void DeleteLine(int id)//IDL function
         {
             Line cur = DataSource.Lines.FirstOrDefault(curLine => curLine.Id == id && !curLine.Deleted);
             if (cur == null)
@@ -175,31 +170,28 @@ namespace DL
         #endregion
 
         #region LineStation
-        public void AddLineStation(LineStation lineStation)
+        public void AddLineStation(LineStation lineStation)//IDL function
         {
             if (DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.LineId == lineStation.LineId && curLineStation.Station == lineStation.Station && !curLineStation.Deleted) != null)
                 throw new LineStationExceptions(lineStation.LineId, lineStation.Station, true);
             else
                 DataSource.LineStations.Add(lineStation.Clone());
         }
-
-        public LineStation GetLineStation(int lineId, int station)
+        public LineStation GetLineStation(int lineId, int station)//IDL function
         {
             LineStation retValue = DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.LineId == lineId && curLineStation.Station == station && !curLineStation.Deleted);
             if (retValue != null)
                 return retValue.Clone();
             else throw new LineStationExceptions(lineId, station, false);
         }
-        
-        public IEnumerable<LineStation> GetAllLineStations(int lineId)
+        public IEnumerable<LineStation> GetAllLineStations(int lineId)//IDL function
         {
             return from item in DataSource.LineStations
                    where item.LineId == lineId && !item.Deleted
                    orderby item.LineStationIndex
                    select item.Clone();
         }
-
-        public void UpdateLineStation(LineStation newLineStation)
+        public void UpdateLineStation(LineStation newLineStation)//IDL function
         {
             LineStation cur = DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.LineId == newLineStation.LineId && curLineStation.Station == newLineStation.Station && !curLineStation.Deleted);
             if(cur == null)
@@ -207,23 +199,20 @@ namespace DL
             DataSource.LineStations.Remove(cur);
             DataSource.LineStations.Add(newLineStation);
         }
-
-        public void DeleteLineStation(int lineId, int station)
+        public void DeleteLineStation(int lineId, int station)//IDL function
         {
             LineStation cur = DataSource.LineStations.FirstOrDefault(curLineStation => curLineStation.LineId == lineId && curLineStation.Station == station && !curLineStation.Deleted);
             if (cur == null)
                 throw new LineStationExceptions(lineId, station, false);
             cur.Deleted = true;
         }
-
-        public void DeleteAlLineStationslBy(Predicate<DO.LineStation> predicate)
+        public void DeleteAlLineStationslBy(Predicate<DO.LineStation> predicate)//IDL function
         {
             foreach (var station in DataSource.LineStations)
                 if (predicate(station))
                     station.Deleted = true;
         }
-
-        public IEnumerable<LineStation> GetAllLineStationsBy(Predicate<DO.LineStation> predicate)
+        public IEnumerable<LineStation> GetAllLineStationsBy(Predicate<DO.LineStation> predicate)//IDL function
         {
             return from lineStation in DataSource.LineStations
                    where predicate(lineStation) && !lineStation.Deleted
@@ -232,30 +221,28 @@ namespace DL
         #endregion
 
         #region LineTrip
-        public void AddLineTrip(LineTrip lineTrip)
+        public void AddLineTrip(LineTrip lineTrip)//IDL function
         {
             if ((DataSource.LinesTrip.FirstOrDefault(curLine => curLine.LineId == lineTrip.LineId && curLine.StartAt == lineTrip.StartAt && !curLine.Deleted) != null))
                 throw new LineTripExceptions(lineTrip.LineId, lineTrip.StartAt, true);
             else
                 DataSource.LinesTrip.Add(lineTrip.Clone());
         }
-
-        public LineTrip GetLineTrip(int lineId, TimeSpan start)
+        public LineTrip GetLineTrip(int lineId, TimeSpan start)//IDL function
         {
             LineTrip retValue = DataSource.LinesTrip.FirstOrDefault(curLine => curLine.LineId == lineId && curLine.StartAt == start && !curLine.Deleted);
             if (retValue != null)
                 return retValue.Clone();
             else throw new LineTripExceptions(lineId, start, false);
         }
-
-        public IEnumerable<DO.LineTrip> GetAllLineTripsBy(Predicate<DO.LineTrip> predicate)
+        public IEnumerable<DO.LineTrip> GetAllLineTripsBy(Predicate<DO.LineTrip> predicate)//IDL function
         {
             return from lTrip in DataSource.LinesTrip
                    where predicate(lTrip) && !lTrip.Deleted
                    orderby lTrip.StartAt
                    select lTrip;
         }
-        public void UpdateLineTrip(LineTrip newLineTrip)
+        public void UpdateLineTrip(LineTrip newLineTrip)//IDL function
         {
             LineTrip cur = DataSource.LinesTrip.FirstOrDefault(curLineTrip => curLineTrip.LineId == newLineTrip.LineId && curLineTrip.StartAt == newLineTrip.StartAt && !curLineTrip.Deleted);
             if (cur == null)
@@ -263,8 +250,7 @@ namespace DL
             DataSource.LinesTrip.Remove(cur);
             DataSource.LinesTrip.Add(newLineTrip);
         }
-
-        public void DeleteLineTrip(int lineId, TimeSpan start)
+        public void DeleteLineTrip(int lineId, TimeSpan start)//IDL function
         {
             LineTrip cur = DataSource.LinesTrip.FirstOrDefault(curLineTrip => curLineTrip.LineId == lineId && curLineTrip.StartAt == start && !curLineTrip.Deleted);
             if (cur == null)
@@ -274,7 +260,7 @@ namespace DL
         #endregion
 
         #region Station
-        public void AddStation(Station station)
+        public void AddStation(Station station)//IDL function
         {
             if (DataSource.Stations.FirstOrDefault(curStation => curStation.Code == station.Code && 
             !curStation.Deleted) != null)
@@ -282,8 +268,7 @@ namespace DL
             else
                 DataSource.Stations.Add(station.Clone());
         }
-
-        public Station GetStation(int code)
+        public Station GetStation(int code)//IDL function
         {
             Station retValue = DataSource.Stations.FirstOrDefault(curStation => curStation.Code == code && 
             !curStation.Deleted);
@@ -291,14 +276,13 @@ namespace DL
                 return retValue.Clone();
             else throw new StationExceptions(code, false);
         }
-        public IEnumerable<DO.Station> GetAllStations()
+        public IEnumerable<DO.Station> GetAllStations()//IDL function
         {
             return from station in DataSource.Stations
                    where !station.Deleted
                    select station;
         }
-
-        public void UpdateStation(Station newStation)
+        public void UpdateStation(Station newStation)//IDL function
         {
             Station cur = DataSource.Stations.FirstOrDefault(curStation => curStation.Code == newStation.Code && !curStation.Deleted);
             if (cur == null)
@@ -306,8 +290,7 @@ namespace DL
             DataSource.Stations.Remove(cur);
             DataSource.Stations.Add(newStation);
         }
-
-        public void DeleteStation(int code)
+        public void DeleteStation(int code)//IDL function
         {
             Station cur = DataSource.Stations.FirstOrDefault(curStation => curStation.Code == code && !curStation.Deleted);
             if (cur == null)
@@ -316,6 +299,7 @@ namespace DL
         }
         #endregion
 
+        //obselete
         #region Trip
         public void AddTrip(Trip trip)
         {
@@ -352,23 +336,21 @@ namespace DL
         #endregion
 
         #region User
-        public void AddUser(User user)
+        public void AddUser(User user)//IDL function
         {
             if (DataSource.Users.FirstOrDefault(curUser => curUser.UserName == user.UserName && !curUser.Deleted) != null)
                 throw new UserExceptions(user.UserName, true);
             else
                 DataSource.Users.Add(user.Clone());
         }
-
-        public User GetUser(string name)
+        public User GetUser(string name)//IDL function
         {
             User retValue = DataSource.Users.FirstOrDefault(curUser => curUser.UserName == name && !curUser.Deleted);
             if (retValue != null)
                 return retValue.Clone();
             else throw new UserExceptions(name, false);
         }
-
-        public void UpdateUser(User newUser)
+        public void UpdateUser(User newUser)//IDL function
         {
             User cur = DataSource.Users.FirstOrDefault(curUser => curUser.UserName == newUser.UserName && !curUser.Deleted);
             if (cur == null)
@@ -376,8 +358,7 @@ namespace DL
             DataSource.Users.Remove(cur);
             DataSource.Users.Add(newUser);
         }
-
-        public void DeleteUser(string userName)
+        public void DeleteUser(string userName)//IDL function
         {
             User cur = DataSource.Users.FirstOrDefault(curUser => curUser.UserName == userName && !curUser.Deleted);
             if (cur == null)

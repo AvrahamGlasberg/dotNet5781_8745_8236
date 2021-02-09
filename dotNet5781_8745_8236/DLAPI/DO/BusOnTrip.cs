@@ -9,14 +9,41 @@ namespace DO
     [Obsolete]
     public class BusOnTrip
     {
-        public int Id { get; set; } // run
-        public int LicenseNum { get; set; } // bus license
-        public int LineId { get; set; } // line id
+        /// <summary>
+        /// Bus on trip ID
+        /// </summary>
+        public int Id { get; set; }
+        /// <summary>
+        /// Bus's license
+        /// </summary>
+        public int LicenseNum { get; set; } 
+        /// <summary>
+        /// Line's ID
+        /// </summary>
+        public int LineId { get; set; }
+        /// <summary>
+        /// Planned start time
+        /// </summary>
         public TimeSpan PlannedTakeOff { get; set; }
+        /// <summary>
+        /// Actual start time
+        /// </summary>
         public TimeSpan ActualTakeOff { get; set; }
-        public int PrevStation { get; set; } // station code 
+        /// <summary>
+        /// Previous station's code
+        /// </summary>
+        public int PrevStation { get; set; }
+        /// <summary>
+        /// Time at the previous station
+        /// </summary>
         public TimeSpan PrevStationAt { get; set; }
+        /// <summary>
+        /// Time until next station
+        /// </summary>
         public TimeSpan NextStationAt { get; set; }
+        /// <summary>
+        /// If the object deleted or not
+        /// </summary>
         public bool Deleted { get; set; }
     }
 }

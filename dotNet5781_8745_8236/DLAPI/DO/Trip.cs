@@ -9,13 +9,37 @@ namespace DO
     [Obsolete]
     public class Trip
     {
-        public int Id { get; set; } // run
-        public string UserName { get; set; }//user username
+        /// <summary>
+        /// ID
+        /// </summary>
+        public int Id { get; set; } 
+        /// <summary>
+        /// User's name
+        /// </summary>
+        public string UserName { get; set; }
+        /// <summary>
+        /// Line's id
+        /// </summary>
         public int LineId { get; set; }
-        public int InStation { get; set; }//station code
+        /// <summary>
+        /// Cur station's code
+        /// </summary>
+        public int InStation { get; set; }
+        /// <summary>
+        ///Time at
+        /// </summary>
         public TimeSpan InAt { get; set; }
-        public int OutStation { get; set; }//station code
+        /// <summary>
+        /// Destination
+        /// </summary>
+        public int OutStation { get; set; }
+        /// <summary>
+        /// Out time
+        /// </summary>
         public TimeSpan OutAt { get; set; }
+        /// <summary>
+        /// If the object deleted or not
+        /// </summary>
         public bool Deleted { get; set; }
     }
 }

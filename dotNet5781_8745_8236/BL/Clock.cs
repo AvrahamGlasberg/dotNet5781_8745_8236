@@ -15,9 +15,21 @@ namespace BL
         public static Clock Instance { get => instance; }// The public Instance property to use
         #endregion
 
+        /// <summary>
+        /// The simulator rate, private
+        /// </summary>
         private int rate;
+        /// <summary>
+        /// The simulator rate
+        /// </summary>
         public int Rate { get { return rate; } set { rate = value; } }
+        /// <summary>
+        /// The observer's action, private
+        /// </summary>
         private event Action<TimeSpan> clockObserver;
+        /// <summary>
+        /// The observer's action
+        /// </summary>
         public event Action<TimeSpan> ClockObserver {
             add
             {
@@ -27,7 +39,13 @@ namespace BL
             {
                 clockObserver -= value;
             } }
+        /// <summary>
+        /// The current simulator's time, private
+        /// </summary>
         private TimeSpan time;
+        /// <summary>
+        /// The current simulator's time
+        /// </summary>
         public TimeSpan Time 
         { 
             get 
