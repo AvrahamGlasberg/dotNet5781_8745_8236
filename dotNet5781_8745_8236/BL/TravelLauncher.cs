@@ -46,18 +46,25 @@ namespace BL
                 System.Threading.Thread.Sleep(timeToSleep);
                 for (int i = 0; !BLImp.Instance.stopSim; i = (i + 1) % allTravels.Count)
                 {
+                    //new line - was'nt before
+                    curTime = Clock.Instance.Time;
                     var allLineStations = allTravels[i].LineInTrip.LineStations.ToList();
                     var number = allTravels[i].LineInTrip.LineNumber;
                     var id = BO.Config.LineOnTripId;
+                    //here need to add the thread to list for interrupts
                     Thread trip = new Thread(() => Trip(number, allLineStations, id));
                     trip.Start();
 
                     int nextInd = (i + 1) % allTravels.Count;
                     time = allTravels[nextInd].StartAt - curTime;
                     timeToSleep = 0;
-                    if (time < TimeSpan.Zero)
+
+                    if (nextInd == 0)
                         time += new TimeSpan(24, 0, 0);
-                    timeToSleep = time.Hours * 360 * 1000;
+                    else if (time < TimeSpan.Zero)//means that time of computer runtime cause to miss a line launch 
+                        time = TimeSpan.Zero;
+                    //
+                        timeToSleep = time.Hours * 360 * 1000;
                     timeToSleep += time.Minutes * 60 * 1000;
                     timeToSleep += time.Seconds * 1000;
                     timeToSleep /= Clock.Instance.Rate;

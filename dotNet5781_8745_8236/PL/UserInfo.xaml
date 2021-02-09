@@ -103,7 +103,7 @@
         </DataGrid>
 
         <StackPanel Grid.Row="4" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <Label Style="{StaticResource labelsTxt2}" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content ="Enter amount of money.&#10;press Enter to add." />
+            <Label Style="{StaticResource labelsTxt2}" FontSize="25" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content ="Enter amount of money.&#10;Press Enter to add." />
             <TextBox x:Name="CashToAddTB" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" Height="35" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Width="150" PreviewKeyDown="Prev_Key_Down" KeyDown="Key_Down">
                 <TextBox.Resources>
                     <ResourceDictionary>
