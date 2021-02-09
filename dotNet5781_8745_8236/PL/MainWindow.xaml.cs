@@ -25,6 +25,9 @@ namespace PL
     public partial class MainWindow : Window
     {
         IBL bl;
+        /// <summary>
+        /// ctor of the window
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -32,14 +35,19 @@ namespace PL
             {
                 bl = BLFactory.GetBL();
             }
-            catch (BO.MissingData ex) //creating bo failed
+            catch (BO.MissingData ex) //creating BO failed
             {
                 MessageBox.Show(ex.Message);
             }
         }
+        /// <summary>
+        /// open login window for check accsses to the maneger area and if it ok open the ManagerPresentation window 
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void OpenManagerOptions(object sender, RoutedEventArgs e)
         {
-            Login dialog = new Login();
+            Login dialog = new Login(); // open the login win and geting the answer
             if(dialog.ShowDialog() == true)
             {
                 if (dialog.User.Admin)
@@ -48,39 +56,60 @@ namespace PL
                     window.Show();
                     this.Close();
                 }
-                else
+                else // the user do not have access to the maneger app
                     MessageBox.Show("You don't have access to manager app.", "Access denied", MessageBoxButton.OK, MessageBoxImage.Exclamation);
             }
         }
+        /// <summary>
+        /// open the simulation window
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void OpenSimulator(object sender, RoutedEventArgs e)
         {
             Simulator window = new Simulator();
-            window.Show();
+            window.Show(); 
             this.Close();
         }
-
+        /// <summary>
+        /// close the window
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Exit(object sender, RoutedEventArgs e)
         {
             ExitApp();
         }
+        /// <summary>
+        /// close all the app
+        /// </summary>
         private void ExitApp()
         {
             Application.Current.Shutdown();
         }
-
+        /// <summary>
+        /// make animate on the Button  when the mouse enter
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Button_Mouse_Enter(object sender, MouseEventArgs e)
         {
             (sender as Button).Increase(7);
         }
+        /// <summary>
+        ///  Decrease the animate on the Button when the mouse leave
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Button_Mouse_Leave(object sender, MouseEventArgs e)
         {
             (sender as Button).Decrease();
         }
-
-        private void WindowActivated(object sender, EventArgs e)
-        {
-        }
-
+        /// <summary>
+        /// Open  the window of user info
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void OpenUserInfo(object sender, RoutedEventArgs e)
         {
             Login win = new Login();

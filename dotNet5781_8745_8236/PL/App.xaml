@@ -81,7 +81,6 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
-        <!--FontStyle="Italic"-->
         <Style x:Key="labelsTxt" TargetType="Label">
             <Style.Setters>
                 <Setter Property="FontFamily" Value="Modern No. 20"/>

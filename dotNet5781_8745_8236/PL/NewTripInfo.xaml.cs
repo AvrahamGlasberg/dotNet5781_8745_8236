@@ -22,6 +22,10 @@ namespace PL
     {
         IBL bl;
         BO.BusLine busLine;
+        /// <summary>
+        /// window ctor
+        /// </summary>
+        /// <param name="busline"></param>
         public NewTripInfo(BO.BusLine busline)
         {
             InitializeComponent();
@@ -35,11 +39,15 @@ namespace PL
                 MessageBox.Show(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Add trip to the data
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void AddTrip(object sender, RoutedEventArgs e)
         {
             int freq;
-            if (startTP.SelectedTime == null || !int.TryParse(freqTB.Text, out freq) || finishTP.SelectedTime == null)
+            if (startTP.SelectedTime == null || !int.TryParse(freqTB.Text, out freq) || finishTP.SelectedTime == null) // when some data is missing / Invalid jumping massage to the user and asking it
             {
                 string message = "";
                 if (startTP.SelectedTime == null)
@@ -66,13 +74,17 @@ namespace PL
                     bl.AddLineTrip(new LineTrip() { LineInTrip = busLine, StartAt = startTP.SelectedTime.Value.TimeOfDay, Frequency = frequency, FinishAt = finishTP.SelectedTime.Value.TimeOfDay });
                     this.Close();
                 }
-                catch (BO.LineTripExists ex)
+                catch (BO.LineTripExists ex) // the LineTrip already exists
                 {
                     MessageBox.Show(ex.Message + string.Format(" choose different start than{0} or different line than {0}", ex.Start, ex.LineNumber), "Input error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }
-
+        /// <summary>
+        /// allow the user to insert only numbers
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Numbers_Enter_Only(object sender, KeyEventArgs e)
         {
             if (((int)e.Key < (int)Key.D0 || (int)e.Key > (int)Key.D9) && ((int)e.Key < (int)Key.NumPad0 || (int)e.Key > (int)Key.NumPad9) && e.Key != Key.Enter && e.Key != Key.Escape && e.Key != Key.Back)

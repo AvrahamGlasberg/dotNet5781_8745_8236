@@ -32,14 +32,18 @@ namespace PL
             {
                 bl = BLFactory.GetBL();
             }
-            catch (BO.MissingData ex) //creating bo failed
+            catch (BO.MissingData ex) //creating BO failed
             {
                 MessageBox.Show(ex.Message);
             }
             Curbus = bus;
             MainGrid.DataContext = Curbus;
         }
-
+        /// <summary>
+        /// refueling the bus by operate the BL's Refuel func and make sound
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Start_Refuel(object sender, RoutedEventArgs e)
         {
             try
@@ -50,12 +54,16 @@ namespace PL
                 sound.Play();
                 this.Close();
             }
-            catch(BO.BusNotFound ex)
+            catch(BO.BusNotFound ex) // can't found the bus for refueling
             {
                 MessageBox.Show(ex.Message + string.Format(" Bus {0} could not be found.", ex.License), "Object Not Found", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
+        /// <summary>
+        /// treatmenting the bus by operate the BL's Treatment func and make sound
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Start_Treatment(object sender, RoutedEventArgs e)
         {
             try
@@ -66,7 +74,7 @@ namespace PL
                 sound.Play();
                 this.Close();
             }
-            catch (BO.BusNotFound ex)
+            catch (BO.BusNotFound ex) // can't found the bus for refueling
             {
                 MessageBox.Show(ex.Message + string.Format(" Bus {0} could not be found.", ex.License), "Object Not Found", MessageBoxButton.OK, MessageBoxImage.Error);
             }

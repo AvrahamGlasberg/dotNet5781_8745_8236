@@ -23,16 +23,19 @@ namespace PL
     public partial class NewLineInfo : Window
     {
         IBL bl;
-        ObservableCollection<BO.Station> newbusStationsList;
-        ObservableCollection<BO.Station> busStationsList;
+        ObservableCollection<BO.Station> newbusStationsList; // Collection of the station to add to the new line
+        ObservableCollection<BO.Station> busStationsList;  // Collection of the remain station to add to the list station of the new line
+        /// <summary>
+        /// window ctor
+        /// </summary>
         public NewLineInfo()
         {
             InitializeComponent();
             try
             {
                 bl = BLFactory.GetBL();
-            }
-            catch (BO.MissingData ex)
+            } 
+            catch (BO.MissingData ex) //creating bo failed
             {
                 MessageBox.Show(ex.Message);
             }
@@ -43,12 +46,16 @@ namespace PL
             NewStationsListBox.DataContext = newbusStationsList;
             AreasCB.ItemsSource = Enum.GetValues(typeof(BO.Areas));
         }
-
+        /// <summary>
+        /// Add the Line to the data
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Add_Line(object sender, RoutedEventArgs e)
         {
             int code;
             string message = "";
-            if (!int.TryParse(LineCodeTB.Text, out code) || (newbusStationsList.Count < 2) || AreasCB.SelectedItem == null)
+            if (!int.TryParse(LineCodeTB.Text, out code) || (newbusStationsList.Count < 2) || AreasCB.SelectedItem == null) // when some data is missing/invalid jumping massage to the user and asking it
             {
                 if (!int.TryParse(LineCodeTB.Text, out code))
                     message += "Please enter station's code!\n";
@@ -70,14 +77,18 @@ namespace PL
                     bl.AddBusLine(line);
                     this.Close();
                 }
-                catch(BO.BusLineExists ex)
+                catch(BO.BusLineExists ex) // the BusLine already exists
                 {
                     MessageBox.Show(ex.Message + string.Format(" Choose different line number than {0} or change it's route!", ex.LineNumber), "Object already exists", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
 
         }
-
+        /// <summary>
+        /// add the selected station to the Collection of station of the new line
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Add_StationToBusLine(object sender, RoutedEventArgs e)
         {
             Button bt = sender as Button;
@@ -86,13 +97,21 @@ namespace PL
             busStationsList.Remove(busStation);
         }
 
-    
+        /// <summary>
+        /// allow the user to insert only numbers
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Numbers_Enter_Only(object sender, KeyEventArgs e)
         {
             if (((int)e.Key < (int)Key.D0 || (int)e.Key > (int)Key.D9) && ((int)e.Key < (int)Key.NumPad0 || (int)e.Key > (int)Key.NumPad9) && e.Key != Key.Enter && e.Key != Key.Escape && e.Key != Key.Back)
                 e.Handled = true;
         }
-
+        /// <summary>
+        /// remove the selected station from the Collection of station of the new line
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Remove_Station(object sender, RoutedEventArgs e)
         {
             Button bt = sender as Button;

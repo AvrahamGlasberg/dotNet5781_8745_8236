@@ -9,25 +9,58 @@ namespace DS
 {
     public static class DataSource
     {
+        /// <summary>
+        /// list of DO.AdjacentStation
+        /// </summary>
         public static List<AdjacentStation> AdjacentStations;
+        /// <summary>
+        /// list of DO.Bus
+        /// </summary>
         public static List<Bus> Buses;
+        /// <summary>
+        /// list of DO.BusOnTrip
+        /// </summary>
         public static List<BusOnTrip> BusesOnTrip;
+        /// <summary>
+        /// list of DO.Line
+        /// </summary>
         public static List<Line> Lines;
+        /// <summary>
+        /// list of DO.LineStation
+        /// </summary>
         public static List<LineStation> LineStations;
+        /// <summary>
+        /// list of DO.LineTrip
+        /// </summary>
         public static List<LineTrip> LinesTrip;
+        /// <summary>
+        /// list of DO.Station
+        /// </summary>
         public static List<Station> Stations;
+        /// <summary>
+        /// list of DO.Trip
+        /// </summary>
         public static List<Trip> Trips;
+        /// <summary>
+        /// list of DO.User
+        /// </summary>
         public static List<User> Users;
-
+        /// <summary>
+        /// dataSource ctor
+        /// </summary>
         static DataSource()
         {
             InitLists();
         }
+        /// <summary>
+        /// intilize lists of data
+        /// </summary>
         private static void InitLists()
         {
             Random rand = new Random(DateTime.Now.Millisecond);
 
             #region Stations
+            //some stations's codes for inilaziling
             int[] Codes = {38831,
                             38832,
                             38833,
@@ -78,7 +111,7 @@ namespace DS
                             38889,
                             38890,
                             38891 };
-
+            //some stations's names for inilaziling
             string[] Names =
             {
                 "Bar Lev / Ben Yehuda School",
@@ -132,6 +165,7 @@ namespace DS
                 "Weizmann / The Magic Rug",
                 "Tzala / Coral"
             };
+            //some stations's Long coordinates for inilaziling
             double[] Longt =
             {
                 34.917806,
@@ -186,6 +220,7 @@ namespace DS
                 34.787199
 
             };
+            //some stations's Lat coordinates for inilaziling
             double[] Latd =
             {
                 32.183921,
@@ -239,6 +274,7 @@ namespace DS
                 31.816579,
                 31.801182
             };
+            // create list of 50 stations by the data above
             Stations = new List<Station>();
             for (int i = 0; i < 50; i++)
             {
@@ -254,6 +290,7 @@ namespace DS
             #endregion
 
             #region Lines
+            //some LineNumbers for inilaziling
             int[] LineNumbers =
             {
                 5,
@@ -267,6 +304,7 @@ namespace DS
                 26,
                 947
             };
+            // create list of 10 lines
             Lines = new List<Line>();
             for (int i = 0; i < 10; i++)
             {
@@ -283,6 +321,7 @@ namespace DS
             #endregion
 
             #region LineStations
+            //create list of Line Stations
             LineStations = new List<LineStation>();
             for (int i = 0; i <Lines.Count; i++)
             {
@@ -294,11 +333,13 @@ namespace DS
                         Station = Stations[i * 3 + j].Code,
                         LineStationIndex = j
                     };
+                    // first station 
                     if (j == 0)
                         NewLineStation.PrevStation = null;
                     else
                         NewLineStation.PrevStation = Stations[i * 3 + j - 1].Code;
-                    if (j == 9)
+                    // last station
+                    if (j == 9) 
                         NewLineStation.NextStation = null;
                     else
                         NewLineStation.NextStation = Stations[i * 3 + j + 1].Code;
@@ -308,6 +349,7 @@ namespace DS
             #endregion
 
             #region AdjacentStations
+            // create list of all the AdjacentStation according to the stations in the lines
             AdjacentStations = new List<AdjacentStation>();
             for (int i = 0; i < LineStations.Count; i++)
             {
@@ -329,7 +371,7 @@ namespace DS
                         int s = (int)(time * 360)%60 + 1;
                         TimeSpan t = new TimeSpan(h, m, s);
                         if (!AdjacentStations.Exists(stations => stations.Station1 == LineStations[i].Station && stations.Station2 == (int)LineStations[i].NextStation))
-                            AdjacentStations.Add(new AdjacentStation()
+                            AdjacentStations.Add(new AdjacentStation() // add the station to the list
                             {
                                 Station1 = LineStations[i].Station,
                                 Station2 = (int)LineStations[i].NextStation,
@@ -342,10 +384,11 @@ namespace DS
             #endregion
 
             #region Buses
+            // create list of buses 
             Buses = new List<Bus>();
             for (int i = 0; i < 20; i++)
             {
-                Bus NewBus = new Bus()
+                Bus NewBus = new Bus() // init the parmeters by random value
                 {
                     FromDate = DateTime.Now,
                     LastTreatmentDate = DateTime.Now.AddYears(-1),
@@ -355,7 +398,7 @@ namespace DS
                     BusStatus = Status.Ready
                 };
                 int License;
-                do
+                do // find empty license number
                 {
                     License = rand.Next(10000000, 100000000);
                 } while (Buses.Exists(bus=>bus.LicenseNum==License));
@@ -364,11 +407,15 @@ namespace DS
             }
             #endregion
 
+            #region Trips
+            // just create lists without init it 
             BusesOnTrip = new List<BusOnTrip>();
             LinesTrip = new List<LineTrip>();
             Trips = new List<Trip>();
+            #endregion
 
             #region User
+            // create list of user, for convenience adding one user
             Users = new List<User>()
             {
                 new User()

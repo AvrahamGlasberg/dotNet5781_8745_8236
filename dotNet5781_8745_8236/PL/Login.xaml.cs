@@ -22,6 +22,9 @@ namespace PL.Dialogs
     {
         IBL bl;
         BO.User user;
+        /// <summary>
+        /// ctor of the window 
+        /// </summary>
         public Login()
         {
             InitializeComponent();
@@ -29,19 +32,28 @@ namespace PL.Dialogs
             {
                 bl = BLFactory.GetBL();
             }
-            catch(BO.MissingData ex)//creating bo failed
+            catch(BO.MissingData ex) //creating BO failed
             {
                 MessageBox.Show(ex.Message);
             }
             NameTB.Focus();
             NameTB.SelectAll();
         }
+        /// <summary>
+        /// open register window
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void buttonRegister_Click(object sender, RoutedEventArgs e)
         {
             Register reg = new Register();
             reg.ShowDialog();
         }
-
+        /// <summary>
+        /// check the user name and the password and send the answer to the sender window
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Log_In(object sender, RoutedEventArgs e)
         {
             try
@@ -51,13 +63,18 @@ namespace PL.Dialogs
                     this.DialogResult = true;
                 else
                     MessageBox.Show("Incorrect Password!");
-            }
-            catch(BO.UserNotFound ex)
+            } 
+            catch(BO.UserNotFound ex) // can't find the user in bl
             {
                 MessageBox.Show(ex.Message + string.Format(" Name {0} is not exists. choose another or register.", ex.Name));
             }
             
         }
+        /// <summary>
+        /// move to the next textbBlock when press Enter key
+        /// </summary>
+        /// <param name="sender">sender of the event</param>
+        /// <param name="e">e of the argument</param>
         private void Key_Down(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Enter)
@@ -66,10 +83,12 @@ namespace PL.Dialogs
                 PassTB.SelectAll();
             }
         }
+        /// <summary>
+        ///  get func of user
+        /// </summary>
         public BO.User User
         {
             get { return user; }
         }
-
     }
 }

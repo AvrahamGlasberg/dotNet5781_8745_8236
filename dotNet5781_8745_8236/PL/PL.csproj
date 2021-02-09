@@ -239,17 +239,11 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="stationDesign.png" />
-    <Resource Include="StationOfBus.png" />
     <Resource Include="Icons\stationDesign.png" />
     <Resource Include="Icons\electricPanel.png" />
-    <Resource Include="electricPanel.png" />
     <Resource Include="Icons\missingBus.jpg" />
-    <Resource Include="missingBus.jpg" />
     <Resource Include="Icons\missingBus1.png" />
-    <Resource Include="missingBus1.png" />
     <Resource Include="Icons\missingBus2.jpg" />
-    <Resource Include="missingBus2.jpg" />
     <Resource Include="Icons\LCD.jpg" />
     <Resource Include="Icons\Simulation.jpg" />
     <Content Include="Sounds\drive.mp3" />

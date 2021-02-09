@@ -6,6 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
+        ResizeMode="NoResize"
         Title="Simulator" Height="450" Width="800" Closing="Window_Closing" Activated="Window_Activated">
     <Window.Background>
         <ImageBrush ImageSource="Icons/background.jpg" />
@@ -43,9 +44,6 @@
 
         <!-- Stations data grid -->
         <DataGrid  x:Name="StationsDataGrid" IsReadOnly="True" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" SelectionChanged="Station_Selected" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" CanUserResizeColumns="False">
-            <DataGrid.Background>
-                <ImageBrush ImageSource="Icons/LCD.jpg"/>
-            </DataGrid.Background>
             <DataGrid.Columns>
                 <DataGridTemplateColumn Header="Code">
                     <DataGridTemplateColumn.CellTemplate>
@@ -78,7 +76,7 @@
                 <DropShadowEffect BlurRadius="50" ShadowDepth="0" Opacity="0.995" Direction="0"/>
             </Label.Effect>
             <Label.Background>
-                <ImageBrush ImageSource="stationDesign.png"/>
+                <ImageBrush ImageSource="Icons/stationDesign.png"/>
             </Label.Background>
         </Label>
         <DataGrid HeadersVisibility="None" x:Name="LinesDataGrid" ItemsSource="{Binding}" Background="Yellow" ColumnHeaderStyle="{StaticResource DataGridHeaderStyle}" Grid.Row="1" Grid.Column="1" CanUserAddRows="False" EnableColumnVirtualization="False" AutoGenerateColumns="False" CanUserDeleteRows="False" CanUserReorderColumns="False" CanUserResizeRows="False" CanUserSortColumns="False" CanUserResizeColumns="False" Margin="5,50,5,5" BorderThickness="4,3,3,5">
@@ -116,7 +114,7 @@
                 <SolidColorBrush Color="{DynamicResource {x:Static SystemColors.WindowFrameColorKey}}"/>
             </DataGrid.BorderBrush>
             <DataGrid.Background>
-                <ImageBrush ImageSource="electricPanel.png">
+                <ImageBrush ImageSource="Icons/electricPanel.png">
                     <ImageBrush.RelativeTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -167,7 +165,7 @@
                 </RadialGradientBrush>
             </Label.Foreground>
             <Label.Background>
-                <ImageBrush ImageSource="missingBus2.jpg" Opacity="0.8"/>
+                <ImageBrush ImageSource="Icons/missingBus2.jpg" Opacity="0.8"/>
             </Label.Background>
         </Label>
         <Border BorderBrush="DarkBlue" BorderThickness="0, 3, 0, 0"  Grid.Row="3" Grid.ColumnSpan="3" Width="800" VerticalAlignment="Bottom" Height="50">
