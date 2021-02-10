@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DLAPI;
 using DS;
 using DL;
-using DO;
 using System.Xml.Linq;
+using System.IO;
 
 namespace SaveDataProject
 {
     class Program
     {
+        static string dir = @"xml\";
         static private void SaveTimeSpan()
         {
-            string dir = @"xml\";
             string adjacentStationPath = @"AdjacentStationXml.xml"; //XElement
             string path = dir + adjacentStationPath;
             XElement adjacentStationRootElem = XElement.Load(path);
@@ -36,7 +31,11 @@ namespace SaveDataProject
         {
             try
             {
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
+
                 SaveTimeSpan();
+
                 XMLTools.SaveListToXMLSerializer<DO.Bus>(DataSource.Buses, @"BusXml.xml");
                 XMLTools.SaveListToXMLSerializer<DO.Line>(DataSource.Lines, @"LineXml.xml");
                 XMLTools.SaveListToXMLSerializer<DO.LineStation>(DataSource.LineStations, @"LineStationXml.xml");
