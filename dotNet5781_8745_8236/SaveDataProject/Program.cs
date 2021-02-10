@@ -5,7 +5,7 @@ using System.Xml.Linq;
 using System.IO;
 
 namespace SaveDataProject
-{
+{ 
     class Program
     {
         static string dir = @"xml\";
@@ -13,8 +13,7 @@ namespace SaveDataProject
         {
             string adjacentStationPath = @"AdjacentStationXml.xml"; //XElement
             string path = dir + adjacentStationPath;
-            XElement adjacentStationRootElem = XElement.Load(path);
-            adjacentStationRootElem.RemoveAll();
+            XElement adjacentStationRootElem = new XElement("ArrayOfAdjacentStation");
 
             foreach (var item in DataSource.AdjacentStations)
             {
