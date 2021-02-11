@@ -3,3 +3,5 @@ Course in WPF at JCT, Avraham &amp; Itamar
 # For compiling:
 After building the project, first insert the two files from the "dll for project" folder into the bin->debug folder,&#x0a; 
 **then** run the "SaveDataProject" once. if the console did not write any error messages, you can run the "PL" project and use the application.
+# Manager access (also function as user):
+**Name:** Avraham, **Password:** 1. (should appear as defult when trying to log-in), or register new Administer/User
