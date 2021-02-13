@@ -49,6 +49,9 @@ namespace BL
                 foreach (var trip in BLImp.Instance.GetAllLineTrips())
                     for (TimeSpan t = trip.StartAt; t <= trip.FinishAt && trip.Frequency != TimeSpan.Zero; t += trip.Frequency)
                         allTravels.Add(new BO.LineTrip() { StartAt = t, LineInTrip = trip.LineInTrip });
+                for (int i = 0; i < allTravels.Count; i++)
+                    if (allTravels[i].StartAt < curTime)
+                        allTravels[i].StartAt += new TimeSpan(24, 0, 0);
                 allTravels = allTravels.OrderBy(trip => trip.StartAt).ToList();
 
                 if (allTravels.Count > 0)//if there is travels
